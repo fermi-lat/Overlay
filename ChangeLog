@@ -1,0 +1,34 @@
+------------------------------------------------------------
+User: usher  Wed Oct 15 08:14:32 PDT 2008
+Overlay
+
+Log Message:
+Initial import of the Overlay package - to overlay background events onto simulated events
+
+Status:
+
+Vendor Tag:	GLAST
+Release Tags:	v0r0p0
+		
+N Overlay/.cvsignore
+N Overlay/cmt/NMake
+N Overlay/cmt/requirements
+N Overlay/cmt/.cvsignore
+N Overlay/src/IBackgroundSelectTool.h
+N Overlay/src/McIlwain_L_Tool.cxx
+N Overlay/src/IBackgroundBinTool.h
+N Overlay/src/BackgroundSelectTool.cxx
+N Overlay/src/Overlay.txt
+N Overlay/src/XmlFetchEvents.cxx
+N Overlay/src/overlayRootReaderAlg.cxx
+N Overlay/src/XmlFetchEvents.h
+N Overlay/src/IFetchEvents.h
+N Overlay/src/Dll/Overlay_load.cxx
+N Overlay/src/Dll/Overlay_dll.cxx
+N Overlay/doc/release.notes
+N Overlay/xml/backgroundOverlay.xsd
+N Overlay/xml/McIlwain_L.xml
+
+No conflicts created by this import
+
+    *
