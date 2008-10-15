@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+$Header: /nfs/slac/g/glast/ground/cvs/Overlay/xml/PtSCzenith.xml,v 1.0 2007/06/15 20:14:25 usher Exp $
+-->
+
+<sourceList xmlns='http://xml.netbeans.org/examples/targetNS'
+  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+  xsi:schemaLocation='http://xml.netbeans.org/examples/targetNS file:/./backgroundOverlay.xsd'>
+
+   <source name="Periodic_triggers" type="McIlwain_L" rangeUnits="none" rangeMin="0.9" rangeMax="1.8">
+      <bin min="0.9" max="1.1">
+         <fileList>
+            <file filePath="C:/Glast/data/L1PROC-Disp_digi.root" treeName="Digi" branchName="DigiEvent" numEvents="5"/>
+         </fileList>
+      </bin>
+      <bin min="1.1" max="1.8">
+         <fileList>
+            <file filePath="C:/Glast/data/L1PROC-Disp_digi.root" treeName="Digi" branchName="DigiEvent" numEvents="5"/>
+         </fileList>
+      </bin>
+   </source>
+
+
+</sourceList>
