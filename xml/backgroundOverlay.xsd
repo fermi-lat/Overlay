@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : backgroundOverlay.xsd
+    Created on : October 14, 2008, 2:05 PM
+    Author     : dflath
+    Description:
+        Definition of valid xml to describe a background source or list of sources.
+-->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   xmlns:ns="http://xml.netbeans.org/examples/targetNS"
+   targetNamespace="http://xml.netbeans.org/examples/targetNS"
+   xmlns="http://xml.netbeans.org/examples/targetNS"
+   elementFormDefault="qualified">
+
+   <xsd:element name="sourceList">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element ref="source" maxOccurs="unbounded"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+
+   <xsd:element name="source">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element ref="bin" maxOccurs="unbounded"/>
+         </xsd:sequence>
+
+<!-- TODO:  maybe later we want to replace these by enumerated types, as in commented sections immediately below and at end of document -->         
+         <xsd:attribute name="name" type="xsd:string" use="required"/>
+         <xsd:attribute name="type" type="xsd:string" use="required"/>
+         <xsd:attribute name="rangeUnits" type="xsd:string" use="required"/>
+         <xsd:attribute name="rangeMin" type="xsd:decimal" use="required"/>
+         <xsd:attribute name="rangeMax" type="xsd:decimal" use="required"/>
+      </xsd:complexType>
+   </xsd:element>
+   
+   <xsd:element name="bin">
+      <xsd:complexType>
+         <xsd:choice>
+            <xsd:element ref="fileList"/>
+            <xsd:element ref="eventList"/>
+         </xsd:choice>
+         <xsd:attribute name="min" type="xsd:decimal" use="required"/>
+         <xsd:attribute name="max" type="xsd:decimal" use="required"/>
+      </xsd:complexType>
+   </xsd:element>
+   
+   <xsd:element name="fileList">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element ref="file" maxOccurs="unbounded"/>
+         </xsd:sequence>
+      </xsd:complexType>      
+   </xsd:element>
+   
+   <xsd:element name="file">
+      <xsd:complexType>
+            <xsd:attribute name="filePath"   type="xsd:string"  use="required"/>
+            <xsd:attribute name="treeName"   type="xsd:string"  use="required"/>
+            <xsd:attribute name="branchName" type="xsd:string"  use="required"/>
+            <xsd:attribute name="numEvents"  type="xsd:integer" use="required"/>
+      </xsd:complexType>      
+   </xsd:element>
+   
+   <xsd:element name="eventList">
+      <xsd:complexType  mixed="true">
+         <xsd:sequence>
+            <xsd:element ref="event" maxOccurs="unbounded"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+
+   <xsd:element name="event">
+      <xsd:complexType>
+            <xsd:attribute name="filePath" type="xsd:string" use="required"/>
+            <xsd:attribute name="treeName" type="xsd:string" use="required"/>
+            <xsd:attribute name="eventIndex" type="xsd:integer" use="required"/>
+      </xsd:complexType>      
+   </xsd:element>
+
+</xsd:schema>
