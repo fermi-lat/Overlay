@@ -1,7 +1,7 @@
 /**  @file BackgroundSelectTool.cxx
-    @brief implementation of class BackgroundSelectTool
-    
-  $Header: /nfs/slac/g/glast/ground/cvs/Interleave/src/BackgroundSelectTool.cxx,v 1.19 2008/06/17 22:13:59 kocian Exp $  
+@brief implementation of class BackgroundSelectTool
+
+$Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/BackgroundSelectTool.cxx,v 1.1.1.1 2008/10/15 15:14:30 usher Exp $  
 */
 
 #include "IBackgroundSelectTool.h"
@@ -34,8 +34,8 @@
 #include <ctime>
 
 /** @class BackgroundSelection
-    @brief manage the selection of background events to merge with signal events
-    @author Dan Flath
+@brief manage the selection of background events to merge with signal events
+@author Dan Flath
 
 It uses the name of a tuple variable as a key to look up trigger and downlink rates of a background
 source depending on the value of that variable. See the corresponding member functions. Given such
@@ -86,6 +86,8 @@ private:
 
     /// Option string which will be passed to McEvent::Clear
     StringProperty       m_clearOption;
+    /// toggle to choose events sequentially from the file
+    bool m_sequential;
 };
 
 static ToolFactory<BackgroundSelectTool> s_factory;
@@ -93,13 +95,13 @@ const IToolFactory& BackgroundSelectToolFactory = s_factory;
 
 //------------------------------------------------------------------------
 BackgroundSelectTool::BackgroundSelectTool(const std::string& type, 
-                                 const std::string& name, 
-                                 const IInterface* parent) :
-                                 AlgTool(type, name, parent)
-                                 , m_rootIoSvc(0)
-                                 , m_eventOffset(0)
-                                 , m_fetch(0)
-                                 , m_digiEvent(0)
+                                           const std::string& name, 
+                                           const IInterface* parent) :
+AlgTool(type, name, parent)
+, m_rootIoSvc(0)
+, m_eventOffset(0)
+, m_fetch(0)
+, m_digiEvent(0)
 {
     //Declare the additional interface
     declareInterface<IBackgroundSelectTool>(this);
@@ -107,6 +109,8 @@ BackgroundSelectTool::BackgroundSelectTool(const std::string& type,
     // declare properties with setProperties calls
     declareProperty("InputXmlFile", m_inputXmlFile="$(OVERLAYROOT)/xml/McIlwain_L.xml");
     declareProperty("clearOption",  m_clearOption="");
+    // this is useful for making before/after event displays!
+    declareProperty("sequentialRead",   m_sequential=false);
 
     std::string varName = this->name();
 }
@@ -157,7 +161,6 @@ StatusCode BackgroundSelectTool::initialize()
             sc = StatusCode::FAILURE;
         }
     }
-
     return sc;
 }
 
@@ -166,7 +169,7 @@ StatusCode BackgroundSelectTool::finalize ()
     StatusCode  status = StatusCode::SUCCESS;
 
     delete m_fetch;
-    
+
     return status;
 }
 
@@ -215,9 +218,7 @@ DigiEvent* BackgroundSelectTool::selectEvent()
         if( m_digiEvent == 0)
         { 
             m_eventOffset = 0; 
-
-            m_rootIoSvc->setIndex(m_eventOffset);
-        
+            m_rootIoSvc->setIndex(m_eventOffset);      
             m_digiEvent = dynamic_cast<DigiEvent*>(m_rootIoSvc->getNextEvent("overlay"));
         }
     } 
@@ -235,8 +236,8 @@ void BackgroundSelectTool::setNewInputBin(double x)
 {
     MsgStream log(msgSvc(), name());
 
-   try 
-   {
+    try 
+    {
         // Close the curent input file(s)
         m_rootIoSvc->closeInput("overlay");
 
@@ -245,26 +246,29 @@ void BackgroundSelectTool::setNewInputBin(double x)
 
         // Open the new input files
         m_rootIoSvc->prepareRootInput("overlay", 
-                                      m_fetch->getTreeName(), 
-                                      m_fetch->getBranchName(), 
-                                      fileList);
+            m_fetch->getTreeName(), 
+            m_fetch->getBranchName(), 
+            fileList);
 
         // Select a random starting position within the allowed number of events
         Long64_t numEventsLong = m_rootIoSvc->getRootEvtMax();
         double   numEvents     = numEventsLong;
+        //normal, random mode
         Long64_t startEvent    = (Long64_t)(RandFlat::shoot() * (numEvents - 1));
-
-        // ****TEST*****
-        startEvent = numEventsLong - 2;
+        // sequential, test mode
+        if(m_sequential) startEvent = 0;
+        bool test = false;
+        if(test) startEvent = numEventsLong - 2;
 
         // Set that as the starting event
         m_rootIoSvc->setIndex(startEvent);
-   } 
-   catch(...) 
-   {
-      log << MSG::WARNING << "exception thrown" << endreq;
-      throw;
-   }
+
+    } 
+    catch(...) 
+    {
+        log << MSG::WARNING << "exception thrown" << endreq;
+        throw;
+    }
 
     return;
 }

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+$Header: /nfs/slac/g/glast/ground/cvs/Overlay/xml/McIlwain_L.xml,v 1.1.1.1 2008/10/15 15:14:31 usher Exp $
+-->
+
+<sourceList xmlns='http://xml.netbeans.org/examples/targetNS'
+  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+  xsi:schemaLocation='http://xml.netbeans.org/examples/targetNS file:/./backgroundOverlay.xsd'>
+
+   <source name="Periodic_triggers" type="McIlwain_L" rangeUnits="none" rangeMin="0.9" rangeMax="1.8">
+ 
+      <bin min="0.95" max="1.0150">
+         <fileList>
+            <file filePath="$Overlay_path/Periodic-05_digi.root"   
+                treeName="Digi" branchName="DigiEvent" />
+            <file filePath="$Overlay_path/Periodic-05_digi_1.root"   
+                treeName="Digi" branchName="DigiEvent" />
+         </fileList>
+      </bin>
+      <bin min="1.0150" max="1.0400">
+         <fileList>
+            <file filePath="$Overlay_path/Periodic-10_digi.root"   
+                treeName="Digi" branchName="DigiEvent" />
+            <file filePath="$Overlay_path/Periodic-10_digi_1.root"   
+                treeName="Digi" branchName="DigiEvent" />
+         </fileList>
+      </bin>
+      <bin min="1.0400" max="1.0557">
+         <fileList>
+            <file filePath="$Overlay_path/Periodic-15_digi.root"   
+                treeName="Digi" branchName="DigiEvent" />
+            <file filePath="$Overlay_path/Periodic-15_digi_1.root"   
+                treeName="Digi" branchName="DigiEvent" />
+         </fileList>
+      </bin>
+      <bin min="1.0057" max="1.0686">
+         <fileList>
+            <file filePath="$Overlay_path/Periodic-20_digi.root"   
+                treeName="Digi" branchName="DigiEvent" />
+            <file filePath="$Overlay_path/Periodic-20_digi_1.root"   
+                treeName="Digi" branchName="DigiEvent" />
+         </fileList>
+      </bin>
+      <bin min="1.0686" max="1.0810">
+         <fileList>
+            <file filePath="$Overlay_path/Periodic-25_digi.root"   
+                treeName="Digi" branchName="DigiEvent" />
+            <file filePath="$Overlay_path/Periodic-25_digi_1.root"   
+                treeName="Digi" branchName="DigiEvent" />
+         </fileList>
+      </bin>
+      <bin min="1.0810" max="1.0930">
+         <fileList>
+            <file filePath="$Overlay_path/Periodic-30_digi.root"   
+                treeName="Digi" branchName="DigiEvent" />
+            <file filePath="$Overlay_path/Periodic-30_digi_1.root"   
+                treeName="Digi" branchName="DigiEvent" />
+         </fileList>
+      </bin>
+      <bin min="1.0930" max="1.1050">
+         <fileList>
+            <file filePath="$Overlay_path/Periodic-35_digi.root"   
+                treeName="Digi" branchName="DigiEvent" />
+            <file filePath="$Overlay_path/Periodic-35_digi_1.root"   
+                treeName="Digi" branchName="DigiEvent" />
+         </fileList>
+      </bin>
+      <bin min="1.1050" max="1.1170">
+         <fileList>
+            <file filePath="$Overlay_path/Periodic-40_digi.root"   
+                treeName="Digi" branchName="DigiEvent" />
+            <file filePath="$Overlay_path/Periodic-40_digi_1.root"   
+                treeName="Digi" branchName="DigiEvent" />
+         </fileList>
+      </bin>
+      <bin min="1.1170" max="1.1320">
+         <fileList>
+            <file filePath="$Overlay_path/Periodic-45_digi.root"   
+                treeName="Digi" branchName="DigiEvent" />
+            <file filePath="$Overlay_path/Periodic-45_digi_1.root"   
+                treeName="Digi" branchName="DigiEvent" />
+         </fileList>
+      </bin>
+      <bin min="1.1320" max="1.1490">
+         <fileList>
+            <file filePath="$Overlay_path/Periodic-50_digi.root"   
+                treeName="Digi" branchName="DigiEvent" />
+            <file filePath="$Overlay_path/Periodic-50_digi_1.root"   
+                treeName="Digi" branchName="DigiEvent" />
+         </fileList>
+      </bin>
+      <bin min="1.1490" max="1.1670">
+         <fileList>
+            <file filePath="$Overlay_path/Periodic-55_digi.root"   
+                treeName="Digi" branchName="DigiEvent" />
+            <file filePath="$Overlay_path/Periodic-55_digi_1.root"   
+                treeName="Digi" branchName="DigiEvent" />
+         </fileList>
+      </bin>
+      <bin min="1.1670" max="1.1860">
+         <fileList>
+            <file filePath="$Overlay_path/Periodic-60_digi.root"   
+                treeName="Digi" branchName="DigiEvent" />
+            <file filePath="$Overlay_path/Periodic-60_digi_1.root"   
+                treeName="Digi" branchName="DigiEvent" />
+         </fileList>
+      </bin>
+      <bin min="1.1860" max="1.2090">
+         <fileList>
+            <file filePath="$Overlay_path/Periodic-65_digi.root"   
+                treeName="Digi" branchName="DigiEvent" />
+            <file filePath="$Overlay_path/Periodic-65_digi_1.root"   
+                treeName="Digi" branchName="DigiEvent" />
+         </fileList>
+      </bin>
+      <bin min="1.2090" max="1.2410">
+         <fileList>
+            <file filePath="$Overlay_path/Periodic-70_digi.root"   
+                treeName="Digi" branchName="DigiEvent" />
+            <file filePath="$Overlay_path/Periodic-70_digi_1.root"   
+                treeName="Digi" branchName="DigiEvent" />
+         </fileList>
+      </bin>
+      <bin min="1.2410" max="1.2810">
+         <fileList>
+            <file filePath="$Overlay_path/Periodic-75_digi.root"   
+                treeName="Digi" branchName="DigiEvent" />
+            <file filePath="$Overlay_path/Periodic-75_digi_1.root"   
+                treeName="Digi" branchName="DigiEvent" />
+         </fileList>
+      </bin>
+      <bin min="1.2810" max="1.3290">
+         <fileList>
+            <file filePath="$Overlay_path/Periodic-80_digi.root"   
+                treeName="Digi" branchName="DigiEvent" />
+            <file filePath="$Overlay_path/Periodic-80_digi_1.root"   
+                treeName="Digi" branchName="DigiEvent" />
+         </fileList>
+      </bin>
+      <bin min="1.3290" max="1.3915">
+         <fileList>
+            <file filePath="$Overlay_path/Periodic-85_digi.root"   
+                treeName="Digi" branchName="DigiEvent" />
+            <file filePath="$Overlay_path/Periodic-85_digi_1.root"   
+                treeName="Digi" branchName="DigiEvent" />
+         </fileList>
+      </bin>
+      <bin min="1.3195" max="1.4690">
+         <fileList>
+            <file filePath="$Overlay_path/Periodic-90_digi.root"   
+                treeName="Digi" branchName="DigiEvent" />
+            <file filePath="$Overlay_path/Periodic-90_digi_1.root"   
+                treeName="Digi" branchName="DigiEvent" />
+         </fileList>
+      </bin>
+      <bin min="1.4690" max="1.5040">
+         <fileList>
+            <file filePath="$Overlay_path/Periodic-92_digi.root"   
+                treeName="Digi" branchName="DigiEvent" />
+         </fileList>
+      </bin>
+      <bin min="1.5040" max="1.5390">
+         <fileList>
+            <file filePath="$Overlay_path/Periodic-94_digi.root"   
+                treeName="Digi" branchName="DigiEvent" />
+         </fileList>
+      </bin>
+      <bin min="1.5390" max="1.5720">
+         <fileList>
+            <file filePath="$Overlay_path/Periodic-96_digi.root"   
+                treeName="Digi" branchName="DigiEvent" />
+         </fileList>
+      </bin>
+      <bin min="1.5720" max="1.6020">
+         <fileList>
+            <file filePath="$Overlay_path/Periodic-98_digi.root"   
+                treeName="Digi" branchName="DigiEvent" />
+         </fileList>
+      </bin>
+      <bin min="1.6020" max="1.6390">
+         <fileList>
+            <file filePath="$Overlay_path/Periodic-99_digi.root"   
+                treeName="Digi" branchName="DigiEvent" />
+         </fileList>
+      </bin>
+      <bin min="1.6390" max="1.6670">
+         <fileList>
+            <file filePath="$Overlay_path/Periodic-995_digi.root"   
+                treeName="Digi" branchName="DigiEvent" />
+         </fileList>
+      </bin>
+      <bin min="1.6670" max="1.7280">
+         <fileList>
+            <file filePath="$Overlay_path/Periodic-100_digi.root"   
+                treeName="Digi" branchName="DigiEvent" />
+         </fileList>
+      </bin>
+  </source>
+
+
+</sourceList>

@@ -1,8 +1,10 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.0 2008/07/18 16:53:06 usher Exp $
+$Id: release.notes,v 1.1.1.1 2008/10/15 15:14:30 usher Exp $
 @verbatim
+04-Nov-08  v0r0p1 Add "sequential" option to BackgroundSelectTool
+                  xml for new PeriodicTrigger files: McIlwain_L_434K.xml
 15-Oct-08  v0     Initial checkin.
 
 @endverbatim
