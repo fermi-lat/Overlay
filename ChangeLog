@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: lsrea  Tue Nov 18 12:52:15 PST 2008
+Overlay/src
+
+Modified Files:
+	BackgroundSelectTool.cxx 
+Log Message:
+Fix bug in finalize method... deletion of m_fetch is already done in the destructor
+
+    *
+------------------------------------------------------------
 TAG
 Tag name: v0r0p1, operation: add
 Package: Overlay
