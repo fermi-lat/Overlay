@@ -1,7 +1,7 @@
 /**  @file BackgroundSelectTool.cxx
 @brief implementation of class BackgroundSelectTool
 
-$Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/BackgroundSelectTool.cxx,v 1.1.1.1 2008/10/15 15:14:30 usher Exp $  
+$Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/BackgroundSelectTool.cxx,v 1.2 2008/11/04 19:14:44 lsrea Exp $  
 */
 
 #include "IBackgroundSelectTool.h"
@@ -168,7 +168,7 @@ StatusCode BackgroundSelectTool::finalize ()
 {
     StatusCode  status = StatusCode::SUCCESS;
 
-    delete m_fetch;
+    // note that m_fetch is deleted in the destructor!
 
     return status;
 }
