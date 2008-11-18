@@ -1,4 +1,32 @@
 ------------------------------------------------------------
+TAG
+Tag name: v0r0p2, operation: add
+Package: Overlay
+User: lsrea  Tue Nov 18 12:53:39 2008
+Files:
+  Overlay/.cvsignore  1.1.1.1
+  Overlay/ChangeLog  1.9
+  Overlay/cmt/.cvsignore  1.1.1.1
+  Overlay/cmt/NMake  1.1.1.1
+  Overlay/cmt/requirements  1.3
+  Overlay/doc/release.notes  1.3
+  Overlay/src/XmlFetchEvents.h  1.1.1.1
+  Overlay/src/IBackgroundSelectTool.h  1.1.1.1
+  Overlay/src/overlayRootReaderAlg.cxx  1.1.1.1
+  Overlay/src/BackgroundSelectTool.cxx  1.3
+  Overlay/src/XmlFetchEvents.cxx  1.1.1.1
+  Overlay/src/Overlay.txt  1.1.1.1
+  Overlay/src/McIlwain_L_Tool.cxx  1.1.1.1
+  Overlay/src/IFetchEvents.h  1.1.1.1
+  Overlay/src/IBackgroundBinTool.h  1.1.1.1
+  Overlay/src/Dll/Overlay_dll.cxx  1.1.1.1
+  Overlay/src/Dll/Overlay_load.cxx  1.1.1.1
+  Overlay/xml/backgroundOverlay.xsd  1.1.1.1
+  Overlay/xml/McIlwain_L_434K.xml  1.1
+  Overlay/xml/McIlwain_L.xml  1.1.1.1
+
+    *
+------------------------------------------------------------
 User: lsrea  Tue Nov 18 12:53:27 PST 2008
 Overlay/doc
 
