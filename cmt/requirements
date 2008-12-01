@@ -1,15 +1,18 @@
 package Overlay
-version v0r0p2
+version v1r0p0
 
 author Tracy Usher <usher@slac.stanford.edu>
 
-# $Header: /nfs/slac/g/glast/ground/cvs/Overlay/cmt/requirements,v 1.2 2008/11/04 19:15:05 lsrea Exp $
+# $Header: /nfs/slac/g/glast/ground/cvs/Overlay/cmt/requirements,v 1.3 2008/11/18 20:52:31 lsrea Exp $
 
 branches src doc
 
 use GlastPolicy v*
 use Event       v*
 use RootIo      v* 
+
+use overlayRootData v*
+use OverlayEvent    v*
 
 apply_pattern packageShr
 apply_pattern package_include
@@ -19,10 +22,13 @@ private
 apply_pattern package_Cshlibflags
 apply_pattern package_headers
 
-use GlastSvc v*
-use Trigger  v*
-use FluxSvc  v*
-use gr_app   v*
+use GlastSvc     v*
+use G4Propagator v*
+use Trigger      v*
+use FluxSvc      v*
+use AcdUtil      v*
+use TkrUtil      v*
+use gr_app       v*
 
 macro source "*.cxx " WIN32 "*.h *.cxx"
 macro headers ""      WIN32 "*.h"
@@ -34,5 +40,25 @@ macro_append Overlay_cppflags " " \
 
 library Overlay  \
         -s=../Overlay $(headers) \
-        -s=../src $(source)      \
+        -s=../src/cnv $(source) \
+        -s=../src/DataServices $(source) \
+        -s=../src/MergeAlgs $(source) \
+        -s=../src/InputControl $(source) \
+        -s=../src/Translation $(source) \
         -s=Dll *.cxx
+
+
+# simple test program
+#application test_Event  test/testmain.cxx
+
+public 
+# Setting job options to below will test reading but only works if input files
+# have been set up already. This test job will then use the OverlayTestAlg in the
+# src/test folder. 
+#set TESTJOBOPTIONS ${OVERLAYROOT}/src/test/TestReadJobOptions.txt
+#
+# The default job options for the test program will read standard digis from 
+# ROOTTESTDATA and output a file in Overlay format. 
+
+# Test program
+apply_pattern package_test
