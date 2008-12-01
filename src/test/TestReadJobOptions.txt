@@ -1,0 +1,44 @@
+//##############################################################
+//
+// Job options file for testing Overlay reading of Overlay files
+// 
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/test/jobOptions.txt,v 1.0 2008/07/21 15:17:29 glastrm Exp $
+
+//  -------------- basic Glast/Gaudi run enviornment -----------
+ApplicationMgr.DLLs   = {  "Overlay", "RootIo"};
+//ApplicationMgr.ExtSvc += {"OverlayInputSvc"};
+
+// For test
+OverlayOutputSvc.overlayRootFile = "overlay.root";
+
+ApplicationMgr.ExtSvc = { 
+//    "GlastEventSelector/EventSelector" , 
+    "EventCnvSvc"};
+
+//----------------- local algorithms to run -------------------
+ApplicationMgr.TopAlg = { 
+    "OverlayTestAlg"
+};
+    
+// ----------------------------
+//  GlastSvc definition
+//
+ApplicationMgr.DLLs += {"GlastSvc"};
+
+
+// Set output level threshold (2=DEBUG, 3=INFO, 4=WARNING, 5=ERROR, 6=FATAL )
+MessageSvc.OutputLevel     = 2;
+OverlayTestAlg.OutputLevel = 1;
+
+
+EventPersistencySvc.CnvServices = {"EventCnvSvc"};
+EventSelector.Input = "NONE";
+
+ApplicationMgr.EvtMax =10;
+
+//==============================================================
+//
+// End of job options file
+//
+//##############################################################
+
