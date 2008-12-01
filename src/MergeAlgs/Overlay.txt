@@ -1,0 +1,29 @@
+//##############################################################
+//
+// Job options file for Setting up the background overlay from input digis
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Overlay.txt,v 1.1.1.1 2008/10/15 15:14:30 usher Exp $
+
+// Include the Overlay package library
+ApplicationMgr.DLLs+= { "Overlay"};
+ApplicationMgr.ExtSvc += {"OverlayInputSvc"};
+
+// Modify the Digitization sequencer to include background overlay
+Digitization.Members = { 
+    "TkrDigiAlg",
+    "TkrOverlayMergeAlg", 
+    "AcdOverlayMergeAlg",
+    "AcdDigiAlg",
+    "CalOverlayMergeAlg"
+    };
+    
+// Also modify the CalDigitization sequencer
+//CalDigitization.Members = { "CalDigiAlg", "CalOverlayMergeAlg" };
+
+// Turn off the random noise hit backgrounds in the Tracker
+ToolSvc.GeneralNoiseTool.occupancy = 0.;
+
+//==============================================================
+//
+// End of job options file
+//
+//##############################################################
