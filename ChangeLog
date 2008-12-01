@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: usher  Mon Dec  1 14:40:30 PST 2008
+Overlay/src/DataServices
+
+Added Files:
+	OverlayInputSvc.cxx OverlayOutputSvc.cxx 
+Log Message:
+Input and Ouput data "services" for Overlay data
+    *
+------------------------------------------------------------
 User: usher  Mon Dec  1 14:38:26 PST 2008
 Overlay/src/Translation
 
