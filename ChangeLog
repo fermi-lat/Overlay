@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: usher  Mon Dec  1 14:42:59 PST 2008
+Overlay/src/InputControl
+
+Added Files:
+	McIlwain_L_Tool.cxx XmlFetchEvents.cxx XmlFetchEvents.h 
+Log Message:
+Moving file control code into its own subfolder
+    *
+------------------------------------------------------------
 User: usher  Mon Dec  1 14:40:30 PST 2008
 Overlay/src/DataServices
 
