@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: usher  Mon Dec  1 14:45:20 PST 2008
+Overlay/src/MergeAlgs
+
+Added Files:
+	AcdOverlayMergeAlg.cxx CalDigiMergeAlg.cxx_save 
+	CalOverlayMergeAlg.cxx Overlay.txt TkrOverlayMergeAlg.cxx 
+Log Message:
+Move the merging algorithms into this package in their own subfolder
+    *
+------------------------------------------------------------
 User: usher  Mon Dec  1 14:42:59 PST 2008
 Overlay/src/InputControl
 
