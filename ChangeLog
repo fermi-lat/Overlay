@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: usher  Mon Dec  1 14:47:50 PST 2008
+Overlay/src/test
+
+Added Files:
+	OverlayTestAlg.cxx TestReadJobOptions.txt jobOptions.txt 
+Log Message:
+Test JO files and algorithm
+    *
+------------------------------------------------------------
 User: usher  Mon Dec  1 14:45:20 PST 2008
 Overlay/src/MergeAlgs
 
