@@ -1,4 +1,16 @@
 ------------------------------------------------------------
+User: usher  Mon Dec  1 14:50:12 PST 2008
+Overlay/src/Translation
+
+Added Files:
+	AcdHitToOverlayTool.cxx CalXtalToOverlayTool.cxx 
+	DigiToOverlay.txt DigiToOverlayAlg.cxx EventToOverlayTool.cxx 
+	GemToOverlayTool.cxx IDigiToOverlayTool.h 
+	TkrDigiToOverlayTool.cxx 
+Log Message:
+Import code to convert from standard TDS classes (post calibration) to Overlay format
+    *
+------------------------------------------------------------
 User: usher  Mon Dec  1 14:47:50 PST 2008
 Overlay/src/test
 
