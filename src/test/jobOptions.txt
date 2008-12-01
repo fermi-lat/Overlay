@@ -1,0 +1,202 @@
+//##############################################################
+//
+// Job options file for GUI (gui or FRED) Gleam job
+// $Header: /nfs/slac/g/glast/ground/cvs/Gleam/src/jobOptions.txt,v 1.24 2008/06/15 18:23:20 lsrea Exp $
+
+////#include "$GLEAMROOT/src/basicOptions.txt"
+//
+//******************************************************************************************************
+// The following is the replacement for Gleam's basicOptons.txt file (to *** below)
+//
+// Primary DLLs, including auditor:
+//
+ApplicationMgr.DLLs   += {"GaudiAlg","GaudiAud"};
+ApplicationMgr.ExtSvc += {"ChronoStatSvc"};
+
+AuditorSvc.Auditors = {"ChronoAuditor"};
+
+//
+// Set up basic event loop: 
+//
+ApplicationMgr.ExtSvc = {"EventSelector/EventSelector" };
+
+EventPersistencySvc.CnvServices = {"EventCnvSvc"};
+
+EventSelector.Input     = "SVC='DbEvtSelector";
+EventSelector.PrintFreq = -1;
+
+
+//
+// A structure for the topalg, using sequencer steps:
+//
+ApplicationMgr.TopAlg = {"Sequencer/Top"};
+
+//
+// Follow construction of basicOptions
+//
+Top.Members = {
+               "Sequencer/Event"
+              };
+
+//
+// Define the top sequence loop:
+//
+Event.Members = {"Sequencer/Digitization",
+                 "Sequencer/Calibration",
+                 "Sequencer/Triggered" 
+                };
+
+//
+// This needs to run after having read in the digis 
+// so we can get the event time from them!
+// Note: this is the opposite of what is needed for the MC!
+//
+Calibration.Members = {"TkrCalibAlg/TkrReconCalib"};
+
+//
+// 
+Triggered.Members = {
+                     "Sequencer/Reconstruction",
+                     "Sequencer/Output"
+                    };
+//
+// Detector services:
+//
+ApplicationMgr.DLLs   += {"GlastSvc"};
+ApplicationMgr.ExtSvc += {"GlastDetSvc"};
+
+GlastDetSvc.topVolume   = "LAT"; 
+GlastDetSvc.visitorMode = "recon";
+
+//
+// Randoms definition:
+//
+ApplicationMgr.ExtSvc += {"GlastRandomSvc"};
+
+//
+// G4:
+//
+ApplicationMgr.DLLs += {"G4Generator","G4Propagator"};
+
+//
+// Propagator:
+//
+ApplicationMgr.ExtSvc += {"GlastPropagatorSvc"};
+
+#include "$CALIBSVCROOT/src/defaultOptions.txt"
+
+//
+// CAL Xtal respons::
+//
+ApplicationMgr.DLLs += {"CalXtalResponse"};
+
+ApplicationMgr.DLLs +={"TkrUtil"};
+    
+Reconstruction.Members={ 
+    "Sequencer/Cal1", 
+    "Sequencer/Tkr",
+    "Sequencer/Cal2",
+    "Sequencer/TkrIter",
+    "Sequencer/Acd",
+    "Sequencer/Gcr"
+    };
+
+//
+// Recon members:
+//
+Cal1.Members = {"CalXtalRecAlg"};
+
+//
+// Decrease output:
+//
+second.OutputLevel = 5;  
+
+//
+// ACD recon:
+//
+ApplicationMgr.DLLs += {"AcdUtil"};
+
+//
+// Tracker geometry services:
+//
+ApplicationMgr.ExtSvc += {"TkrGeometrySvc"};
+
+// 
+// Root IO:
+//
+ApplicationMgr.DLLs   += {"RootIo"};
+ApplicationMgr.ExtSvc += {"RootIoSvc"}; 
+
+//
+// Must use RootIo as executable, not Gaudi event loop!
+//
+ApplicationMgr.Runable = "RootIoSvc"; 
+
+//
+// Geometry: Use flight geometry!
+//
+GlastDetSvc.xmlfile = "$(XMLGEODBSXMLPATH)/flight/flightSegVols.xml";
+
+// 
+// Number of events:
+//
+ApplicationMgr.EvtMax = 10000000000;
+
+//
+// End of replacement of basicOptions.txt
+//******************************************************************************************************
+// 
+
+// 
+// *****************************************************************************************************
+// The parts below specific to setting up the test job for Overlay input and output
+//
+// Digitization sequence: Read in digis from a ROOT file!
+//
+Digitization.Members +={"digiRootReaderAlg"};
+
+// Test program input file
+digiRootReaderAlg.digiRootFileList = { "$ROOTTESTDATAROOT/data/default/digi.root" } ;
+
+//
+// Don't need full reconstruction
+//
+Reconstruction.Members={ 
+    "Sequencer/Cal1" 
+    };
+
+Cal1.Members = { 
+    "CalXtalRecAlg"
+    };
+
+
+// Disable pre-scales, otherwise muons won't trigger!
+TriggerAlg.applyPrescales = false;
+
+// turn off output
+Output.Members = {};
+
+// Testing overlay
+#include "$OVERLAYROOT/src/Translation/DigiToOverlay.txt"
+OverlayOutputSvc.overlayRootFile = "overlay.root";
+
+// Start up a CalCalibSvc:
+ApplicationMgr.ExtSvc += {"CalCalibSvc"};
+
+// Cal flavor:
+////CalCalibSvc.DefaultFlavor = "vanilla";
+CalCalibSvc.DefaultFlavor = "ideal";
+
+ApplicationMgr.ExtSvc += {"AcdCalibSvc"};
+
+// For real data:
+////AcdCalibSvc.DefaultFlavor       = "vanilla";
+AcdCalibSvc.DefaultFlavor       = "ideal";
+AcdCalibSvc.FlavorHighRange     = "ideal";
+AcdCalibSvc.FlavorCoherentNoise = "ideal";
+
+//==============================================================
+//
+// End of job options file
+//
+//##############################################################
