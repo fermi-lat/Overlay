@@ -1,8 +1,9 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.4 2008/12/02 03:04:09 usher Exp $
+$Id: release.notes,v 1.5 2008/12/02 15:30:25 usher Exp $
 @verbatim
+ 2-Dec-08  v1r0p2  TU Correct spelling for AcdDigi.h
  2-Dec-08  v1r0p1  TU Add in the converters, forgotten in checkin
  1-Dec-08  v1r0p0  TU First "version 1" tag
 19-Nov-08  v0r0p2 LSR Fix bug in BackgroundSelectTool

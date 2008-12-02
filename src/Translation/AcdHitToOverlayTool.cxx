@@ -1,7 +1,7 @@
 /**  @file AcdHitToOverlayTool.cxx
     @brief implementation of class AcdHitToOverlayTool
     
-  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/AcdHitToOverlayTool.cxx,v 1.0 2008/10/15 15:14:30 usher Exp $  
+  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/AcdHitToOverlayTool.cxx,v 1.1 2008/12/01 22:50:11 usher Exp $  
 */
 
 #include "IDigiToOverlayTool.h"
@@ -13,7 +13,7 @@
 #include "GaudiKernel/IDataProviderSvc.h"
 
 #include "Event/TopLevel/EventModel.h"
-#include "Event/Digi/Acddigi.h"
+#include "Event/Digi/AcdDigi.h"
 #include "Event/Recon/AcdRecon/AcdRecon.h"
 
 #include "OverlayEvent/OverlayEventModel.h"
