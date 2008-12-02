@@ -1,8 +1,9 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.3 2008/11/18 20:53:27 lsrea Exp $
+$Id: release.notes,v 1.4 2008/12/02 03:04:09 usher Exp $
 @verbatim
+ 2-Dec-08  v1r0p1  TU Add in the converters, forgotten in checkin
  1-Dec-08  v1r0p0  TU First "version 1" tag
 19-Nov-08  v0r0p2 LSR Fix bug in BackgroundSelectTool
 04-Nov-08  v0r0p1 Add "sequential" option to BackgroundSelectTool
