@@ -1,22 +1,4 @@
 ------------------------------------------------------------
-User: usher  Tue Dec  2 14:05:01 PST 2008
-Overlay/doc
-
-Modified Files:
-	release.notes 
-Log Message:
-Fix spelin error, tag v1r0p2
-    *
-------------------------------------------------------------
-User: usher  Tue Dec  2 14:05:01 PST 2008
-Overlay/cmt
-
-Modified Files:
-	requirements 
-Log Message:
-Fix spelin error, tag v1r0p2
-    *
-------------------------------------------------------------
 TAG
 Tag name: v1r0p1, operation: add
 Package: Overlay
