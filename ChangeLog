@@ -1,4 +1,15 @@
 ------------------------------------------------------------
+User: usher  Tue Dec  2 07:27:17 PST 2008
+Overlay/src/cnv
+
+Added Files:
+	AcdOverlayCnv.cxx BaseCnv.cpp BaseCnv.h CalOverlayiCnv.cxx 
+	EventOverlayCnv.cxx GemOverlayCnv.cxx IEventCnvSvc.h 
+	SrcOverlayCnv.cxx TkrOverlayCnv.cxx 
+Log Message:
+Converters which do the bulk of the work here!
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r0p0, operation: add
 Package: Overlay
