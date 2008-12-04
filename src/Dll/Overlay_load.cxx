@@ -3,7 +3,7 @@
 * @brief This is needed for forcing the linker to load all components
 * of the library.
 *
-*  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Dll/Overlay_load.cxx,v 1.1.1.1 2008/10/15 15:14:31 usher Exp $
+*  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Dll/Overlay_load.cxx,v 1.2 2008/12/01 22:52:36 usher Exp $
 */
 
 #include "GaudiKernel/DeclareFactoryEntries.h"
@@ -21,6 +21,7 @@ DECLARE_FACTORY_ENTRIES(Overlay) {
     DECLARE_TOOL( TkrDigiToOverlayTool );
     DECLARE_TOOL( AcdHitToOverlayTool );
     DECLARE_TOOL( GemToOverlayTool );
+    DECLARE_TOOL( OverlayRandom);
     DECLARE_CONVERTER( SrcOverlayCnv );
     DECLARE_CONVERTER( EventOverlayCnv );
     DECLARE_CONVERTER( TkrOverlayCnv );
