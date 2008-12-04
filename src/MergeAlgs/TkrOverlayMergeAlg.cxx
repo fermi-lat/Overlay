@@ -5,7 +5,7 @@
  *
  * @author Tracy Usher
  *
- * $Header: /nfs/slac/g/glast/ground/cvs/TkrDigi/src/GaudiAlg/TkrOverlayMergeAlg.cxx,v 1.2 2008/11/12 19:10:08 lsrea Exp $
+ * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/TkrOverlayMergeAlg.cxx,v 1.1 2008/12/01 22:45:20 usher Exp $
  */
 
 
@@ -16,9 +16,10 @@
 
 #include "Event/TopLevel/EventModel.h"
 #include "Event/Digi/TkrDigi.h"
+#include "LdfEvent/Gem.h"
 #include "OverlayEvent/OverlayEventModel.h"
 #include "OverlayEvent/TkrOverlay.h"
-#include "LdfEvent/Gem.h"
+#include "OverlayEvent/GemOverlay.h"
 
 #include "TkrUtil/ITkrGeometrySvc.h"
 #include "TkrUtil/ITkrMakeClustersTool.h"
@@ -26,8 +27,8 @@
 
 #include <map>
 
-class TkrOverlayMergeAlg : public Algorithm {
-
+class TkrOverlayMergeAlg : public Algorithm 
+{
  public:
 
     TkrOverlayMergeAlg(const std::string&, ISvcLocator*);
@@ -40,13 +41,13 @@ class TkrOverlayMergeAlg : public Algorithm {
     Event::TkrDigi* copyTkrOverlay(Event::TkrOverlay* TkrOverlay);
 
     /// Type of tool to run
-    std::string         m_type;
+    std::string           m_type;
     /// Pointer to the tracker geometry service
-    ITkrGeometrySvc*    m_tkrGeom;
+    ITkrGeometrySvc*      m_tkrGeom;
     /// Pointer to the tracker splits service
-    ITkrSplitsSvc*      m_tspSvc;
+    ITkrSplitsSvc*        m_tspSvc;
     /// ptr to ghost tool
-    ITkrGhostTool*      m_ghostTool;
+    ITkrGhostTool*        m_ghostTool;
     /// ptr to cluster tool
     ITkrMakeClustersTool* m_clustersTool;
 
@@ -58,13 +59,15 @@ const IAlgFactory& TkrOverlayMergeAlgFactory = Factory;
 
 TkrOverlayMergeAlg::TkrOverlayMergeAlg(const std::string& name,
                                          ISvcLocator* pSvcLocator)
-    : Algorithm(name, pSvcLocator) {
+    : Algorithm(name, pSvcLocator) 
+{
     // variable to select the tool type
     declareProperty("Type", m_type="General");
 }
 
 
-StatusCode TkrOverlayMergeAlg::initialize() {
+StatusCode TkrOverlayMergeAlg::initialize() 
+{
     // Purpose and Method: initializes TkrOverlayMergeAlg
     // Inputs: none
     // Outputs: a status code
@@ -75,21 +78,24 @@ StatusCode TkrOverlayMergeAlg::initialize() {
     MsgStream log(msgSvc(), name());
     log << MSG::INFO << "initialize" << endreq;
 
-    if ( setProperties().isFailure() ) {
+    if ( setProperties().isFailure() ) 
+    {
         log << MSG::ERROR << "setProperties() failed" << endreq;
         return StatusCode::FAILURE;
     }
 
     // Get the Tkr Geometry service 
     sc = service("TkrGeometrySvc", m_tkrGeom, true);
-    if ( sc.isFailure() ) {
+    if ( sc.isFailure() ) 
+    {
         log << MSG::ERROR << "Couldn't set up TkrGeometrySvc!" << endreq;
         return sc;
     }
 
     // Get the splits service 
     m_tspSvc = m_tkrGeom->getTkrSplitsSvc();
-    if ( !m_tspSvc ) {
+    if ( !m_tspSvc ) 
+    {
         log << MSG::ERROR
             << "Couldn't set up TkrSplitsSvc!" << std::endl;
         return StatusCode::FAILURE;
@@ -97,14 +103,16 @@ StatusCode TkrOverlayMergeAlg::initialize() {
 
     m_ghostTool = 0;
     sc = toolSvc()->retrieveTool("TkrGhostTool",m_ghostTool) ;
-    if (sc.isFailure()) {
+    if (sc.isFailure()) 
+    {
         log<<MSG::WARNING << "Failed to retrieve ghost tool" << endreq ;
         return StatusCode::FAILURE ;
     }
 
     m_clustersTool = 0;
     sc = toolSvc()->retrieveTool("TkrMakeClustersTool",m_clustersTool) ;
-    if (sc.isFailure()) {
+    if (sc.isFailure()) 
+    {
         log<<MSG::WARNING << "Failed to retrieve ghost tool" << endreq ;
         return StatusCode::FAILURE ;
     }
@@ -113,7 +121,8 @@ StatusCode TkrOverlayMergeAlg::initialize() {
 }
 
 
-StatusCode TkrOverlayMergeAlg::execute() {
+StatusCode TkrOverlayMergeAlg::execute() 
+{
     // Purpose and Method: execution method (called once for every event)
     //                     Doesn't do anything but calls the chosen tool.
     // Inputs: none
@@ -132,36 +141,31 @@ StatusCode TkrOverlayMergeAlg::execute() {
     // Now recover the digis for this event
     SmartDataPtr<Event::TkrDigiCol> tkrDigiCol(eventSvc(), EventModel::Digi::TkrDigiCol);
 
-    // Create a map of the simulation digis, indexing by identifier
-    std::map<int, Event::TkrDigi*> idToDigiMap;
-
     // do the TkrVector shenanigans
-
     // make the tkrVector
     unsigned short towerBits = 0;
     m_ghostTool->calculateTkrVector(tkrDigiCol, towerBits);
 
+    // Recover the GemOverlay from the TDS
+    SmartDataPtr<Event::GemOverlay> gemOverlay(eventSvc(), OverlayEventModel::Overlay::GemOverlay);
+
     // get the tkrVector of the overlay
-    bool isOverlay;
-    unsigned short tkrVector;
-    SmartDataPtr<LdfEvent::Gem> gemOverlay(eventSvc(), "Overlay/Gem");
-    if (overlayCol && gemOverlay!=0) 
-    {
-        isOverlay = true;
-        tkrVector = gemOverlay->tkrVector();
-    }
+    unsigned short tkrVector = 0;
+    if (gemOverlay!=0) tkrVector = gemOverlay->getTkrVector();
 
     // OR the two sources
     tkrVector |= towerBits;
 
-    DataObject* pNode = 0;
-    LdfEvent::Gem* gem = new LdfEvent::Gem();
+    // Is there a Gem object in the TDS already? (should not be...)
+    SmartDataPtr<LdfEvent::Gem> gem(eventSvc(), "Event/Gem");
 
-    sc = eventSvc()->retrieveObject("/Event/Gem", pNode);
-    if ( sc.isFailure() ) 
+    if (!gem)
     {
-        sc = eventSvc()->registerObject("/Event/Gem", gem);
-        if( sc.isFailure() ) 
+        // Make a new Gem object
+        gem = new LdfEvent::Gem();
+
+        // Register it in the TDS
+        if ((sc = eventSvc()->registerObject("/Event/Gem", gem)).isFailure())
         {
             log << MSG::ERROR << "could not register /Event/Gem" << endreq;
             return sc;
@@ -170,6 +174,9 @@ StatusCode TkrOverlayMergeAlg::execute() {
 
     // store the result in the event
     gem->setTkrVector( tkrVector );
+
+    // Create a map of the simulation digis, indexing by identifier
+    std::map<int, Event::TkrDigi*> idToDigiMap;
 
     for(Event::TkrDigiCol::iterator tkrIter = tkrDigiCol->begin(); tkrIter != tkrDigiCol->end(); tkrIter++)
     {
@@ -292,7 +299,8 @@ Event::TkrDigi* TkrOverlayMergeAlg::copyTkrOverlay(Event::TkrOverlay* TkrOverlay
     return tkrDigi;
 }
 
-StatusCode TkrOverlayMergeAlg::finalize() {
+StatusCode TkrOverlayMergeAlg::finalize() 
+{
     MsgStream log(msgSvc(), name());
     log << MSG::INFO << "finalize" << endreq;
     return StatusCode::SUCCESS;

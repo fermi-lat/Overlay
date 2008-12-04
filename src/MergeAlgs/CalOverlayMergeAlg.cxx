@@ -4,7 +4,7 @@
  *
  * @author Zach Fewtrell zachary.fewtrell@nrl.navy.mil
  * 
- *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/CalOverlayMergeAlg.cxx,v 1.1 2008/12/01 22:45:19 usher Exp $
+ *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/CalOverlayMergeAlg.cxx,v 1.2 2008/12/02 03:01:21 usher Exp $
  */
 
 // Gaudi specific include files
@@ -27,8 +27,6 @@
 #include "CalUtil/CalGeom.h"  
 #include "idents/TowerId.h"
 
-#include "CalXtalResponse/ICalCalibSvc.h"
-
 #include <map>
 
 // Class definition
@@ -49,10 +47,6 @@ private:
 
     /// used for constants & conversion routines.
     IGlastDetSvc*  m_detSvc;
-  
-    /// pointer to CalCalibSvc objects.
-    ICalCalibSvc*  m_overCalibSvc;  
-    ICalCalibSvc*  m_digiCalibSvc;  
 
     /// Pointer to the propagator
     IPropagator*   m_propagator;
@@ -93,22 +87,6 @@ StatusCode CalOverlayMergeAlg::initialize()
     sc = service("GlastDetSvc", m_detSvc);
     if (sc.isFailure() ) {
         log << MSG::ERROR << "  can't get GlastDetSvc " << endreq;
-        return sc;
-    }
-  
-    // obtain the CalCalibSvc for the input overlay digis (data!)
-    sc = service("CalOverlayCalibSvc", m_overCalibSvc);
-    if (sc.isFailure()) 
-    {
-        log << MSG::ERROR << "can't get CalOverlayCalibSvc "  << endreq;
-        return sc;
-    }
-  
-    // now obtain the CalCalibSvc for the simulation digis
-    sc = service("CalCalibSvc", m_digiCalibSvc);
-    if (sc.isFailure()) 
-    {
-        log << MSG::ERROR << "can't get CalCalibSvc "  << endreq;
         return sc;
     }
 

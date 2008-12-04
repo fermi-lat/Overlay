@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/test/OverlayTestAlg.cxx,v 1.0 2008/05/09 17:50:11 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/test/OverlayTestAlg.cxx,v 1.1 2008/12/01 22:47:50 usher Exp $
 
 // Include files
 
@@ -75,7 +75,7 @@ StatusCode OverlayTestAlg::initialize()
     }
 
     // Now look for the output data service
-    if (service("OverlayOutputSvc", tmpService, true).isFailure())
+    if (service("OverlayOutputSvc", tmpService).isFailure())
     {
         log << MSG::INFO << "No OverlayOutputSvc available, no output conversion will be performed" << endreq;
     }
