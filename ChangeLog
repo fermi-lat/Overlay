@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: usher  Thu Dec  4 13:50:17 PST 2008
+Overlay/src/MergeAlgs
+
+Modified Files:
+	CalOverlayMergeAlg.cxx TkrOverlayMergeAlg.cxx 
+Log Message:
+Various updates aimed at fixing various problems...
+    *
+------------------------------------------------------------
+User: usher  Thu Dec  4 13:50:17 PST 2008
 Overlay/src/Dll
 
 Modified Files:
