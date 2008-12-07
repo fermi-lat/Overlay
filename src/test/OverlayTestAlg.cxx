@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/test/OverlayTestAlg.cxx,v 1.1 2008/12/01 22:47:50 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/test/OverlayTestAlg.cxx,v 1.2 2008/12/04 21:50:17 usher Exp $
 
 // Include files
 
@@ -35,6 +35,7 @@ public:
     StatusCode finalize();
     
 private:
+    IOverlayDataSvc* m_overlayInputSvc;
 };
 
 
@@ -68,9 +69,9 @@ StatusCode OverlayTestAlg::initialize()
     }
     else 
     {
-        IOverlayDataSvc* overlayInputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
+        m_overlayInputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
 
-        if (!overlayInputSvc) log << MSG::INFO << "Could not find input data service interface" << endreq;
+        if (!m_overlayInputSvc) log << MSG::INFO << "Could not find input data service interface" << endreq;
         else                  log << MSG::INFO << "Input data service successfully retrieved" << endreq;
     }
 
@@ -123,6 +124,9 @@ StatusCode OverlayTestAlg::execute()
     {
         log << MSG::INFO << "Could not find a CalOverlay object in the TDS" << endreq;
     }
+
+    // Ask service to update event
+//    sc = m_overlayInputSvc->selectNextEvent();
 
     return sc;
 }
