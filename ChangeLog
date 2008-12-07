@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: usher  Sun Dec  7 08:53:24 PST 2008
+Overlay/src/DataServices
+
+Modified Files:
+	OverlayInputSvc.cxx 
+Log Message:
+Modify input service to supply the input buffer for events in attempt to help control memory leaks...
+    *
+------------------------------------------------------------
 User: usher  Thu Dec  4 13:50:17 PST 2008
 Overlay/src/InputControl
 
