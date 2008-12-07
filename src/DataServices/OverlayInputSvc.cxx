@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/CalibSvc/src/OverlayInputSvc/OverlayInputSvc.cxx,v 1.0 2008/07/23 18:11:46 jrb Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/DataServices/OverlayInputSvc.cxx,v 1.1 2008/12/01 22:40:29 usher Exp $
 
 // Include files
 #include "GaudiKernel/Service.h"
@@ -69,6 +69,11 @@ private:
 
     // Pointer to input data
     EventOverlay*       m_eventOverlay;
+    EventOverlay        m_myOverlay;
+    EventOverlay*       m_myOverlayPtr;
+
+    // flag to signal that we need to read the current event
+    bool                m_needToReadEvent;
 
     StringProperty      m_inputXmlFilePath;
 
@@ -87,7 +92,7 @@ const ISvcFactory& OverlayInputSvcFactory = s_factory;
 
 /// Standard Constructor
 OverlayInputSvc::OverlayInputSvc(const std::string& name,ISvcLocator* svc) : Service(name,svc),
-                               m_rootIoSvc(0), m_eventOverlay(0)
+                               m_rootIoSvc(0), m_eventOverlay(0), m_myOverlayPtr(&m_myOverlay), m_needToReadEvent(true)
 {
     // Input pararmeters that may be set via the jobOptions file
     // Input ROOT file name  provided for backward compatibility, digiRootFileList is preferred
@@ -200,7 +205,7 @@ StatusCode OverlayInputSvc::queryInterface(const InterfaceID& riid, void** ppvIn
 
 EventOverlay* OverlayInputSvc::getRootEventOverlay()
 {
-    if (m_eventOverlay == 0) selectNextEvent();
+    if (m_needToReadEvent) selectNextEvent();
 
     return m_eventOverlay;
 }
@@ -233,9 +238,9 @@ StatusCode OverlayInputSvc::selectNextEvent()
     }
 
     // If m_eventOverlay is not null then we have a problem
-    if (m_eventOverlay)
+    if (!m_needToReadEvent)
     {
-        log << MSG::ERROR << "Found non-zero pointer to DigiEvent during event loop!" << endreq;
+        log << MSG::ERROR << "Found non-zero pointer to EventOverlay during event loop!" << endreq;
         return StatusCode::FAILURE;
     }
 
@@ -254,6 +259,9 @@ StatusCode OverlayInputSvc::selectNextEvent()
         m_eventOverlay = dynamic_cast<EventOverlay*>(m_rootIoSvc->getNextEvent("overlay"));
     }
 
+    // Set flag to indicate we have read the event
+    m_needToReadEvent = false;
+
     return StatusCode::SUCCESS;
 }
 
@@ -266,10 +274,11 @@ void OverlayInputSvc::handle(const Incident &inc)
 
 void OverlayInputSvc::beginEvent() // should be called at the beginning of an event
 { 
-    // At beginning of event free up the DigiEvent if we have one
-    if (m_eventOverlay) m_eventOverlay->Clear(m_clearOption.value().c_str());
+    // At beginning of event we need to clear our EventOverlay object
+    m_myOverlay.Clear(m_clearOption.value().c_str());
 
-    m_eventOverlay = 0;
+    // Set the flag to indicate the need to input the next event
+    m_needToReadEvent = true;
 
     return;
 }
@@ -283,8 +292,11 @@ void OverlayInputSvc::setNewInputBin(double x)
 {
     MsgStream log(msgSvc(), name());
 
-   try 
-   {
+    try 
+    {
+        // Zero the pointer to the input data
+        m_eventOverlay = 0;
+
         // Close the curent input file(s)
         m_rootIoSvc->closeInput("overlay");
 
@@ -294,7 +306,8 @@ void OverlayInputSvc::setNewInputBin(double x)
         // Open the new input files
         m_rootIoSvc->prepareRootInput("overlay", 
                                       m_fetch->getTreeName(), 
-                                      m_fetch->getBranchName(), 
+                                      m_fetch->getBranchName(),
+                                      (TObject**)&m_myOverlayPtr,
                                       fileList);
 
         // Select a random starting position within the allowed number of events
@@ -304,12 +317,12 @@ void OverlayInputSvc::setNewInputBin(double x)
 
         // Set that as the starting event
         m_rootIoSvc->setIndex(startEvent);
-   } 
-   catch(...) 
-   {
-      log << MSG::WARNING << "exception thrown" << endreq;
-      throw;
-   }
+    } 
+    catch(...) 
+    {
+        log << MSG::WARNING << "exception thrown" << endreq;
+        throw;
+    }
 
     return;
 }
