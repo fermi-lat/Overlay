@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: lsrea  Sun Dec  7 18:00:52 PST 2008
+Overlay/src/MergeAlgs
+
+Modified Files:
+	Overlay.txt 
+Log Message:
+Add TkrDigiMergeTruncationAlg to sequence, after TkrOverlayMergeAlg
+
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r0p3, operation: add
 Package: Overlay
