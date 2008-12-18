@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: usher  Thu Dec 18 15:36:51 PST 2008
+Overlay/src/MergeAlgs
+
+Added Files:
+	GemOverlayMergeAlg.cxx 
+Log Message:
+Initial import of algorithm to handle merging of the trigger primitives
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r0p4, operation: add
 Package: Overlay
