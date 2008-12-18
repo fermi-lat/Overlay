@@ -1,8 +1,9 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.7 2008/12/07 17:10:10 usher Exp $
+$Id: release.notes,v 1.8 2008/12/08 02:02:00 lsrea Exp $
 @verbatim
+18-Dec-08  v1r1p0  TU Update to include handling merging of trigger information
  7-Dec-08  v1r0p4 LSR add TkrDigiMergeTruncationAlg to Overlay.txt sequence
  7-Dec-08  v1r0p3  TU Modifications to input control to help reduce root memory leaks
  2-Dec-08  v1r0p2  TU Correct spelling for AcdDigi.h
