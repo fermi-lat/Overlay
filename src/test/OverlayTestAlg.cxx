@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/test/OverlayTestAlg.cxx,v 1.2 2008/12/04 21:50:17 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/test/OverlayTestAlg.cxx,v 1.3 2008/12/07 16:53:24 usher Exp $
 
 // Include files
 
@@ -16,6 +16,9 @@
 #include "OverlayEvent/AcdOverlay.h"
 #include "OverlayEvent/CalOverlay.h"
 #include "OverlayEvent/TkrOverlay.h"
+
+#include "Event/TopLevel/Event.h"
+#include "Event/TopLevel/EventModel.h"
 
 #include <string>
 
@@ -96,6 +99,12 @@ StatusCode OverlayTestAlg::execute()
 {
     StatusCode  sc = StatusCode::SUCCESS;
     MsgStream   log( msgSvc(), name() );
+
+    // Retrieve the Event data for this event
+    SmartDataPtr<Event::EventHeader> eventHeader(eventSvc(), EventModel::EventHeader);
+
+    // For the test job it is necessary to set the time
+    eventHeader->setTime(0);
 
     // Look up the EventOverlay object in the TDS
     SmartDataPtr<Event::EventOverlay> event(eventSvc(), OverlayEventModel::Overlay::EventOverlay);
