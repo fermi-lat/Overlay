@@ -1,20 +1,25 @@
 //##############################################################
 //
 // Job options file for Setting up the background overlay from input digis
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/Overlay.txt,v 1.1 2008/12/01 22:45:20 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/Overlay.txt,v 1.2 2008/12/08 02:00:52 lsrea Exp $
 
 // Include the Overlay package library
 ApplicationMgr.DLLs += { "Overlay"};
 ApplicationMgr.ExtSvc += {"OverlayInputSvc"};
 
+// Reset the basic Trigger sequence so we can call TriggerInfoAlg in Digitization
+TriggerTest.Members = {"TriggerAlg", "Count/trigger", "TriRowBitsAlg" };
+
 // Modify the Digitization sequencer to include background overlay
 Digitization.Members = { 
     "TkrDigiAlg",
-    "TkrOverlayMergeAlg",
-    "TkrDigiMergeTruncationAlg",
     "AcdOverlayMergeAlg",
     "AcdDigiAlg",
-    "CalOverlayMergeAlg"
+    "CalOverlayMergeAlg",
+    "TriggerInfoAlg",
+    "GemOverlayMergeAlg",
+    "TkrOverlayMergeAlg",
+    "TkrDigiMergeTruncationAlg"
     };
     
 // Also modify the CalDigitization sequencer
