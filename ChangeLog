@@ -1,13 +1,4 @@
 ------------------------------------------------------------
-User: usher  Mon Dec 22 12:00:49 PST 2008
-Overlay/src/MergeAlgs
-
-Modified Files:
-	AcdOverlayMergeAlg.cxx 
-Log Message:
-Poor man's zero suppression to see if AcdTileCount is affected
-    *
-------------------------------------------------------------
 TAG
 Tag name: v1r1p0, operation: add
 Package: Overlay
