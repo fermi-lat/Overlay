@@ -4,7 +4,7 @@
  *
  * @author Zach Fewtrell zachary.fewtrell@nrl.navy.mil
  * 
- *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/AcdOverlayMergeAlg.cxx,v 1.2 2008/12/02 03:01:21 usher Exp $
+ *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/AcdOverlayMergeAlg.cxx,v 1.3 2008/12/18 23:38:52 usher Exp $
  */
 
 // Gaudi specific include files
@@ -146,7 +146,7 @@ StatusCode AcdOverlayMergeAlg::execute()
         double energyDep = acdOverlay->getEnergyDep();
 
         //***TEST***
-        //if (energyDep < 0.03) continue;
+        if (energyDep < 0.03) continue;
 
         // Position
         HepPoint3D position = acdOverlay->getPosition();
