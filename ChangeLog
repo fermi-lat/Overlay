@@ -1,5 +1,15 @@
 ------------------------------------------------------------
 User: lsrea  Sun Jan  4 08:04:38 PST 2009
+Overlay/src/MergeAlgs
+
+Modified Files:
+	AcdOverlayMergeAlg.cxx 
+Log Message:
+Make zero-suppression threshold a property for testing purposes
+
+    *
+------------------------------------------------------------
+User: lsrea  Sun Jan  4 08:04:38 PST 2009
 Overlay/doc
 
 Modified Files:
