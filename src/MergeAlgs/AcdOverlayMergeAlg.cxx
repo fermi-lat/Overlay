@@ -4,7 +4,7 @@
  *
  * @author Zach Fewtrell zachary.fewtrell@nrl.navy.mil
  * 
- *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/AcdOverlayMergeAlg.cxx,v 1.3 2008/12/18 23:38:52 usher Exp $
+ *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/AcdOverlayMergeAlg.cxx,v 1.4 2008/12/22 20:00:49 usher Exp $
  */
 
 // Gaudi specific include files
@@ -50,6 +50,9 @@ private:
 
     /// Pointer to the Acd geometry svc
     IAcdGeometrySvc*       m_acdGeoSvc;
+    
+    /// Energy threshold ("zero-suppression") for ACD hits
+    double m_energyThreshold;
 };
 
 
@@ -63,7 +66,8 @@ AcdOverlayMergeAlg::AcdOverlayMergeAlg(const std::string& name, ISvcLocator* pSv
 {
 
     // Declare the properties that may be set in the job options file
-//    declareProperty("FirstRangeReadout",   m_firstRng= "autoRng"); 
+//    declareProperty("FirstRangeReadout",   m_firstRng= "autoRng");
+    declareProperty("AcdHitEnergyThreshold", m_energyThreshold = 0.03);
 }
 
 /// initialize the algorithm. retrieve helper tools & services
@@ -103,7 +107,7 @@ StatusCode AcdOverlayMergeAlg::initialize()
     return sc;
 }
 
-/// \brief take Hits from McIntegratingHits, create & register CalDigis
+/// \brief take Hits from McIntegratingHits, create & register AcdDigis
 StatusCode AcdOverlayMergeAlg::execute() 
 {
     // Get a message object for output
@@ -145,8 +149,8 @@ StatusCode AcdOverlayMergeAlg::execute()
         // Energy deposited
         double energyDep = acdOverlay->getEnergyDep();
 
-        //***TEST***
-        if (energyDep < 0.03) continue;
+        //if threshold is above zero, cut on that value...
+        if (m_energyThreshold>0.0 && energyDep < m_energyThreshold) continue;
 
         // Position
         HepPoint3D position = acdOverlay->getPosition();
