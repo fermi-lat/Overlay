@@ -1,5 +1,60 @@
 ------------------------------------------------------------
 TAG
+Tag name: Overlay-01-01-03, operation: add
+Package: Overlay
+User: glastrm  Tue Jan  6 09:30:51 2009
+Files:
+  Overlay/.cvsignore  1.1.1.1
+  Overlay/ChangeLog  1.71
+  Overlay/Overlay/IOverlayDataSvc.h  1.1
+  Overlay/Overlay/IFetchEvents.h  1.1
+  Overlay/Overlay/IBackgroundBinTool.h  1.1
+  Overlay/cmt/.cvsignore  1.1.1.1
+  Overlay/cmt/NMake  1.1.1.1
+  Overlay/cmt/requirements  1.12
+  Overlay/doc/release.notes  1.12
+  Overlay/src/mainpage.h  1.1
+  Overlay/src/DataServices/OverlayInputSvc.cxx  1.2
+  Overlay/src/DataServices/OverlayOutputSvc.cxx  1.1
+  Overlay/src/Dll/Overlay_dll.cxx  1.1.1.1
+  Overlay/src/Dll/Overlay_load.cxx  1.4
+  Overlay/src/InputControl/XmlFetchEvents.h  1.1
+  Overlay/src/InputControl/XmlFetchEvents.cxx  1.1
+  Overlay/src/InputControl/OverlayRandom.cxx  1.1
+  Overlay/src/InputControl/McIlwain_L_Tool.cxx  1.1
+  Overlay/src/MergeAlgs/GemOverlayMergeAlg.cxx  1.1
+  Overlay/src/MergeAlgs/CalDigiMergeAlg.cxx_save  1.1
+  Overlay/src/MergeAlgs/TkrOverlayMergeAlg.cxx  1.3
+  Overlay/src/MergeAlgs/Overlay.txt  1.3
+  Overlay/src/MergeAlgs/AcdOverlayMergeAlg.cxx  1.6
+  Overlay/src/MergeAlgs/CalOverlayMergeAlg.cxx  1.3
+  Overlay/src/Translation/DigiToOverlayAlg.cxx  1.1
+  Overlay/src/Translation/IDigiToOverlayTool.h  1.1
+  Overlay/src/Translation/TkrDigiToOverlayTool.cxx  1.1
+  Overlay/src/Translation/AcdHitToOverlayTool.cxx  1.2
+  Overlay/src/Translation/EventToOverlayTool.cxx  1.1
+  Overlay/src/Translation/DigiToOverlay.txt  1.1
+  Overlay/src/Translation/GemToOverlayTool.cxx  1.1
+  Overlay/src/Translation/CalXtalToOverlayTool.cxx  1.1
+  Overlay/src/cnv/IEventCnvSvc.h  1.1
+  Overlay/src/cnv/AcdOverlayCnv.cxx  1.1
+  Overlay/src/cnv/GemOverlayCnv.cxx  1.1
+  Overlay/src/cnv/CalOverlayiCnv.cxx  1.1
+  Overlay/src/cnv/SrcOverlayCnv.cxx  1.1
+  Overlay/src/cnv/BaseCnv.h  1.1
+  Overlay/src/cnv/TkrOverlayCnv.cxx  1.1
+  Overlay/src/cnv/BaseCnv.cpp  1.1
+  Overlay/src/cnv/EventOverlayCnv.cxx  1.1
+  Overlay/src/test/jobOptions.txt  1.1
+  Overlay/src/test/TestReadJobOptions.txt  1.2
+  Overlay/src/test/OverlayTestAlg.cxx  1.4
+  Overlay/xml/backgroundOverlay.xsd  1.1.1.1
+  Overlay/xml/McIlwain_L_434K.xml  1.1
+  Overlay/xml/McIlwain_L.xml  1.1.1.1
+
+    *
+------------------------------------------------------------
+TAG
 Tag name: v1r1p3, operation: add
 Package: Overlay
 User: lsrea  Tue Jan  6 08:54:52 2009
