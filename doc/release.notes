@@ -1,10 +1,13 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.10 2008/12/22 20:03:08 usher Exp $
+$Id: release.notes,v 1.11 2009/01/04 16:04:37 lsrea Exp $
 @verbatim
 
-04-Jan-08  v1r1p2 LSR Make zero suppression threshold a property, for testing
+06-Jan-09  v1r1p3 LSR Set ZS threshold to -1, which turns off the test;
+                        More properly done while generating the overlay files
+                        Leave the option in for tests and further development
+04-Jan-09  v1r1p2 LSR Make zero suppression threshold a property, for testing
 22-Dec-08  v1r1p1  TU Quick poor man's ACD zero suppression to check effect on CPF stuff
 18-Dec-08  v1r1p0  TU Update to include handling merging of trigger information
  7-Dec-08  v1r0p4 LSR add TkrDigiMergeTruncationAlg to Overlay.txt sequence
