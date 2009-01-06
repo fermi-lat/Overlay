@@ -4,7 +4,7 @@
  *
  * @author Zach Fewtrell zachary.fewtrell@nrl.navy.mil
  * 
- *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/AcdOverlayMergeAlg.cxx,v 1.4 2008/12/22 20:00:49 usher Exp $
+ *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/AcdOverlayMergeAlg.cxx,v 1.5 2009/01/04 16:04:38 lsrea Exp $
  */
 
 // Gaudi specific include files
@@ -67,7 +67,8 @@ AcdOverlayMergeAlg::AcdOverlayMergeAlg(const std::string& name, ISvcLocator* pSv
 
     // Declare the properties that may be set in the job options file
 //    declareProperty("FirstRangeReadout",   m_firstRng= "autoRng");
-    declareProperty("AcdHitEnergyThreshold", m_energyThreshold = 0.03);
+    // default setting means that the energy cut is not applied
+    declareProperty("AcdHitEnergyThreshold", m_energyThreshold = -1.0);
 }
 
 /// initialize the algorithm. retrieve helper tools & services
