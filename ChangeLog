@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: usher  Wed Jan 14 12:07:51 PST 2009
+Overlay/Overlay
+
+Modified Files:
+	IOverlayDataSvc.h 
+Log Message:
+Add two functions to allow setting of flag for controlling the writing of Overlay objects at the end of an event
+    *
+------------------------------------------------------------
 TAG
 Tag name: GlastRelease-15-50-10, operation: add
 Package: Overlay
