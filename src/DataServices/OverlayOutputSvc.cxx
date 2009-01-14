@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/CalibSvc/src/OverlayOutputSvc/OverlayOutputSvc.cxx,v 1.0 2008/07/23 18:11:46 jrb Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/DataServices/OverlayOutputSvc.cxx,v 1.1 2008/12/01 22:40:29 usher Exp $
 
 // Include files
 #include "GaudiKernel/Service.h"
@@ -44,6 +44,12 @@ public:
     /// Register an output path with us
     virtual StatusCode registerOutputPath(const std::string& path);
 
+    /// For output service, set store events flag
+    virtual void storeEvent(bool flag) {m_saveEvent = flag;}
+
+    /// For output service, return current value of store events flag
+    virtual bool getStoreEventFlag() {return m_saveEvent;}
+
     /// Handles incidents, implementing IIncidentListener interface
     virtual void handle( const Incident & ) ;    
 
@@ -60,10 +66,6 @@ private:
     /// List of objects to store (from converters
     std::vector<std::string> m_objectList;
 
-    /// ROOT file pointer
-    TFile*            m_digiFile;
-    /// ROOT tree pointer
-    TTree*            m_digiTree;
     // Pointer to input data
     EventOverlay*     m_eventOverlay;
 
@@ -77,10 +79,8 @@ private:
     int               m_bufSize;
     /// Compression level for the ROOT file
     int               m_compressionLevel;
-    /// auto save every events
-    int               m_autoSaveEvents;
-    /// Option string which will be passed to McEvent::Clear
-    StringProperty    m_clearOption;
+    /// Flag to specify whether event is to be written at end of event
+    bool              m_saveEvent;
 };
 
 
@@ -91,7 +91,7 @@ const ISvcFactory& OverlayOutputSvcFactory = s_factory;
 
 /// Standard Constructor
 OverlayOutputSvc::OverlayOutputSvc(const std::string& name,ISvcLocator* svc) : Service(name,svc),
-                               m_rootIoSvc(0), m_eventOverlay(0)
+                               m_rootIoSvc(0), m_eventOverlay(0), m_saveEvent(false)
 {
     // Input pararmeters that may be set via the jobOptions file
     // Input ROOT file name  provided for backward compatibility, digiRootFileList is preferred
@@ -103,9 +103,6 @@ OverlayOutputSvc::OverlayOutputSvc(const std::string& name,ISvcLocator* svc) : S
     // ROOT default compression
     declareProperty("compressionLevel", m_compressionLevel = 1);
     declareProperty("treeName",         m_treeName         = "Overlay");
-    declareProperty("autoSave",         m_autoSaveEvents   = 1000);
-
-    declareProperty("clearOption",      m_clearOption      = "");
 
     m_objectList.clear();
 
@@ -138,10 +135,8 @@ StatusCode OverlayOutputSvc::initialize()
     }
 
     // Use the RootIoSvc to setup our output ROOT files
-    m_digiTree = m_rootIoSvc->prepareRootOutput("OverlayOut", m_fileName, m_treeName, 
-        m_compressionLevel, "GLAST Digitization Data");
+    m_rootIoSvc->prepareRootOutput("OverlayOut", m_fileName, m_treeName, m_compressionLevel, "GLAST Digitization Data");
     m_eventOverlay = new EventOverlay();
-//    m_common.m_eventOverlay = m_eventOverlay;
     m_rootIoSvc->setupBranch("OverlayOut", "EventOverlay", "EventOverlay", &m_eventOverlay, m_bufSize, m_splitMode);
 
     // Get pointer to the ToolSvc
@@ -231,50 +226,57 @@ void OverlayOutputSvc::beginEvent() // should be called at the beginning of an e
     // At beginning of event free up the DigiEvent if we have one
     m_eventOverlay->Clear();
 
+    // Assume all events are saved
+    m_saveEvent = true;
+
     return;
 }
 
 void OverlayOutputSvc::endEvent()  // must be called at the end of an event to update, allow pause
 {
-    // Get the converstion service with an IConverter* interface
-    IConverter* cnvService = 0;
-    if (serviceLocator()->getService("EventCnvSvc", IID_IConverter, (IInterface*&)cnvService).isFailure())
+    // Should event be saved?
+    if (m_saveEvent)
     {
-        MsgStream log(msgSvc(), name());
-        log << MSG::ERROR << "Could not retrieve the EventCnvSvc! " << endreq;
-        return;
+        // Get the converstion service with an IConverter* interface
+        IConverter* cnvService = 0;
+        if (serviceLocator()->getService("EventCnvSvc", IID_IConverter, (IInterface*&)cnvService).isFailure())
+        {
+            MsgStream log(msgSvc(), name());
+            log << MSG::ERROR << "Could not retrieve the EventCnvSvc! " << endreq;
+            return;
+        }
+
+        // For now, go through the list and make sure the objects have been converted...
+        for(std::vector<std::string>::iterator dataIter = m_objectList.begin();
+                                               dataIter != m_objectList.end();
+                                               dataIter++)
+        {
+            std::string path = *dataIter;
+
+            DataObject* object = 0;
+            StatusCode status = m_eventDataSvc->retrieveObject(path, object);
+        }
+
+        // Now do a clear of the root DigiEvent root object
+        m_eventOverlay->Clear();
+
+        // Go through list of data objects and "convert" them...
+        for(std::vector<std::string>::iterator dataIter = m_objectList.begin();
+                                               dataIter != m_objectList.end();
+                                               dataIter++)
+        {
+            std::string path = *dataIter;
+
+            DataObject* object = 0;
+            StatusCode status = m_eventDataSvc->retrieveObject(path, object);
+
+            IOpaqueAddress* address = 0;
+            status = cnvService->createRep(object, address);
+        }
+
+        // Now fill the root tree for this event
+        m_rootIoSvc->fillTree("OverlayOut");
     }
-
-    // For now, go through the list and make sure the objects have been converted...
-    for(std::vector<std::string>::iterator dataIter = m_objectList.begin();
-                                           dataIter != m_objectList.end();
-                                           dataIter++)
-    {
-        std::string path = *dataIter;
-
-        DataObject* object = 0;
-        StatusCode status = m_eventDataSvc->retrieveObject(path, object);
-    }
-
-    // Now do a clear of the root DigiEvent root object
-    m_eventOverlay->Clear();
-
-    // Go through list of data objects and "convert" them...
-    for(std::vector<std::string>::iterator dataIter = m_objectList.begin();
-                                           dataIter != m_objectList.end();
-                                           dataIter++)
-    {
-        std::string path = *dataIter;
-
-        DataObject* object = 0;
-        StatusCode status = m_eventDataSvc->retrieveObject(path, object);
-
-        IOpaqueAddress* address = 0;
-        status = cnvService->createRep(object, address);
-    }
-
-    // Now fill the root tree for this event
-    m_rootIoSvc->fillTree("OverlayOut");
 
     return;
 }
