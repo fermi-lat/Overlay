@@ -1,5 +1,15 @@
 ------------------------------------------------------------
 User: lsrea  Thu Jan 15 20:04:04 PST 2009
+Overlay/src/Tasks
+
+Added Files:
+	SkimOverlayEventsAlg.cxx skimOverlayEvents.txt 
+Log Message:
+These are to skim digi events and produce overlay events
+
+    *
+------------------------------------------------------------
+User: lsrea  Thu Jan 15 20:04:04 PST 2009
 Overlay/src/Dll
 
 Modified Files:
