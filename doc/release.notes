@@ -1,9 +1,10 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.12 2009/01/06 16:54:12 lsrea Exp $
+$Id: release.notes,v 1.13 2009/01/16 04:05:28 lsrea Exp $
 @verbatim
 
+19-Jan-09  v1r1p5 LSR Mods to jO for skim task
 15-Jan-09  v1r1p4 LSR Add Task folder, and SkimOverlayEventsAlg, and jO
 06-Jan-09  v1r1p3 LSR Set ZS threshold to -1, which turns off the test;
                         More properly done while generating the overlay files
