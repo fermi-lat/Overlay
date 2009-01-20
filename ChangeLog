@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: lsrea  Mon Jan 19 17:52:22 PST 2009
+Overlay/src/Tasks
+
+Modified Files:
+	skimOverlayEvents.txt 
+Log Message:
+Modify jO to do a full recon and write out the full merit file
+
+    *
+------------------------------------------------------------
 TAG
 Tag name: Overlay-01-01-04, operation: add
 Package: Overlay
