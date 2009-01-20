@@ -1,4 +1,5 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/userAlg/src/jobOptions.txt,v 1.21 2008/07/21 15:17:39 glastrm Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Tasks/skimOverlayEvents.txt,v 1.1 2009/01/16 04:04:04 lsrea Exp 
+$
 //##############################################################
 //
 // Job options file to skim the Periodic-Trigger events from a data file
@@ -41,7 +42,6 @@ Triggered.Members = {
 };
 
 NtupleMaker.Members = {"AnalysisNtupleAlg", "PtValsAlg" };
-AnalysisNtupleAlg.toolList = {"McKludge"};
 
 // for making the overlays, sets the Output sequence
 #include "$OVERLAYROOT/src/Translation/DigiToOverlay.txt"
@@ -62,19 +62,10 @@ digiRootReaderAlg.digiRootFileList = { "$(GLEAMROOT)/data/r0236240104_digi.root"
 //          output files
 
 
-OverlayOutputSvc.overlayRootFile = "$(GLEAMROOT)/data/r0236240104-PT_final1_overlay.root";
-RootTupleSvc.filename=             "$(GLEAMROOT)/data/r0236240104-PT_final1_merit.root";
+OverlayOutputSvc.overlayRootFile = "$(GLEAMROOT)/data/r0236240104-PT_final2_overlay.root";
+RootTupleSvc.filename=             "$(GLEAMROOT)/data/r0236240104-PT_final2_merit.root";
 
 ApplicationMgr.EvtMax =10000000;
-
-// try this to speed things up: (seems to cut the time by a few %)
-// to really speed this up requires not reading in the entire digi event each time
-
-Reconstruction.Members={ 
-    "Sequencer/Cal1", 
-    "Sequencer/Acd"
-    };
-
 
 //==============================================================
 //
