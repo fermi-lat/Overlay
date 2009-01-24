@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: lsrea  Sat Jan 24 13:58:04 PST 2009
+Overlay/src/Tasks
+
+Modified Files:
+	skimOverlayEvents.txt 
+Log Message:
+Get the correct NtupleMaker sequence
+
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r1p6, operation: add
 Package: Overlay
