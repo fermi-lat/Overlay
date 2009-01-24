@@ -1,5 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Tasks/skimOverlayEvents.txt,v 1.1 2009/01/16 04:04:04 lsrea Exp 
-$
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Tasks/skimOverlayEvents.txt,v 1.1 2009/01/16 04:04:04 lsrea Exp $
 //##############################################################
 //
 // Job options file to skim the Periodic-Trigger events from a data file
@@ -41,7 +40,8 @@ Triggered.Members = {
     "Sequencer/Output"
 };
 
-NtupleMaker.Members = {"AnalysisNtupleAlg", "PtValsAlg" };
+NtupleMaker.Members = {"PtValsAlg", "AnalysisNtupleAlg", "ClassifyAlg", "FT1Alg","ObfCoordsAlg"};
+AnalysisNtupleAlg.realData = true;
 
 // for making the overlays, sets the Output sequence
 #include "$OVERLAYROOT/src/Translation/DigiToOverlay.txt"
@@ -55,15 +55,15 @@ ToolSvc.AcdHitToOverlayTool.PHARibbonCut = 25.0;
 // -------------------------------------------------
 //          input files
 
-digiRootReaderAlg.digiRootFileList = { "$(GLEAMROOT)/data/r0236240104_digi.root" } ;
-
+digiRootReaderAlg.digiRootFileList = 
+  {"root://glast-rdr.slac.stanford.edu//glast/Data/Flight/Level1/LPA/prod/1.66/digi/r0244973765_v001_digi.root"};
 
 // ------------------------------------------------
 //          output files
 
 
-OverlayOutputSvc.overlayRootFile = "$(GLEAMROOT)/data/r0236240104-PT_final2_overlay.root";
-RootTupleSvc.filename=             "$(GLEAMROOT)/data/r0236240104-PT_final2_merit.root";
+OverlayOutputSvc.overlayRootFile = "$FARM/u31/lsrea/testOverlay/r0236243776-PT-final7_overlay.root";
+RootTupleSvc.filename=             "$FARM/u31/lsrea/testOverlay/r0236243776-PT-final7_merit.root";
 
 ApplicationMgr.EvtMax =10000000;
 
