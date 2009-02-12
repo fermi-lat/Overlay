@@ -5,7 +5,7 @@
  *
  * @author Tracy Usher
  *
- * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/GemOverlayMergeAlg.cxx,v 1.2 2008/12/04 21:50:17 usher Exp $
+ * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/GemOverlayMergeAlg.cxx,v 1.1 2008/12/18 23:36:51 usher Exp $
  */
 
 
@@ -169,8 +169,12 @@ StatusCode GemOverlayMergeAlg::execute()
     // Reset the tile list in the TriggerInfo object
     triggerInfo->setTileList(tileList);
 
-    // Rest the trigger bits
+    // Reset the trigger bits
     triggerInfo->setTriggerBits(triggerBits);
+
+    // Update the delta event and window open times
+    triggerInfo->setDeltaEventTime(gemOverlay->getDeltaEventTime());
+    triggerInfo->setDeltaWindowOpenTime(gemOverlay->getDeltaWindowOpenTime());
 
     return sc;
 }
