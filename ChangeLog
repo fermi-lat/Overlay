@@ -1,13 +1,4 @@
 ------------------------------------------------------------
-User: usher  Thu Feb 12 08:46:22 PST 2009
-Overlay/src/MergeAlgs
-
-Modified Files:
-	GemOverlayMergeAlg.cxx 
-Log Message:
-Transfer deltaEventTime and deltaWindowOpenTime from GemOverlay to TriggerInfo
-    *
-------------------------------------------------------------
 TAG
 Tag name: Overlay-01-01-07, operation: add
 Package: Overlay
