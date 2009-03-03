@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/DataServices/OverlayInputSvc.cxx,v 1.2 2008/12/07 16:53:24 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/DataServices/OverlayInputSvc.cxx,v 1.3 2009/01/14 20:07:51 usher Exp $
 
 // Include files
 #include "GaudiKernel/Service.h"
@@ -73,6 +73,12 @@ private:
     // Pointer to the object which determines which bin we are in
     IBackgroundBinTool* m_binTool;
 
+    // Use a map to keep track of the input files... we'll keep them open until the 
+    // end of the job
+    std::map<std::string, std::string> m_inputFileMap;
+    
+    std::string         m_curFileType;
+
     // Pointer to input data
     EventOverlay*       m_eventOverlay;
     EventOverlay        m_myOverlay;
@@ -98,7 +104,7 @@ const ISvcFactory& OverlayInputSvcFactory = s_factory;
 
 /// Standard Constructor
 OverlayInputSvc::OverlayInputSvc(const std::string& name,ISvcLocator* svc) : Service(name,svc),
-                               m_rootIoSvc(0), m_eventOverlay(0), m_myOverlayPtr(&m_myOverlay), m_needToReadEvent(true)
+                               m_rootIoSvc(0), m_curFileType(""), m_eventOverlay(0), m_myOverlayPtr(&m_myOverlay), m_needToReadEvent(true)
 {
     // Input pararmeters that may be set via the jobOptions file
     // Input ROOT file name  provided for backward compatibility, digiRootFileList is preferred
@@ -107,6 +113,8 @@ OverlayInputSvc::OverlayInputSvc(const std::string& name,ISvcLocator* svc) : Ser
     declareProperty("OverlayTool",      m_overlay="McIlwain_L");
     declareProperty("InputXmlFilePath", m_inputXmlFilePath="$(OVERLAYROOT)/xml");
     declareProperty("clearOption",      m_clearOption="");
+
+    m_inputFileMap.clear();
 
     return;
 }
@@ -190,6 +198,13 @@ StatusCode OverlayInputSvc::finalize()
 
     log << MSG::DEBUG << "Finalizing" << endreq;
 
+    // Loop through any open files and close them
+    for(std::map<std::string,std::string>::iterator fileMapItr = m_inputFileMap.begin();
+        fileMapItr != m_inputFileMap.end(); fileMapItr++)
+    {
+        m_rootIoSvc->closeInput(fileMapItr->second);
+    }
+
     delete m_fetch;
 
     // Finalize the base class
@@ -252,7 +267,7 @@ StatusCode OverlayInputSvc::selectNextEvent()
 
     // Try reading the event this way... 
     // using treename as the key
-    m_eventOverlay = dynamic_cast<EventOverlay*>(m_rootIoSvc->getNextEvent("overlay"));
+    m_eventOverlay = dynamic_cast<EventOverlay*>(m_rootIoSvc->getNextEvent(m_curFileType));
 
     // If the call returns a null pointer then most likely we have hit the end of file
     // Try to wrap back to first event and try again
@@ -262,7 +277,7 @@ StatusCode OverlayInputSvc::selectNextEvent()
 
         m_rootIoSvc->setIndex(m_eventOffset);
         
-        m_eventOverlay = dynamic_cast<EventOverlay*>(m_rootIoSvc->getNextEvent("overlay"));
+        m_eventOverlay = dynamic_cast<EventOverlay*>(m_rootIoSvc->getNextEvent(m_curFileType));
     }
 
     // Set flag to indicate we have read the event
@@ -298,36 +313,56 @@ void OverlayInputSvc::setNewInputBin(double x)
 {
     MsgStream log(msgSvc(), name());
 
-    try 
+    // Zero the pointer to the input data
+    m_eventOverlay = 0;
+
+    // Close the curent input file(s)
+    //m_rootIoSvc->closeInput("overlay"); // Not closing files here
+
+    // Grab the new input file list
+    std::vector<std::string> fileList = m_fetch->getFiles(x);
+
+    std::string fileName = fileList[0];
+
+    if (m_inputFileMap.find(fileName) == m_inputFileMap.end())
     {
-        // Zero the pointer to the input data
-        m_eventOverlay = 0;
+        try 
+        {
+            // Create a rootIoSvc "type" name to identify this file to RootIoSvc
+            std::stringstream rootType;
 
-        // Close the curent input file(s)
-        m_rootIoSvc->closeInput("overlay");
+            rootType << "overlay_" << m_inputFileMap.size();
 
-        // Grab the new input file list
-        std::vector<std::string> fileList = m_fetch->getFiles(x);
+            // Set it as our "current" file type
+            m_curFileType = rootType.str();
 
-        // Open the new input files
-        m_rootIoSvc->prepareRootInput("overlay", 
-                                      m_fetch->getTreeName(), 
-                                      m_fetch->getBranchName(),
-                                      (TObject**)&m_myOverlayPtr,
-                                      fileList);
+            // And store this away in our map of opened files
+            m_inputFileMap[fileName] = m_curFileType;
 
-        // Select a random starting position within the allowed number of events
-        Long64_t numEventsLong = m_rootIoSvc->getRootEvtMax();
-        double   numEvents     = numEventsLong;
-        Long64_t startEvent    = (Long64_t)(RandFlat::shoot() * (numEvents - 1));
+            // Open the new input files
+            m_rootIoSvc->prepareRootInput(m_curFileType, 
+                                          m_fetch->getTreeName(), 
+                                          m_fetch->getBranchName(),
+                                         (TObject**)&m_myOverlayPtr,
+                                          fileList);
 
-        // Set that as the starting event
-        m_rootIoSvc->setIndex(startEvent);
-    } 
-    catch(...) 
+            // Select a random starting position within the allowed number of events
+            Long64_t numEventsLong = m_rootIoSvc->getRootEvtMax();
+            double   numEvents     = numEventsLong;
+            Long64_t startEvent    = (Long64_t)(RandFlat::shoot() * (numEvents - 1));
+
+            // Set that as the starting event
+            m_rootIoSvc->setIndex(startEvent);
+        } 
+        catch(...) 
+        {
+            log << MSG::WARNING << "exception thrown" << endreq;
+            throw;
+        }
+    }
+    else
     {
-        log << MSG::WARNING << "exception thrown" << endreq;
-        throw;
+        m_curFileType = m_inputFileMap[fileName];
     }
 
     return;
