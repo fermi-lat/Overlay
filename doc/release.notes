@@ -1,9 +1,10 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.16 2009/01/24 22:00:53 lsrea Exp $
+$Id: release.notes,v 1.17 2009/02/12 17:02:04 usher Exp $
 @verbatim
 
+ 3-Mar-09  v1r3p0  TU Modify to keep open all input streams during length of job
 12-Feb-09  v1r2p0  TU Include deltaEventTime and deltaWindowTime in TriggerInfo 
 24-Jan-09  v1r1p7 LSR Latest skimOverlayEvents.txt
 19-Jan-09  v1r1p5 LSR Mods to jO for skim task
