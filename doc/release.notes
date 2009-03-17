@@ -1,9 +1,10 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.18 2009/03/03 01:51:58 usher Exp $
+$Id: release.notes,v 1.19 2009/03/16 17:36:52 usher Exp $
 @verbatim
 
+16-Mar-09  v1r4p1  TU Fix test program JO file so it will find ntupleWriterSvc
 16-Mar-09  v1r4p0  TU New code to handle Pt* variables, not read overlay when sim event does not interact
  3-Mar-09  v1r3p0  TU Modify to keep open all input streams during length of job
 12-Feb-09  v1r2p0  TU Include deltaEventTime and deltaWindowTime in TriggerInfo 
