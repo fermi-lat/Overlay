@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: usher  Tue Mar 17 12:50:20 PDT 2009
+Overlay/src/MergeAlgs
+
+Modified Files:
+	DoMergeAlg.cxx 
+Log Message:
+Include an option to bypass algorithm if wanting to run in a pass through mode
+    *
+------------------------------------------------------------
 TAG
 Tag name: Overlay-01-04-01, operation: add
 Package: Overlay
