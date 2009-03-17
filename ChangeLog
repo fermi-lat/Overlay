@@ -1,13 +1,4 @@
 ------------------------------------------------------------
-User: usher  Mon Mar 16 17:06:32 PDT 2009
-Overlay/src/test
-
-Modified Files:
-	jobOptions.txt 
-Log Message:
-Fix the test program JO file so it can find ntupleWriterSvc
-    *
-------------------------------------------------------------
 TAG
 Tag name: Overlay-01-04-00, operation: add
 Package: Overlay
