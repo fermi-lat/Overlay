@@ -1,7 +1,7 @@
 //##############################################################
 //
 // Job options file for GUI (gui or FRED) Gleam job
-// $Header: /nfs/slac/g/glast/ground/cvs/Gleam/src/jobOptions.txt,v 1.24 2008/06/15 18:23:20 lsrea Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/test/jobOptions.txt,v 1.1 2008/12/01 22:47:50 usher Exp $
 
 ////#include "$GLEAMROOT/src/basicOptions.txt"
 //
@@ -131,6 +131,11 @@ ApplicationMgr.ExtSvc += {"RootIoSvc"};
 // Must use RootIo as executable, not Gaudi event loop!
 //
 ApplicationMgr.Runable = "RootIoSvc"; 
+
+//
+// ntupleWriterSvc
+//
+ApplicationMgr.DLLs += {"ntupleWriterSvc"};
 
 //
 // Geometry: Use flight geometry!
