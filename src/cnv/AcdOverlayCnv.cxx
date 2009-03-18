@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/AcdOverlayCnv.cxx,v 1.0 2006/01/18 23:12:22 jrb Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/AcdOverlayCnv.cxx,v 1.1 2008/12/02 15:27:16 usher Exp $
 /**
             @file  AcdOverlayCnv.cxx
 
@@ -182,6 +182,8 @@ StatusCode AcdOverlayCnv::createObj(IOpaqueAddress* addr, DataObject*& refpObjec
         
         Event::AcdOverlay* acdOverlayTds = new Event::AcdOverlay(volIdTds, acdIdTds, energyTds, positionTds);
 
+        acdOverlayTds->setStatus(acdOverlayRoot->getStatus());
+
         acdOverlayTdsCol->push_back(acdOverlayTds);
     }
 
@@ -223,6 +225,8 @@ StatusCode AcdOverlayCnv::createRep(DataObject* pObject, IOpaqueAddress*& refpAd
         TVector3   positionRoot(positionTds.x(), positionTds.y(), positionTds.z());
         
         AcdOverlay* acdOverlayRoot = new AcdOverlay(volIdRoot, acdIdRoot, energyRoot, positionRoot);
+
+        acdOverlayRoot->setStatus((*acdOverlayTds)->getStatus());
 
         overlayRoot->addAcdOverlay(acdOverlayRoot);
     }
