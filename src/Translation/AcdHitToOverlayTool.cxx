@@ -1,7 +1,7 @@
 /**  @file AcdHitToOverlayTool.cxx
     @brief implementation of class AcdHitToOverlayTool
     
-  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/AcdHitToOverlayTool.cxx,v 1.1 2008/12/01 22:50:11 usher Exp $  
+  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/AcdHitToOverlayTool.cxx,v 1.2 2008/12/02 22:05:50 usher Exp $  
 */
 
 #include "IDigiToOverlayTool.h"
@@ -242,6 +242,11 @@ StatusCode AcdHitToOverlayTool::translate()
 
         // Create the AcdOverlay object
         Event::AcdOverlay* acdOverlay = new Event::AcdOverlay(volId, acdId, eDep, center);
+
+        // Get the status bits
+        unsigned int statusBits = acdHit->getFlags(Event::AcdHit::A) | (acdHit->getFlags(Event::AcdHit::B) << 16);
+
+        acdOverlay->setStatus(statusBits);
 
         // Dump the AcdHit we made
         delete acdHit;
