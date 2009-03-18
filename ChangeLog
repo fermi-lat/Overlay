@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: usher  Wed Mar 18 16:19:52 PDT 2009
+Overlay/src/MergeAlgs
+
+Modified Files:
+	AcdOverlayMergeAlg.cxx 
+Log Message:
+Add the ACD status bits to the McPositionHit status word
+    *
+------------------------------------------------------------
 TAG
 Tag name: Overlay-01-05-00, operation: add
 Package: Overlay
