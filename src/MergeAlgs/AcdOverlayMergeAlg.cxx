@@ -4,7 +4,7 @@
  *
  * @author Zach Fewtrell zachary.fewtrell@nrl.navy.mil
  * 
- *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/AcdOverlayMergeAlg.cxx,v 1.5 2009/01/04 16:04:38 lsrea Exp $
+ *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/AcdOverlayMergeAlg.cxx,v 1.6 2009/01/06 16:54:12 lsrea Exp $
  */
 
 // Gaudi specific include files
@@ -197,6 +197,7 @@ StatusCode AcdOverlayMergeAlg::execute()
             // Create a new McPositionHit for this 
             Event::McPositionHit* mcHit = new Event::McPositionHit();
 
+            // Initalize
             mcHit->init(energyDep, 
                         volumeId, 
                         locEntryPoint, 
@@ -204,6 +205,9 @@ StatusCode AcdOverlayMergeAlg::execute()
                         entryPoint, 
                         exitPoint, 
                         Event::McPositionHit::overlayHit);
+
+            // Since this is from overlay, add the acdOverlay status mask to the packed flags
+            mcHit->addPackedMask(acdOverlay->getStatus());
 
             mcPosHitCol->push_back(mcHit);
         }
