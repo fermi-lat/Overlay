@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: usher  Thu Mar 19 08:28:08 PDT 2009
+Overlay/src/MergeAlgs
+
+Modified Files:
+	Overlay.txt 
+Log Message:
+Use JO file to include OverlayValsTool in AnaTup
+    *
+------------------------------------------------------------
 TAG
 Tag name: Overlay-01-05-01, operation: add
 Package: Overlay
