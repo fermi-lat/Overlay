@@ -1,9 +1,10 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.23 2009/03/18 23:26:25 usher Exp $
+$Id: release.notes,v 1.24 2009/03/19 15:29:42 usher Exp $
 @verbatim
 
+23-Mar-09           v1r5p3  TU Fix PtOverlayCnv to register itself properly
 19-Mar-09           v1r5p2  TU Use JO file to include OverlayValsTool in AnaTup
 18-Mar-09           v1r5p1  TU Add code to copy ACD status bits into McPositionHit 
 St. Patty's Day '09 v1r5p0  TU AcdHit status bits now in AcdOverlay object 
