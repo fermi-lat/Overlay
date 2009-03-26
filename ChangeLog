@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: usher  Wed Mar 25 17:16:48 PDT 2009
+Overlay/src/DataServices
+
+Modified Files:
+	OverlayInputSvc.cxx 
+Log Message:
+Keep track of separate read indices for each input overlay file
+    *
+------------------------------------------------------------
 TAG
 Tag name: Overlay-01-05-03, operation: add
 Package: Overlay
