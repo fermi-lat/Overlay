@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/DataServices/OverlayInputSvc.cxx,v 1.3 2009/01/14 20:07:51 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/DataServices/OverlayInputSvc.cxx,v 1.4 2009/03/03 01:50:33 usher Exp $
 
 // Include files
 #include "GaudiKernel/Service.h"
@@ -66,8 +66,6 @@ private:
     /// access the RootIoSvc to get the CompositeEventList ptr
     IRootIoSvc *        m_rootIoSvc;
 
-    unsigned int        m_eventOffset;
-
     IFetchEvents*       m_fetch;       ///< abstract guy that processes the xml file
 
     // Pointer to the object which determines which bin we are in
@@ -76,6 +74,9 @@ private:
     // Use a map to keep track of the input files... we'll keep them open until the 
     // end of the job
     std::map<std::string, std::string> m_inputFileMap;
+
+    // Hopefully a temporary kludge until RootIo can handle this
+    std::map<std::string, long long>   m_inputIndexMap;
     
     std::string         m_curFileType;
 
@@ -115,6 +116,7 @@ OverlayInputSvc::OverlayInputSvc(const std::string& name,ISvcLocator* svc) : Ser
     declareProperty("clearOption",      m_clearOption="");
 
     m_inputFileMap.clear();
+    m_inputIndexMap.clear();
 
     return;
 }
@@ -265,17 +267,27 @@ StatusCode OverlayInputSvc::selectNextEvent()
         return StatusCode::FAILURE;
     }
 
+    // Retrieve and increment the index (and, by definition, it exists!)
+    std::map<std::string, long long>::iterator inputIndexIter = m_inputIndexMap.find(m_curFileType);
+
+    long long inputIndex = inputIndexIter->second;
+
+    // update the input index
+    inputIndexIter->second = inputIndex + 1;
+
     // Try reading the event this way... 
     // using treename as the key
-    m_eventOverlay = dynamic_cast<EventOverlay*>(m_rootIoSvc->getNextEvent(m_curFileType));
+    m_eventOverlay = dynamic_cast<EventOverlay*>(m_rootIoSvc->getNextEvent(m_curFileType, inputIndex));
 
     // If the call returns a null pointer then most likely we have hit the end of file
     // Try to wrap back to first event and try again
     if( m_eventOverlay == 0)
     { 
-        m_eventOffset = 0; 
+        long long inputIndex = 0;
 
-        m_rootIoSvc->setIndex(m_eventOffset);
+        m_inputIndexMap[m_curFileType] = inputIndex;
+
+        m_rootIoSvc->setIndex(inputIndex);
         
         m_eventOverlay = dynamic_cast<EventOverlay*>(m_rootIoSvc->getNextEvent(m_curFileType));
     }
@@ -347,12 +359,16 @@ void OverlayInputSvc::setNewInputBin(double x)
                                           fileList);
 
             // Select a random starting position within the allowed number of events
-            Long64_t numEventsLong = m_rootIoSvc->getRootEvtMax();
-            double   numEvents     = numEventsLong;
-            Long64_t startEvent    = (Long64_t)(RandFlat::shoot() * (numEvents - 1));
+            long long numEventsLong = m_rootIoSvc->getRootEvtMax(m_curFileType);
+            double    numEvents     = numEventsLong;
+            long long startEvent    = (long long)(RandFlat::shoot() * (numEvents - 1));
+            //Long64_t startEvent    = (Long64_t)(RandFlat::shoot() * (numEvents - 1));
+
+            // Set the index in our local map
+            m_inputIndexMap[m_curFileType] = startEvent;
 
             // Set that as the starting event
-            m_rootIoSvc->setIndex(startEvent);
+            //m_rootIoSvc->setIndex(startEvent);
         } 
         catch(...) 
         {
