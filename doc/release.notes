@@ -1,10 +1,11 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.26 2009/03/26 00:18:42 usher Exp $
+$Id: release.notes,v 1.27 2009/07/01 16:18:28 heather Exp $
 @verbatim
  * EOH *
 
+08-Sep-09           v1r5p5 HMK Explictly use RootConvert in requirements file
 25-Mar-09           v1r5p4  TU Use separate read indices for each open input overlay file
 23-Mar-09           v1r5p3  TU Fix PtOverlayCnv to register itself properly
 19-Mar-09           v1r5p2  TU Use JO file to include OverlayValsTool in AnaTup
