@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: usher  Tue Sep 15 12:20:05 PDT 2009
+Overlay/src/Translation
+
+Modified Files:
+	AcdHitToOverlayTool.cxx 
+Log Message:
+Fixing linux compiler warnings
+    *
+------------------------------------------------------------
+User: usher  Tue Sep 15 12:20:05 PDT 2009
 Overlay/src/InputControl
 
 Modified Files:
