@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: usher  Tue Sep 15 12:20:04 PDT 2009
+Overlay/src/DataServices
+
+Modified Files:
+	OverlayInputSvc.cxx OverlayOutputSvc.cxx 
+Log Message:
+Fixing linux compiler warnings
+    *
+------------------------------------------------------------
 TAG
 Tag name: Overlay-01-05-05, operation: add
 Package: Overlay
