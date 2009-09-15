@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/DataServices/OverlayInputSvc.cxx,v 1.4 2009/03/03 01:50:33 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/DataServices/OverlayInputSvc.cxx,v 1.5 2009/03/26 00:16:48 usher Exp $
 
 // Include files
 #include "GaudiKernel/Service.h"
@@ -44,10 +44,10 @@ public:
     virtual StatusCode selectNextEvent();
 
     /// Register an output path with us
-    virtual StatusCode registerOutputPath(const std::string& path) {return StatusCode::SUCCESS;}
+    virtual StatusCode registerOutputPath(const std::string&) {return StatusCode::SUCCESS;}
 
     /// For output service, set store events flag
-    virtual void storeEvent(bool flag) {return;}
+    virtual void storeEvent(bool) {return;}
 
     /// For output service, return current value of store events flag
     virtual bool getStoreEventFlag() {return true;}

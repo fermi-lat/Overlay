@@ -1,7 +1,7 @@
 /**  @file AcdHitToOverlayTool.cxx
     @brief implementation of class AcdHitToOverlayTool
     
-  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/AcdHitToOverlayTool.cxx,v 1.2 2008/12/02 22:05:50 usher Exp $  
+  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/AcdHitToOverlayTool.cxx,v 1.3 2009/03/18 04:08:24 usher Exp $  
 */
 
 #include "IDigiToOverlayTool.h"
@@ -213,8 +213,6 @@ StatusCode AcdHitToOverlayTool::translate()
         idents::AcdId            acdId = acdDigi->getId();
 
         // Extract deposited energy
-        double energy = acdDigi->getEnergy();
-
         float  eDep   = acdHit->mips() / m_mipsPerMeV;
 
         // Our entry/exit point

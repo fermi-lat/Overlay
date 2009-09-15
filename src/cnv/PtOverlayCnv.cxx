@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/PtOverlayCnv.cxx,v 1.1 2009/03/16 17:31:27 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/PtOverlayCnv.cxx,v 1.2 2009/03/23 20:01:33 usher Exp $
 /**
             @file  PtOverlayCnv.cxx
 
@@ -142,7 +142,7 @@ StatusCode PtOverlayCnv::finalize()
 }
 
 // (To TDS) Conversion stuff
-StatusCode PtOverlayCnv::createObj(IOpaqueAddress* addr, DataObject*& refpObject) 
+StatusCode PtOverlayCnv::createObj(IOpaqueAddress*, DataObject*& refpObject) 
 {
     StatusCode status = StatusCode::SUCCESS;
 
@@ -190,7 +190,7 @@ StatusCode PtOverlayCnv::createObj(IOpaqueAddress* addr, DataObject*& refpObject
     return status;
 }
     
-StatusCode PtOverlayCnv::createRep(DataObject* pObject, IOpaqueAddress*& refpAddress)
+StatusCode PtOverlayCnv::createRep(DataObject* pObject, IOpaqueAddress*&)
 {
     StatusCode status = StatusCode::SUCCESS;
 

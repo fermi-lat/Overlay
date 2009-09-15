@@ -1,7 +1,7 @@
 /**  @file XmlFetchEvents.cxx
 @brief implementation of class XmlFetchEvents
 
-$Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/XmlFetchEvents.cxx,v 1.1.1.1 2008/10/15 15:14:31 usher Exp $  
+$Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/InputControl/XmlFetchEvents.cxx,v 1.1 2008/12/01 22:42:59 usher Exp $  
 */
 
 #include "XmlFetchEvents.h"
@@ -129,7 +129,7 @@ double XmlFetchEvents::getAttributeValue(const std::string& elemName, double bin
 }
 
 
-std::vector<std::string> XmlFetchEvents::getFiles(double binVal, bool verbose) 
+std::vector<std::string> XmlFetchEvents::getFiles(double binVal, bool) 
 {
     /// Purpose and Method:  Returns a "fileList" associated with the bin found using binVal.
     /// Returns the input file list if completely successful

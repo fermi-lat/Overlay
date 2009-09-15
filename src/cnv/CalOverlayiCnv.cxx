@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/CalOverlayCnv.cxx,v 1.0 2006/01/18 23:12:22 jrb Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/CalOverlayiCnv.cxx,v 1.1 2008/12/02 15:27:17 usher Exp $
 /**
             @file  CalOverlayCnv.cxx
 
@@ -144,7 +144,7 @@ StatusCode CalOverlayCnv::finalize()
 }
 
 // (To TDS) Conversion stuff
-StatusCode CalOverlayCnv::createObj(IOpaqueAddress* addr, DataObject*& refpObject) 
+StatusCode CalOverlayCnv::createObj(IOpaqueAddress*, DataObject*& refpObject) 
 {
     StatusCode status = StatusCode::SUCCESS;
 
@@ -188,7 +188,7 @@ StatusCode CalOverlayCnv::createObj(IOpaqueAddress* addr, DataObject*& refpObjec
     return status;
 }
     
-StatusCode CalOverlayCnv::createRep(DataObject* pObject, IOpaqueAddress*& refpAddress)
+StatusCode CalOverlayCnv::createRep(DataObject* pObject, IOpaqueAddress*&)
 {
     StatusCode status = StatusCode::SUCCESS;
 
