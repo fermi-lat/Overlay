@@ -1,10 +1,11 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.27 2009/07/01 16:18:28 heather Exp $
+$Id: release.notes,v 1.28 2009/09/08 18:22:34 heather Exp $
 @verbatim
  * EOH *
 
+15-Sep-09           v1r5p6  TU Fix linux compiler warnings
 08-Sep-09           v1r5p5 HMK Explictly use RootConvert in requirements file
 25-Mar-09           v1r5p4  TU Use separate read indices for each open input overlay file
 23-Mar-09           v1r5p3  TU Fix PtOverlayCnv to register itself properly
