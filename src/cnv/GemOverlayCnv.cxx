@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/GemOverlayCnv.cxx,v 1.0 2006/01/18 23:12:22 jrb Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/GemOverlayCnv.cxx,v 1.1 2008/12/02 15:27:17 usher Exp $
 /**
             @file  GemOverlayCnv.cxx
 
@@ -142,7 +142,7 @@ StatusCode GemOverlayCnv::finalize()
 }
 
 // (To TDS) Conversion stuff
-StatusCode GemOverlayCnv::createObj(IOpaqueAddress* addr, DataObject*& refpObject) 
+StatusCode GemOverlayCnv::createObj(IOpaqueAddress*, DataObject*& refpObject) 
 {
     StatusCode status = StatusCode::SUCCESS;
 
@@ -188,7 +188,7 @@ StatusCode GemOverlayCnv::createObj(IOpaqueAddress* addr, DataObject*& refpObjec
     return status;
 }
     
-StatusCode GemOverlayCnv::createRep(DataObject* pObject, IOpaqueAddress*& refpAddress)
+StatusCode GemOverlayCnv::createRep(DataObject* pObject, IOpaqueAddress*&)
 {
     StatusCode status = StatusCode::SUCCESS;
 

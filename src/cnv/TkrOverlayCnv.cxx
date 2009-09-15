@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/TkrOverlayCnv.cxx,v 1.0 2006/01/18 23:12:22 jrb Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/TkrOverlayCnv.cxx,v 1.1 2008/12/02 15:27:17 usher Exp $
 /**
             @file  TkrOverlayCnv.cxx
 
@@ -143,7 +143,7 @@ StatusCode TkrOverlayCnv::finalize()
 }
 
 // (To TDS) Conversion stuff
-StatusCode TkrOverlayCnv::createObj(IOpaqueAddress* addr, DataObject*& refpObject) 
+StatusCode TkrOverlayCnv::createObj(IOpaqueAddress*, DataObject*& refpObject) 
 {
     StatusCode status = StatusCode::SUCCESS;
 
@@ -209,7 +209,7 @@ StatusCode TkrOverlayCnv::createObj(IOpaqueAddress* addr, DataObject*& refpObjec
     return status;
 }
     
-StatusCode TkrOverlayCnv::createRep(DataObject* pObject, IOpaqueAddress*& refpAddress)
+StatusCode TkrOverlayCnv::createRep(DataObject* pObject, IOpaqueAddress*&)
 {
     StatusCode status = StatusCode::SUCCESS;
 

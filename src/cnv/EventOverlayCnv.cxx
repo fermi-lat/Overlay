@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/EventOverlayCnv.cxx,v 1.0 2006/01/18 23:12:22 jrb Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/EventOverlayCnv.cxx,v 1.1 2008/12/02 15:27:17 usher Exp $
 /**
             @file  EventOverlayCnv.cxx
 
@@ -147,7 +147,7 @@ StatusCode EventOverlayCnv::finalize()
 }
 
 // (To TDS) Conversion stuff
-StatusCode EventOverlayCnv::createObj(IOpaqueAddress* addr, DataObject*& refpObject) 
+StatusCode EventOverlayCnv::createObj(IOpaqueAddress*, DataObject*& refpObject) 
 {
     StatusCode status = StatusCode::SUCCESS;
 
@@ -186,7 +186,7 @@ StatusCode EventOverlayCnv::createObj(IOpaqueAddress* addr, DataObject*& refpObj
     return status;
 }
     
-StatusCode EventOverlayCnv::createRep(DataObject* pObject, IOpaqueAddress*& refpAddress)
+StatusCode EventOverlayCnv::createRep(DataObject* pObject, IOpaqueAddress*&)
 {
     StatusCode status = StatusCode::SUCCESS;
 

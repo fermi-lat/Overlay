@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/DataServices/OverlayOutputSvc.cxx,v 1.1 2008/12/01 22:40:29 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/DataServices/OverlayOutputSvc.cxx,v 1.2 2009/01/14 20:07:51 usher Exp $
 
 // Include files
 #include "GaudiKernel/Service.h"
@@ -147,8 +147,6 @@ StatusCode OverlayOutputSvc::initialize()
         log << MSG::ERROR << "Can't find the tool service! " << endreq;
         return status;
     }
-
-    IToolSvc* toolSvc = dynamic_cast<IToolSvc*>(tmpToolSvc);
 
     // Find a pointer to the event data service
     status = service("EventDataSvc", m_eventDataSvc, true);
