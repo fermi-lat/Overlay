@@ -1,10 +1,11 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.28 2009/09/08 18:22:34 heather Exp $
+$Id: release.notes,v 1.29 2009/09/15 19:21:29 usher Exp $
 @verbatim
  * EOH *
 
+ Overlay-01-05-07 07-Dec-2009    jrb Add stuff for SCons build
 15-Sep-09           v1r5p6  TU Fix linux compiler warnings
 08-Sep-09           v1r5p5 HMK Explictly use RootConvert in requirements file
 25-Mar-09           v1r5p4  TU Use separate read indices for each open input overlay file
