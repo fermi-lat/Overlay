@@ -1,4 +1,15 @@
 ------------------------------------------------------------
+User: jrb  Mon Dec  7 22:39:20 PST 2009
+GlastRelease-scons/Overlay
+
+Modified Files:
+	.cvsignore 
+Added Files:
+	OverlayLib.py SConscript 
+Log Message:
+
+    *
+------------------------------------------------------------
 TAG
 Tag name: Overlay-01-05-06, operation: add
 Package: Overlay
