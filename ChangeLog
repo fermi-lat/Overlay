@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: usher  Wed Jan 27 14:45:26 PST 2010
+Overlay/src/MergeAlgs
+
+Modified Files:
+	CalOverlayMergeAlg.cxx 
+Log Message:
+Modificaton to Cal overlay to fix the way energy is deposited in McIntegratingHits
+    *
+------------------------------------------------------------
 TAG
 Tag name: Overlay-01-05-07, operation: add
 Package: Overlay
