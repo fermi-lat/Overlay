@@ -4,7 +4,7 @@
  *
  * @author Zach Fewtrell zachary.fewtrell@nrl.navy.mil
  * 
- *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/CalOverlayMergeAlg.cxx,v 1.2 2008/12/02 03:01:21 usher Exp $
+ *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/CalOverlayMergeAlg.cxx,v 1.3 2008/12/04 21:50:17 usher Exp $
  */
 
 // Gaudi specific include files
@@ -26,6 +26,9 @@
 #include "GlastSvc/Reco/IPropagator.h"
 #include "CalUtil/CalGeom.h"  
 #include "idents/TowerId.h"
+#include "CLHEP/Geometry/Transform3D.h"
+#include "CLHEP/Geometry/Point3D.h"
+#include "CLHEP/Geometry/Vector3D.h"
 
 #include <map>
 
@@ -135,11 +138,38 @@ StatusCode CalOverlayMergeAlg::execute()
     // Loop through the input CalOverlays and using the above map merge with existing McIntegratingHits
     for(Event::CalOverlayCol::iterator overIter  = overlayCol->begin(); overIter != overlayCol->end(); overIter++)
     {
-        Event::CalOverlay*      calOverlay = *overIter;
+        Event::CalOverlay* calOverlay = *overIter;
 
         // Use the propagator to get a valid VolumeIdentifier at the resolution of the McIntegratingHits
         m_propagator->setStepStart(calOverlay->getPosition(), direction);
         idents::VolumeIdentifier overId  = m_propagator->getVolumeId(0);
+
+        // Is this a crystal or a diode?
+        int volType = (int)overId[CalUtil::fCellCmp];
+
+        if (volType != 0)
+        {
+            // Attempt to "tweak" the volume identifer to nudge over to a crystal
+            idents::VolumeIdentifier::int64 volIdBits = overId.getValue();
+            int   identSize = overId.size();
+
+            volIdBits &= 0xFFFFFFFFFFFC0000;
+            if (volType == 2 || volType == 4) volIdBits |= 0x00000000000002C0;  // fCALSeg = 11
+
+            overId.init(volIdBits, identSize+1);
+        }
+
+        // Work out the transform for this volume
+        StatusCode sc;
+        HepGeom::Transform3D transfTop;
+        if((sc = m_detSvc->getTransform3DByID(overId,&transfTop)).isFailure())
+        {
+            log << MSG::INFO << "Couldn't get Id for layer 0 of CAL, will assume CAL absent." << endreq;
+            return StatusCode::SUCCESS;
+        }
+
+        HepPoint3D globalHit = calOverlay->getPosition();
+        HepPoint3D localHit  = transfTop.inverse() * globalHit;
 
         // Check that this is a valid CalXtalId
         idents::CalXtalId checkId(overId);
@@ -154,7 +184,7 @@ StatusCode CalOverlayMergeAlg::execute()
 
             newMcHit->setVolumeID(overId);
             newMcHit->setPackedFlags(Event::McIntegratingHit::overlayHit);
-            newMcHit->addEnergyItem(calOverlay->getEnergy(), particle, calOverlay->getPosition());
+            newMcHit->addEnergyItem(calOverlay->getEnergy(), particle, localHit);
 
             calMcHitCol->push_back(newMcHit);
         }
@@ -164,7 +194,7 @@ StatusCode CalOverlayMergeAlg::execute()
             Event::McIntegratingHit* mcHit = calIter->second;
 
             mcHit->addPackedMask(Event::McIntegratingHit::overlayHit);
-            mcHit->addEnergyItem(calOverlay->getEnergy(), particle, calOverlay->getPosition());
+            mcHit->addEnergyItem(calOverlay->getEnergy(), particle, localHit);
         }
     }
 
