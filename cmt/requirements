@@ -1,9 +1,9 @@
 package Overlay
-version v1r5p7
+version v1r6p0
 
 author Tracy Usher <usher@slac.stanford.edu>
 
-# $Header: /nfs/slac/g/glast/ground/cvs/Overlay/cmt/requirements,v 1.29 2009/09/15 19:21:29 usher Exp $
+# $Header: /nfs/slac/g/glast/ground/cvs/Overlay/cmt/requirements,v 1.30 2009/12/08 06:48:05 jrb Exp $
 
 branches src doc
 
