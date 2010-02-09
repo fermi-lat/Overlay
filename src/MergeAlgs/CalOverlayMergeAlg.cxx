@@ -150,13 +150,24 @@ StatusCode CalOverlayMergeAlg::execute()
         if (volType != 0)
         {
             // Attempt to "tweak" the volume identifer to nudge over to a crystal
-            idents::VolumeIdentifier::int64 volIdBits = overId.getValue();
-            int   identSize = overId.size();
+            idents::VolumeIdentifier newIdent;
 
-            volIdBits &= 0xFFFFFFFFFFFC0000;
-            if (volType == 2 || volType == 4) volIdBits |= 0x00000000000002C0;  // fCALSeg = 11
+            // Loop through and copy the current fields we want
+            for (int identIdx = 0; identIdx < CalUtil::fCellCmp; identIdx++) 
+            {
+                newIdent.append(overId[identIdx]);
+            }
 
-            overId.init(volIdBits, identSize+1);
+            // Now append the fields we need for a crystal
+            newIdent.append(0);                          // for xtal component
+            if ((volType ==2) || (volType ==4))          // + end
+            {  
+                newIdent.append(11);                     // max segment number
+            } 
+            else newIdent.append(0);                     // - end
+
+            // Now change the old id to the new one
+            overId.init(newIdent.getValue(), newIdent.size());
         }
 
         // Work out the transform for this volume
