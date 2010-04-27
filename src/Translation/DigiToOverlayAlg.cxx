@@ -5,7 +5,7 @@
  *
  * @author Tracy Usher
  *
- * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/DigiToOverlayAlg.cxx,v 1.1 2008/12/01 22:50:12 usher Exp $
+ * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/DigiToOverlayAlg.cxx,v 1.2 2009/03/16 17:31:27 usher Exp $
  */
 
 #include "GaudiKernel/Algorithm.h"
@@ -55,6 +55,7 @@ DigiToOverlayAlg::DigiToOverlayAlg(const std::string& name,
     defaultToolNames.push_back("CalXtalToOverlayTool");
     defaultToolNames.push_back("AcdHitToOverlayTool");
     defaultToolNames.push_back("GemToOverlayTool");
+    defaultToolNames.push_back("DiagnosticDataToOverlayTool");
     defaultToolNames.push_back("PtToOverlayTool");
 
     // Property list def
