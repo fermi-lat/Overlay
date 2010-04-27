@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: usher  Tue Apr 27 13:27:57 PDT 2010
+Overlay/src/MergeAlgs
+
+Modified Files:
+	DiagDataOverlayMergeAlg.cxx 
+Log Message:
+Add in filling of Cal diagnostic info (even though we don't think its really there)
+    *
+------------------------------------------------------------
 User: usher  Tue Apr 27 10:43:15 PDT 2010
 Overlay/src/Translation
 
