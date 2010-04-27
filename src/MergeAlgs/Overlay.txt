@@ -1,7 +1,7 @@
 //##############################################################
 //
 // Job options file for Setting up the background overlay from input digis
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/Overlay.txt,v 1.4 2009/03/16 17:31:27 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/Overlay.txt,v 1.5 2009/03/19 15:28:08 usher Exp $
 
 // Include the Overlay package library
 ApplicationMgr.DLLs += { "Overlay"};
@@ -19,6 +19,7 @@ Digitization.Members = {
     "CalOverlayMergeAlg",
     "TriggerInfoAlg",
     "GemOverlayMergeAlg",
+    "DiagDataOverlayMergeAlg",
     "TkrOverlayMergeAlg",
     "TkrDigiMergeTruncationAlg"
     };
