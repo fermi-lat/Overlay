@@ -129,9 +129,13 @@ StatusCode DiagnosticDataToOverlayTool::translate()
     {
         const LdfEvent::CalDiagnosticData& calDiagnosticData = diagnosticData->getCalDiagnosticByIndex(idx);
 
-        Event::CalDiagDataOverlay cal(calDiagnosticData.dataWord(), calDiagnosticData.tower(), calDiagnosticData.layer());
+        // Only store if data word is non-zero
+        if (calDiagnosticData.dataWord())
+        {
+            Event::CalDiagDataOverlay cal(calDiagnosticData.dataWord(), calDiagnosticData.tower(), calDiagnosticData.layer());
 
-        diagDataOverlay->addCalDiagnostic(cal);
+            diagDataOverlay->addCalDiagnostic(cal);
+        }
     }
 
     // Now come back and copy the Tkr diagnostic info
@@ -141,9 +145,13 @@ StatusCode DiagnosticDataToOverlayTool::translate()
     {
         const LdfEvent::TkrDiagnosticData& tkrDiagnosticData = diagnosticData->getTkrDiagnosticByIndex(idx);
 
-        Event::TkrDiagDataOverlay tkr(tkrDiagnosticData.dataWord(), tkrDiagnosticData.tower(), tkrDiagnosticData.gtcc());
+        // Only store if data word is non-zero
+        if (tkrDiagnosticData.dataWord())
+        {
+            Event::TkrDiagDataOverlay tkr(tkrDiagnosticData.dataWord(), tkrDiagnosticData.tower(), tkrDiagnosticData.gtcc());
 
-        diagDataOverlay->addTkrDiagnostic(tkr);
+            diagDataOverlay->addTkrDiagnostic(tkr);
+        }
     }
 
     return status;
