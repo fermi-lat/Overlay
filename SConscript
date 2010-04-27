@@ -1,7 +1,7 @@
 # -*- python -*-
-# $Header: /nfs/slac/g/glast/ground/cvs/Overlay/SConscript,v 1.3 2010/01/27 22:47:15 usher Exp $
+# $Header: /nfs/slac/g/glast/ground/cvs/Overlay/SConscript,v 1.4 2010/02/09 17:27:13 usher Exp $
 # Authors: Tracy Usher <usher@slac.stanford.edu>
-# Version: Overlay-01-06-01
+# Version: Overlay-01-07-00
 import os
 Import('baseEnv')
 Import('listFiles')
