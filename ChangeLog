@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: usher  Tue Apr 27 10:43:15 PDT 2010
+Overlay/src/MergeAlgs
+
+Modified Files:
+	Overlay.txt 
+Log Message:
+Small update to reduce output into Overlay files (only keep diagnostic data for words that are non-zero since we "or" them into the "real" info anyway)
+    *
+------------------------------------------------------------
 User: usher  Tue Apr 27 09:53:33 PDT 2010
 Overlay/src/cnv
 
