@@ -154,6 +154,7 @@ StatusCode DiagDataOverlayMergeAlg::execute()
         {
             unsigned updateBits = tkrDiagData.dataWord() | tkrOverIter->second;
 
+            // Update the bits for the tracker
             diagnosticData->setTkrDataWordByIndex(idx,updateBits);
 
             // Now clear the overlay information from the map
@@ -176,8 +177,8 @@ StatusCode DiagDataOverlayMergeAlg::execute()
         {
             unsigned updateBits = calDiagData.dataWord() | calOverIter->second;
 
-            // We would do this but someone (LSREA) forgot to add ability to change it! 
-//            diagnosticData->setCalDataWordByIndex(idx,updateBits);
+            // Update the bits for the Cal
+            diagnosticData->setCalDataWordByIndex(idx,updateBits);
 
             // Now clear the overlay information from the map
             calOverDiagMap.erase(calOverIter);
