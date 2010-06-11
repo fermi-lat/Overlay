@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jrb  Thu Jun 10 17:39:27 PDT 2010
+GlastRelease-scons/Overlay
+
+Modified Files:
+	SConscript 
+Log Message:
+updates for SCons build
+    *
+------------------------------------------------------------
 TAG
 Tag name: Overlay-01-07-00, operation: add
 Package: Overlay
