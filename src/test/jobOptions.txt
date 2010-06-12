@@ -1,9 +1,9 @@
 //##############################################################
 //
 // Job options file for GUI (gui or FRED) Gleam job
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/test/jobOptions.txt,v 1.1 2008/12/01 22:47:50 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/test/jobOptions.txt,v 1.2 2009/03/17 00:06:32 usher Exp $
 
-////#include "$GLEAMROOT/src/basicOptions.txt"
+////#include "$GLEAMJOBOPTIONSPATH/basicOptions.txt"
 //
 //******************************************************************************************************
 // The following is the replacement for Gleam's basicOptons.txt file (to *** below)
@@ -83,7 +83,7 @@ ApplicationMgr.DLLs += {"G4Generator","G4Propagator"};
 //
 ApplicationMgr.ExtSvc += {"GlastPropagatorSvc"};
 
-#include "$CALIBSVCROOT/src/defaultOptions.txt"
+#include "$CALIBSVCJOBOPTIONSPATH/defaultOptions.txt"
 
 //
 // CAL Xtal respons::
@@ -182,7 +182,7 @@ TriggerAlg.applyPrescales = false;
 Output.Members = {};
 
 // Testing overlay
-#include "$OVERLAYROOT/src/Translation/DigiToOverlay.txt"
+#include "$OVERLAYJOBOPTIONSPATH/Translation/DigiToOverlay.txt"
 OverlayOutputSvc.overlayRootFile = "overlay.root";
 
 // Start up a CalCalibSvc:
