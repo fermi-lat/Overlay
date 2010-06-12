@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jrb  Fri Jun 11 18:40:11 PDT 2010
+GlastRelease-scons/Overlay/src/Tasks
+
+Modified Files:
+	skimOverlayEvents.txt 
+Log Message:
+in jo files replace occurrences of PKGROOT/src with PKGJOBOPTIONSPATH
+    *
+------------------------------------------------------------
 User: jrb  Thu Jun 10 17:39:27 PDT 2010
 GlastRelease-scons/Overlay
 
