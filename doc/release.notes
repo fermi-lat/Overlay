@@ -1,10 +1,11 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.32 2010/02/09 17:27:14 usher Exp $
+$Id: release.notes,v 1.33 2010/04/27 20:35:34 usher Exp $
 @verbatim
  * EOH *
 
+ Overlay-01-07-01 12-Jun-2010    jrb upgrades for SCons builds
  Overlay-01-07-00 27-Apr-2010  TU  Add Diagnostic data to Overlay
  Overlay-01-06-01  8-Feb-2010  TU  Make volumen ID tweaking in Cal overlay more robust
  Overlay-01-06-00 27-Jan-2010  TU  Fix the way Cal adds energy to McIntegratingHits
