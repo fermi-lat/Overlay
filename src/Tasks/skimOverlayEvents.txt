@@ -1,11 +1,11 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Tasks/skimOverlayEvents.txt,v 1.1 2009/01/16 04:04:04 lsrea Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/Tasks/skimOverlayEvents.txt,v 1.3 2009/01/24 21:58:04 lsrea Exp $
 //##############################################################
 //
 // Job options file to skim the Periodic-Trigger events from a data file
 //   and write out already-processed Overlay events
 //
 // start with the basic program defined in Gleam
-#include "$GLEAMROOT/src/basicOptions.txt"
+#include "$GLEAMJOBOPTIONSPATH/basicOptions.txt"
 
 // --------------------------------------
 //      set up RootIo to control event loop
@@ -21,12 +21,12 @@ Top.Members += {"Sequencer/OutputEvent"};
 // to kill the memory leak
 RootIoSvc.RebuildIndex = false;
 
-//#include "$GLEAMROOT/src/makeOverlay_test.txt"
+//#include "$GLEAMJOBOPTIONSPATH/makeOverlay_test.txt"
 
 // choose one or the other below for old Gui or FRED
 // note that FRED should start up automatically
-//#include "$GLEAMROOT/src/guiOptions.txt"
-//#include "$GLEAMROOT/src/fredOptions.txt"
+//#include "$GLEAMJOBOPTIONSPATH/guiOptions.txt"
+//#include "$GLEAMJOBOPTIONSPATH/fredOptions.txt"
 
 Generation.Members={ };
 Digitization.Members = {"digiRootReaderAlg"};
@@ -44,13 +44,13 @@ NtupleMaker.Members = {"PtValsAlg", "AnalysisNtupleAlg", "ClassifyAlg", "FT1Alg"
 AnalysisNtupleAlg.realData = true;
 
 // for making the overlays, sets the Output sequence
-#include "$OVERLAYROOT/src/Translation/DigiToOverlay.txt"
+#include "$OVERLAYJOBOPTIONSPATH/Translation/DigiToOverlay.txt"
 
 ToolSvc.AcdHitToOverlayTool.PHATileCut = 25.0;
 ToolSvc.AcdHitToOverlayTool.PHARibbonCut = 25.0;
 
 // get the calibrations
-#include "$GLEAMROOT/src/jobOptions/pipeline/calibrations.txt"
+#include "$GLEAMJOBOPTIONSPATH/jobOptions/pipeline/calibrations.txt"
 
 // -------------------------------------------------
 //          input files
