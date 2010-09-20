@@ -1,7 +1,7 @@
 //##############################################################
 //
 // Job options file for GUI (gui or FRED) Gleam job
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/test/jobOptions.txt,v 1.1 2008/12/01 22:47:50 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/test/jobOptions.txt,v 1.2 2009/03/17 00:06:32 usher Exp $
 
 ////#include "$GLEAMROOT/src/basicOptions.txt"
 //
@@ -18,12 +18,14 @@ AuditorSvc.Auditors = {"ChronoAuditor"};
 //
 // Set up basic event loop: 
 //
-ApplicationMgr.ExtSvc = {"EventSelector/EventSelector" };
+ApplicationMgr.ExtSvc = {"DbEvtSelector/EventSelector" };
+
+ApplicationMgr.HistogramPersistency = "NONE";
 
 EventPersistencySvc.CnvServices = {"EventCnvSvc"};
 
-EventSelector.Input     = "SVC='DbEvtSelector";
-EventSelector.PrintFreq = -1;
+//EventSelector.Input     = "SVC='DbEvtSelector";
+//EventSelector.PrintFreq = -1;
 
 
 //
@@ -145,7 +147,8 @@ GlastDetSvc.xmlfile = "$(XMLGEODBSXMLPATH)/flight/flightSegVols.xml";
 // 
 // Number of events:
 //
-ApplicationMgr.EvtMax = 10000000000;
+//ApplicationMgr.EvtMax = 10000000000;
+ApplicationMgr.EvtMax = 10000;
 
 //
 // End of replacement of basicOptions.txt

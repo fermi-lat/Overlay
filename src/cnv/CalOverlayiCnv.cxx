@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/CalOverlayiCnv.cxx,v 1.1 2008/12/02 15:27:17 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/CalOverlayiCnv.cxx,v 1.2 2009/09/15 19:20:05 usher Exp $
 /**
             @file  CalOverlayCnv.cxx
 
@@ -91,8 +91,9 @@ private:
 };
 
 
- static CnvFactory<CalOverlayCnv> s_factory;
- const ICnvFactory& CalOverlayCnvFactory = s_factory;
+ //static CnvFactory<CalOverlayCnv> s_factory;
+ //const ICnvFactory& CalOverlayCnvFactory = s_factory;
+DECLARE_CONVERTER_FACTORY(CalOverlayCnv);
 
  CalOverlayCnv::CalOverlayCnv( ISvcLocator* svc) : Converter (SICB_StorageType, ObjectVector<Event::CalOverlay>::classID(), svc) 
 {
@@ -115,7 +116,9 @@ StatusCode CalOverlayCnv::initialize()
 
     // We're going rogue here, look up the OverlayDataSvc and use this as 
     // our data provider insteand of EventCnvSvc
-    SmartIF<IDataManagerSvc> iaddrReg(IID_IDataManagerSvc, dataProvider());
+    //SmartIF<IDataManagerSvc> iaddrReg(IID_IDataManagerSvc, dataProvider());
+    // HMK Changes in SmartIF interface in Gaudi v21r7 - try this
+    SmartIF<IDataManagerSvc> iaddrReg(dataProvider());
 
     IService* tmpService = 0;
     if (service("OverlayInputSvc", tmpService, false).isFailure())
@@ -123,7 +126,8 @@ StatusCode CalOverlayCnv::initialize()
         log << MSG::INFO << "No OverlayInputSvc available, no input conversion will be performed" << endreq;
         m_overlayInputSvc = 0;
     }
-    else m_overlayInputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
+    else m_overlayInputSvc = SmartIF<IOverlayDataSvc>(tmpService);
+    //else m_overlayInputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
 
     // Now look up the output data service
     if (service("OverlayOutputSvc", tmpService, false).isFailure())
@@ -131,7 +135,8 @@ StatusCode CalOverlayCnv::initialize()
         log << MSG::INFO << "No OverlayOutputSvc available, no input conversion will be performed" << endreq;
         m_overlayOutputSvc = 0;
     }
-    else m_overlayOutputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
+    else m_overlayOutputSvc = SmartIF<IOverlayDataSvc>(tmpService);
+    //else m_overlayOutputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
 
     if (m_overlayOutputSvc) m_overlayOutputSvc->registerOutputPath(m_path);
 

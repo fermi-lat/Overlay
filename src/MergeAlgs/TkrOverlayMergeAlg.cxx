@@ -5,7 +5,7 @@
  *
  * @author Tracy Usher
  *
- * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/TkrOverlayMergeAlg.cxx,v 1.2 2008/12/04 21:50:17 usher Exp $
+ * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/TkrOverlayMergeAlg.cxx,v 1.3 2008/12/18 23:38:52 usher Exp $
  */
 
 
@@ -54,8 +54,9 @@ class TkrOverlayMergeAlg : public Algorithm
 };
 
 // Used by Gaudi for identifying this algorithm
-static const AlgFactory<TkrOverlayMergeAlg>    Factory;
-const IAlgFactory& TkrOverlayMergeAlgFactory = Factory;
+//static const AlgFactory<TkrOverlayMergeAlg>    Factory;
+//const IAlgFactory& TkrOverlayMergeAlgFactory = Factory;
+DECLARE_ALGORITHM_FACTORY(TkrOverlayMergeAlg);
 
 TkrOverlayMergeAlg::TkrOverlayMergeAlg(const std::string& name,
                                          ISvcLocator* pSvcLocator)

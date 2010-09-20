@@ -1,7 +1,7 @@
 /** @file SkimOverlayEventsAlg.cxx
     @brief declartion, implementaion of the class SkimOverlayEventsAlg
 
-    $Header: /nfs/slac/g/glast/ground/cvs/SkimOverlayEventsAlg/src/SkimOverlayEventsAlg.cxx,v 1.19 2004/11/26 21:40:20 burnett Exp $
+    $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Tasks/SkimOverlayEventsAlg.cxx,v 1.1 2009/01/16 04:04:04 lsrea Exp $
 */
 // Gaudi system includes
 #include "GaudiKernel/MsgStream.h"
@@ -88,8 +88,9 @@ private:
 };
 
 
-static const AlgFactory<SkimOverlayEventsAlg>  Factory;
-const IAlgFactory& SkimOverlayEventsAlgFactory = Factory;
+//static const AlgFactory<SkimOverlayEventsAlg>  Factory;
+//const IAlgFactory& SkimOverlayEventsAlgFactory = Factory;
+DECLARE_ALGORITHM_FACTORY(SkimOverlayEventsAlg);
 
 SkimOverlayEventsAlg::SkimOverlayEventsAlg(const std::string& name, ISvcLocator* pSvcLocator)
 :Algorithm(name, pSvcLocator)
@@ -134,7 +135,8 @@ StatusCode SkimOverlayEventsAlg::initialize(){
         log << MSG::INFO << "No OverlayOutputSvc available, no input conversion will be performed" << endreq;
         m_overlayOutputSvc = 0;
     }
-    else m_overlayOutputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
+    else m_overlayOutputSvc = SmartIF<IOverlayDataSvc>(tmpService);
+    //else m_overlayOutputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
     
     // example code to create a ROOT tuple and schedule it for filling 
 

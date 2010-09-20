@@ -1,7 +1,7 @@
 /**  @file DiagnosticDataToOverlayTool.cxx
     @brief implementation of class DiagnosticDataToOverlayTool
     
-  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/DiagnosticDataToOverlayTool.cxx,v 1.0 2008/12/01 22:50:12 usher Exp $  
+  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/DiagnosticDataToOverlayTool.cxx,v 1.2 2010/04/27 17:43:15 usher Exp $  
 */
 
 #include "IDigiToOverlayTool.h"
@@ -52,8 +52,9 @@ private:
     IDataProviderSvc*      m_edSvc;
 };
 
-static ToolFactory<DiagnosticDataToOverlayTool> s_factory;
-const IToolFactory& DiagnosticDataToOverlayToolFactory = s_factory;
+//static ToolFactory<DiagnosticDataToOverlayTool> s_factory;
+//const IToolFactory& DiagnosticDataToOverlayToolFactory = s_factory;
+DECLARE_TOOL_FACTORY(DiagnosticDataToOverlayTool);
 
 //------------------------------------------------------------------------
 DiagnosticDataToOverlayTool::DiagnosticDataToOverlayTool(const std::string& type, 

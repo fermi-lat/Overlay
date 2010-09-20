@@ -1,9 +1,9 @@
 package Overlay
-version v1r7p0
+version v1r7p0gr01
 
 author Tracy Usher <usher@slac.stanford.edu>
 
-# $Header: /nfs/slac/g/glast/ground/cvs/Overlay/cmt/requirements,v 1.32 2010/02/09 17:27:14 usher Exp $
+# $Header: /nfs/slac/g/glast/ground/cvs/Overlay/cmt/requirements,v 1.33 2010/04/27 20:35:34 usher Exp $
 
 branches src doc
 
@@ -29,6 +29,7 @@ use Trigger      v*
 use FluxSvc      v*
 use AcdUtil      v*
 use TkrUtil      v*
+use RootmapPolicy * GlastPolicy
 use gr_app       v*
 
 macro source "*.cxx " WIN32 "*.h *.cxx"
@@ -46,8 +47,9 @@ library Overlay  \
         -s=../src/MergeAlgs $(source) \
         -s=../src/InputControl $(source) \
         -s=../src/Translation $(source) \
-        -s=../src/Tasks $(source) \
-        -s=Dll *.cxx
+        -s=../src/Tasks $(source) 
+
+apply_pattern generate_rootmap library=Overlay
 
 
 # simple test program
