@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: heather  Mon Sep 20 09:15:40 PDT 2010
+Overlay
+
+Modified Files:
+      Tag: GlastReleasev18r6p1
+	SConscript 
+Log Message:
+Gaudi v21r7 updates
+    *
+------------------------------------------------------------
 TAG
 Tag name: Overlay-01-07-01, operation: add
 Package: Overlay
