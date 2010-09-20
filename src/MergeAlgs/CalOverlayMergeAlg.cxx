@@ -4,7 +4,7 @@
  *
  * @author Zach Fewtrell zachary.fewtrell@nrl.navy.mil
  * 
- *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/CalOverlayMergeAlg.cxx,v 1.3 2008/12/04 21:50:17 usher Exp $
+ *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/CalOverlayMergeAlg.cxx,v 1.5 2010/02/09 17:25:38 usher Exp $
  */
 
 // Gaudi specific include files
@@ -60,8 +60,9 @@ private:
 
 
 // Define the factory for this algorithm
-static const AlgFactory<CalOverlayMergeAlg>  Factory;
-const IAlgFactory& CalOverlayMergeAlgFactory = Factory;
+//static const AlgFactory<CalOverlayMergeAlg>  Factory;
+//const IAlgFactory& CalOverlayMergeAlgFactory = Factory;
+DECLARE_ALGORITHM_FACTORY(CalOverlayMergeAlg);
 
 /// construct object & declare jobOptions
 CalOverlayMergeAlg::CalOverlayMergeAlg(const string& name, ISvcLocator* pSvcLocator) :

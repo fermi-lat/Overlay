@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/AcdOverlayCnv.cxx,v 1.2 2009/03/18 04:08:24 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/AcdOverlayCnv.cxx,v 1.3 2009/09/15 19:20:05 usher Exp $
 /**
             @file  AcdOverlayCnv.cxx
 
@@ -93,8 +93,9 @@ private:
 };
 
 
- static CnvFactory<AcdOverlayCnv> s_factory;
- const ICnvFactory& AcdOverlayCnvFactory = s_factory;
+ //static CnvFactory<AcdOverlayCnv> s_factory;
+ //const ICnvFactory& AcdOverlayCnvFactory = s_factory;
+DECLARE_CONVERTER_FACTORY(AcdOverlayCnv);
 
  AcdOverlayCnv::AcdOverlayCnv( ISvcLocator* svc) : Converter (SICB_StorageType, ObjectVector<Event::AcdOverlay>::classID(), svc) 
 {
@@ -123,7 +124,8 @@ StatusCode AcdOverlayCnv::initialize()
         log << MSG::INFO << "No OverlayInputSvc available, no input conversion will be performed" << endreq;
         m_overlayInputSvc = 0;
     }
-    else m_overlayInputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
+    else m_overlayInputSvc = SmartIF<IOverlayDataSvc>(tmpService);
+    //else m_overlayInputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
 
     // Now look up the output data service
     if (service("OverlayOutputSvc", tmpService, false).isFailure())
@@ -131,7 +133,8 @@ StatusCode AcdOverlayCnv::initialize()
         log << MSG::INFO << "No OverlayOutputSvc available, no input conversion will be performed" << endreq;
         m_overlayOutputSvc = 0;
     }
-    else m_overlayOutputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
+    else m_overlayOutputSvc = SmartIF<IOverlayDataSvc>(tmpService);
+    //else m_overlayOutputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
 
     if (m_overlayOutputSvc) m_overlayOutputSvc->registerOutputPath(m_path);
 

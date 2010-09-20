@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/GemOverlayCnv.cxx,v 1.1 2008/12/02 15:27:17 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/GemOverlayCnv.cxx,v 1.2 2009/09/15 19:20:05 usher Exp $
 /**
             @file  GemOverlayCnv.cxx
 
@@ -91,8 +91,9 @@ private:
 };
 
 
- static CnvFactory<GemOverlayCnv> s_factory;
- const ICnvFactory& GemOverlayCnvFactory = s_factory;
+ //static CnvFactory<GemOverlayCnv> s_factory;
+ //const ICnvFactory& GemOverlayCnvFactory = s_factory;
+DECLARE_CONVERTER_FACTORY(GemOverlayCnv);
 
  GemOverlayCnv::GemOverlayCnv( ISvcLocator* svc) : Converter (SICB_StorageType, Event::GemOverlay::classID(), svc) 
 {
@@ -121,7 +122,9 @@ StatusCode GemOverlayCnv::initialize()
         log << MSG::INFO << "No OverlayInputSvc available, no input conversion will be performed" << endreq;
         m_overlayInputSvc = 0;
     }
-    else m_overlayInputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
+    else m_overlayInputSvc = SmartIF<IOverlayDataSvc>(tmpService);
+    // HMK SmartIF interface changed in Gaudi v21r7
+    //else m_overlayInputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
 
     // Now look up the output data service
     if (service("OverlayOutputSvc", tmpService, false).isFailure())
@@ -129,7 +132,8 @@ StatusCode GemOverlayCnv::initialize()
         log << MSG::INFO << "No OverlayOutputSvc available, no input conversion will be performed" << endreq;
         m_overlayOutputSvc = 0;
     }
-    else m_overlayOutputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
+    else m_overlayOutputSvc = SmartIF<IOverlayDataSvc>(tmpService);
+    //else m_overlayOutputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
 
     if (m_overlayOutputSvc) m_overlayOutputSvc->registerOutputPath(m_path);
 

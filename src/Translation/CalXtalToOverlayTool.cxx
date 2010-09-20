@@ -1,7 +1,7 @@
 /**  @file CalXtalToOverlayTool.cxx
     @brief implementation of class CalXtalToOverlayTool
     
-  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/CalXtalToOverlayTool.cxx,v 1.0 2008/10/15 15:14:30 usher Exp $  
+  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/CalXtalToOverlayTool.cxx,v 1.1 2008/12/01 22:50:11 usher Exp $  
 */
 
 #include "IDigiToOverlayTool.h"
@@ -53,8 +53,9 @@ private:
     IDataProviderSvc*   m_edSvc;
 };
 
-static ToolFactory<CalXtalToOverlayTool> s_factory;
-const IToolFactory& CalXtalToOverlayToolFactory = s_factory;
+//static ToolFactory<CalXtalToOverlayTool> s_factory;
+//const IToolFactory& CalXtalToOverlayToolFactory = s_factory;
+DECLARE_TOOL_FACTORY(CalXtalToOverlayTool);
 
 //------------------------------------------------------------------------
 CalXtalToOverlayTool::CalXtalToOverlayTool(const std::string& type, 

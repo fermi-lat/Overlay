@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/DataServices/OverlayInputSvc.cxx,v 1.5 2009/03/26 00:16:48 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/DataServices/OverlayInputSvc.cxx,v 1.6 2009/09/15 19:20:04 usher Exp $
 
 // Include files
 #include "GaudiKernel/Service.h"
@@ -100,8 +100,9 @@ private:
 
 // Instantiation of a static factory class used by clients to create
 // instances of this service
-static SvcFactory<OverlayInputSvc> s_factory;
-const ISvcFactory& OverlayInputSvcFactory = s_factory;
+//static SvcFactory<OverlayInputSvc> s_factory;
+//const ISvcFactory& OverlayInputSvcFactory = s_factory;
+DECLARE_SERVICE_FACTORY(OverlayInputSvc);
 
 /// Standard Constructor
 OverlayInputSvc::OverlayInputSvc(const std::string& name,ISvcLocator* svc) : Service(name,svc),

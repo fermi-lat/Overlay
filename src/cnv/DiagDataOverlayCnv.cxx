@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/DiagDataOverlayCnv.cxx,v 1. 2008/12/02 15:27:17 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/DiagDataOverlayCnv.cxx,v 1.1 2010/04/27 16:53:33 usher Exp $
 /**
             @file  DiagDataOverlayCnv.cxx
 
@@ -91,8 +91,9 @@ private:
 };
 
 
- static CnvFactory<DiagDataOverlayCnv> s_factory;
- const ICnvFactory& DiagDataOverlayCnvFactory = s_factory;
+ //static CnvFactory<DiagDataOverlayCnv> s_factory;
+ //const ICnvFactory& DiagDataOverlayCnvFactory = s_factory;
+DECLARE_CONVERTER_FACTORY(DiagDataOverlayCnv);
 
  DiagDataOverlayCnv::DiagDataOverlayCnv( ISvcLocator* svc) : Converter (SICB_StorageType, Event::DiagDataOverlay::classID(), svc) 
 {
@@ -119,7 +120,9 @@ StatusCode DiagDataOverlayCnv::initialize()
         log << MSG::INFO << "No OverlayInputSvc available, no input conversion will be performed" << endreq;
         m_overlayInputSvc = 0;
     }
-    else m_overlayInputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
+    else m_overlayInputSvc = SmartIF<IOverlayDataSvc>(tmpService);
+    // HMK SmartIF interface changed in Gaudi v21r7
+    //else m_overlayInputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
 
     // Now look up the output data service
     if (service("OverlayOutputSvc", tmpService, false).isFailure())
@@ -127,7 +130,8 @@ StatusCode DiagDataOverlayCnv::initialize()
         log << MSG::INFO << "No OverlayOutputSvc available, no input conversion will be performed" << endreq;
         m_overlayOutputSvc = 0;
     }
-    else m_overlayOutputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
+    else m_overlayOutputSvc = SmartIF<IOverlayDataSvc>(tmpService);
+    //else m_overlayOutputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
 
     if (m_overlayOutputSvc) m_overlayOutputSvc->registerOutputPath(m_path);
 

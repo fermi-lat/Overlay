@@ -5,7 +5,7 @@
  *
  * @author Tracy Usher
  *
- * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/GemOverlayMergeAlg.cxx,v 1.1 2008/12/18 23:36:51 usher Exp $
+ * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/GemOverlayMergeAlg.cxx,v 1.2 2009/02/12 16:46:22 usher Exp $
  */
 
 
@@ -38,8 +38,9 @@ class GemOverlayMergeAlg : public Algorithm
 };
 
 // Used by Gaudi for identifying this algorithm
-static const AlgFactory<GemOverlayMergeAlg>    Factory;
-const IAlgFactory& GemOverlayMergeAlgFactory = Factory;
+//static const AlgFactory<GemOverlayMergeAlg>    Factory;
+//const IAlgFactory& GemOverlayMergeAlgFactory = Factory;
+DECLARE_ALGORITHM_FACTORY(GemOverlayMergeAlg);
 
 GemOverlayMergeAlg::GemOverlayMergeAlg(const std::string& name,
                                          ISvcLocator* pSvcLocator)
