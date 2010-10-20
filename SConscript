@@ -1,5 +1,5 @@
 # -*- python -*-
-# $Header: /nfs/slac/g/glast/ground/cvs/Overlay/SConscript,v 1.6 2010/06/11 00:39:27 jrb Exp $
+# $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/SConscript,v 1.7 2010/06/12 22:39:29 jrb Exp $
 # Authors: Tracy Usher <usher@slac.stanford.edu>
 # Version: Overlay-01-07-01
 import os
@@ -10,14 +10,13 @@ progEnv = baseEnv.Clone()
 libEnv = baseEnv.Clone()
 
 libEnv.Tool('addLinkDeps', package='Overlay', toBuild='component')
-OverlayLib = libEnv.SharedLibrary('Overlay',
-                                   listFiles(['src/Dll/*.cxx',
-                                              'src/cnv/*.cxx',
-                                              'src/DataServices/*.cxx',
-                                              'src/MergeAlgs/*.cxx',
-                                              'src/InputControl/*.cxx',
-                                              'src/Translation/*.cxx',
-                                              'src/Tasks/*.cxx']))
+OverlayLib = libEnv.ComponentLibrary('Overlay',
+                                     listFiles(['src/cnv/*.cxx',
+                                                'src/DataServices/*.cxx',
+                                                'src/MergeAlgs/*.cxx',
+                                                'src/InputControl/*.cxx',
+                                                'src/Translation/*.cxx',
+                                                'src/Tasks/*.cxx']))
 
 progEnv.Tool('OverlayLib')
 test_Overlay = progEnv.GaudiProgram('test_Overlay',
