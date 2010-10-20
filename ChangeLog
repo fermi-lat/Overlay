@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: jrb  Wed Oct 20 11:26:28 PDT 2010
+GlastRelease-scons/Overlay
+
+Modified Files:
+      Tag: GlastReleasev18r7p1
+	SConscript 
+Log Message:
+Get SCons to make rootmap
+    *
+------------------------------------------------------------
 TAG
 Tag name: Overlay-01-07-00-gr01, operation: add
 Package: Overlay
