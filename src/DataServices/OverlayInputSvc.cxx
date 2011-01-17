@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/DataServices/OverlayInputSvc.cxx,v 1.5 2009/03/26 00:16:48 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/DataServices/OverlayInputSvc.cxx,v 1.6 2009/09/15 19:20:04 usher Exp $
 
 // Include files
 #include "GaudiKernel/Service.h"
@@ -286,10 +286,8 @@ StatusCode OverlayInputSvc::selectNextEvent()
         long long inputIndex = 0;
 
         m_inputIndexMap[m_curFileType] = inputIndex;
-
-        m_rootIoSvc->setIndex(inputIndex);
         
-        m_eventOverlay = dynamic_cast<EventOverlay*>(m_rootIoSvc->getNextEvent(m_curFileType));
+        m_eventOverlay = dynamic_cast<EventOverlay*>(m_rootIoSvc->getNextEvent(m_curFileType, inputIndex));
     }
 
     // Set flag to indicate we have read the event
