@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: usher  Mon Jan 17 09:13:18 PST 2011
+Overlay/src/DataServices
+
+Modified Files:
+	OverlayInputSvc.cxx 
+Log Message:
+Fix event indexing when wrapping at the end of an input file
+    *
+------------------------------------------------------------
 User: jrb  Wed Oct 20 11:26:28 PDT 2010
 GlastRelease-scons/Overlay
 
