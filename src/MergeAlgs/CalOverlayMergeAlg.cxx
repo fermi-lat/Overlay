@@ -4,7 +4,7 @@
  *
  * @author Zach Fewtrell zachary.fewtrell@nrl.navy.mil
  * 
- *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/CalOverlayMergeAlg.cxx,v 1.3 2008/12/04 21:50:17 usher Exp $
+ *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/CalOverlayMergeAlg.cxx,v 1.5 2010/02/09 17:25:38 usher Exp $
  */
 
 // Gaudi specific include files
@@ -49,13 +49,18 @@ private:
     idents::VolumeIdentifier makeVolId(idents::CalXtalId calXtalId);
 
     /// used for constants & conversion routines.
-    IGlastDetSvc*  m_detSvc;
+    IGlastDetSvc*            m_detSvc;
 
     /// Pointer to the propagator
-    IPropagator*   m_propagator;
+    IPropagator*             m_propagator;
 
     /// store first range option ("autoRng" ---> best range first, "lex8", "lex1", "hex8", "hex1" ---> lex8-hex1 first)
-    StringProperty m_firstRng;
+    StringProperty           m_firstRng;
+
+    /// Local useful stuff
+    std::vector<std::string> m_diodeNames;
+    std::vector<double>      m_diodeHeights;
+    double                   m_diodeWidth;
 };
 
 
@@ -102,6 +107,30 @@ StatusCode CalOverlayMergeAlg::initialize()
         log << MSG::ERROR << "Couldn't retrieve G4PropagationTool" << endreq;
     }
 
+    // Initialize the diode names
+    m_diodeNames.push_back("diodeSNEG");
+    m_diodeNames.push_back("diodeSPOS");
+    m_diodeNames.push_back("diodeLNEG");
+    m_diodeNames.push_back("diodeLPOS");
+
+    // Get the diode heights
+    double diodeLY = 0.;
+    double diodeSY = 0.;
+    double diodeX  = 0.;
+    double diodeZ  = 0.;
+
+    sc = m_detSvc->getNumericConstByName("diodeLY", &diodeLY);
+    sc = m_detSvc->getNumericConstByName("diodeSY", &diodeSY);
+    sc = m_detSvc->getNumericConstByName("diodeX",  &diodeX);
+    sc = m_detSvc->getNumericConstByName("diodeZ",  &diodeZ);
+
+    m_diodeHeights.push_back(diodeSY);
+    m_diodeHeights.push_back(diodeSY);
+    m_diodeHeights.push_back(diodeLY);
+    m_diodeHeights.push_back(diodeLY);
+    
+    m_diodeWidth = diodeZ;
+
     return sc;
 }
 
@@ -117,6 +146,19 @@ StatusCode CalOverlayMergeAlg::execute()
 
     // Now recover the McIntegratingHits for this event
     SmartDataPtr<Event::McIntegratingHitCol> calMcHitCol(eventSvc(), EventModel::MC::McIntegratingHitCol);
+
+    // Does the collection exist? 
+    if (!calMcHitCol)
+    {
+        // create the TDS location for the McParticle Collection
+        calMcHitCol = new Event::McIntegratingHitVector;
+        StatusCode sc = eventSvc()->registerObject(EventModel::MC::McIntegratingHitCol, calMcHitCol);
+        if (sc.isFailure()) 
+        {
+            log << "Overlay failed to register McIntegratingHit in the TDS" << endreq;
+            return sc;
+        }
+    }
 
     // Create a map of the simulation McIntegratingHits, indexing by identifier
     std::map<idents::VolumeIdentifier, Event::McIntegratingHit*> idToMcHitMap;
@@ -170,17 +212,20 @@ StatusCode CalOverlayMergeAlg::execute()
             overId.init(newIdent.getValue(), newIdent.size());
         }
 
+        // Get a CalXtalId from this
+        idents::CalXtalId calXtalId(overId);
+
         // Work out the transform for this volume
         StatusCode sc;
-        HepGeom::Transform3D transfTop;
-        if((sc = m_detSvc->getTransform3DByID(overId,&transfTop)).isFailure())
+        HepGeom::Transform3D xtalTransform;
+        if((sc = m_detSvc->getTransform3DByID(overId,&xtalTransform)).isFailure())
         {
-            log << MSG::INFO << "Couldn't get Id for layer 0 of CAL, will assume CAL absent." << endreq;
+            log << MSG::INFO << "Couldn't retrieve the transform for this xtal segment id" << endreq;
             return StatusCode::SUCCESS;
         }
 
         HepPoint3D globalHit = calOverlay->getPosition();
-        HepPoint3D localHit  = transfTop.inverse() * globalHit;
+        HepPoint3D localHit  = xtalTransform.inverse() * globalHit;
 
         // Check that this is a valid CalXtalId
         idents::CalXtalId checkId(overId);
@@ -188,24 +233,200 @@ StatusCode CalOverlayMergeAlg::execute()
         // Does the identifier for this CalOverlay match an McIntegratingHit in the sim map?
         std::map<idents::VolumeIdentifier,Event::McIntegratingHit*>::iterator calIter = idToMcHitMap.find(overId);
 
+        // Pointer to the mcHit
+        Event::McIntegratingHit* mcHit = 0;
+
         // If no match then we need to create a new McIntegratingHit and add to the collection
         if (calIter == idToMcHitMap.end())
         {
-            Event::McIntegratingHit* newMcHit = new Event::McIntegratingHit();
+            mcHit = new Event::McIntegratingHit();
 
-            newMcHit->setVolumeID(overId);
-            newMcHit->setPackedFlags(Event::McIntegratingHit::overlayHit);
-            newMcHit->addEnergyItem(calOverlay->getEnergy(), particle, localHit);
+            mcHit->setVolumeID(overId);
+            mcHit->setPackedFlags(Event::McIntegratingHit::overlayHit);
+            mcHit->addEnergyItem(calOverlay->getEnergy(), particle, localHit);
 
-            calMcHitCol->push_back(newMcHit);
+            calMcHitCol->push_back(mcHit);
         }
         // Otherwise, a match so we just merge it into the existing McIntegratingHit
         else
         {
-            Event::McIntegratingHit* mcHit = calIter->second;
+            mcHit = calIter->second;
 
             mcHit->addPackedMask(Event::McIntegratingHit::overlayHit);
             mcHit->addEnergyItem(calOverlay->getEnergy(), particle, localHit);
+        }
+
+        // *************************************************************************
+        // The section below added to include the light seen by the diodes. It is 
+        // meant to emulate the same code in G4Generator's IntDetectorManager class
+        // *************************************************************************
+
+        // The first task we work at is to get a transformation from global to local
+        // coordinates for the volume containing the individual crystal segments
+        // Create a volume identifier for the containing low segment of the crystal
+        idents::VolumeIdentifier xtalIdLow;
+
+        // Create the log part of the identifier
+        for(int idx = 0; idx <= CalUtil::fCellCmp; idx++)
+        {
+            xtalIdLow.append(overId[idx]);
+        }
+
+        // This will be the high end
+        idents::VolumeIdentifier xtalIdHi = xtalIdLow;
+
+        xtalIdLow.append(0);
+        xtalIdHi.append(11);
+
+        // Use these to determine the offset of the center of the crystal
+        HepGeom::Transform3D xtalLowTransform;
+        if((sc = m_detSvc->getTransform3DByID(xtalIdLow,&xtalLowTransform)).isFailure())
+        {
+            log << MSG::INFO << "Couldn't retrieve the transform for this xtal id." << endreq;
+            return StatusCode::SUCCESS;
+        }
+
+        HepGeom::Transform3D xtalHiTransform;
+        if((sc = m_detSvc->getTransform3DByID(xtalIdHi,&xtalHiTransform)).isFailure())
+        {
+            log << MSG::INFO << "Couldn't retrieve the transform for this xtal id." << endreq;
+            return StatusCode::SUCCESS;
+        }
+
+        // We need to make a new translation vector, use the coordinates returned above
+        // It is done this way to automatically insure that we get the right value for the 
+        // translation without having to worry if this is an x or y measuring crystal
+        // If both are same, average returns same value, if both are different we get the 
+        // average between the two
+        Hep3Vector xtalTrans(0.5*(xtalHiTransform.dx()+xtalLowTransform.dx()), 
+                             0.5*(xtalHiTransform.dy()+xtalLowTransform.dy()),
+                             xtalHiTransform.dz());
+
+        // The transformation to the center of the enclosing crystal
+        xtalTransform = HepGeom::Transform3D(xtalHiTransform.getRotation(), xtalTrans);
+
+        // And reset the local position to this encosing volume
+        localHit = xtalTransform.inverse() * globalHit;
+
+        // We need to determine the fraction of light seen by each of the diodes
+        // We do this using the same approach done in the simulation 
+        // (see IntDetectorManager in G4Generator)
+        // Start by looping over the diodes (order is small Neg, small Pos, large Neg, large Pos)
+        for(int diodeIdx = 1; diodeIdx < 5; diodeIdx++)
+        {
+            // Create a volume identifier for this diode. 
+            // Apparently we cannot modify the fields so we must create a new one
+            // each time through this loop
+            idents::VolumeIdentifier diodeId;
+
+            // Create the log part of the identifier
+            for(int idx = 0; idx < CalUtil::fCellCmp; idx++)
+            {
+                diodeId.append(overId[idx]);
+            }
+
+            // now make it a diode part
+            diodeId.append(diodeIdx);
+
+            // Look up the transform, this will give the position of the center
+            // of the diode and its rotation
+            HepGeom::Transform3D trnsDiode;
+            if((sc = m_detSvc->getTransform3DByID(diodeId,&trnsDiode)).isFailure())
+            {
+                log << MSG::INFO << "Could not retrieve diode transform" << endreq;
+                continue;
+            }
+
+            // We need to get the normal vector pointing from the diode into the xtal
+            // We can get that by checking if the crystal measures x or y, and
+            // checking to see if the diode is on the plus or negative side
+            // Assume a normal in plus y
+            Hep3Vector diodeNrml(0., 1., 0.);
+
+            // Get both the distance from the center of the current xtal segment to the diode
+            // And reset the diodeNrml if we are oriented along x
+            double longDistToDiode = xtalTransform.dy() - trnsDiode.dy();
+
+            if (calXtalId.isX()) 
+            {
+                longDistToDiode = xtalTransform.dx() - trnsDiode.dx();
+                diodeNrml       = Hep3Vector(1., 0., 0.);
+            }
+
+            if (longDistToDiode < 0.) diodeNrml *= -1.;
+
+            // Get the dimensions of the face of the diode we are dealing with
+            double diodeFaceAlpha = 2. * m_diodeHeights[diodeIdx-1];
+            double diodeFaceBeta  = 2. * m_diodeWidth;
+
+            // Get the vector from the center of the diode to the current energy deposition point
+            Hep3Vector lineToCenter = globalHit - trnsDiode.getTranslation();
+            double     distToCenter = lineToCenter.mag();
+
+            // Now want the angle between this line and the diode normal
+            double cosTheta = lineToCenter.unit().dot(diodeNrml);
+
+            if (cosTheta < 0.)
+            {
+                cosTheta *= -1.;
+            }
+
+            // Projected area of rectangle is diodeFaceArea * cosTheta, which can also be 
+            // written as diodeFaceAlpha * diodeFaceBeta * cosTheta, so we scale diodeFaceBeta
+            // by cosTheta for what follows
+            double diodeFaceBetaPr = diodeFaceBeta * cosTheta;
+
+            // Determine fractional solid angle subtended. For this problem, this is the solid
+            // angle subtended by a pyramid.
+            double radical   = (4.*distToCenter*distToCenter + diodeFaceAlpha*diodeFaceAlpha)
+                             * (4.*distToCenter*distToCenter + diodeFaceBetaPr*diodeFaceBetaPr);
+            double aSinArg   = diodeFaceAlpha * diodeFaceBetaPr / sqrt(radical);
+            double fracAngle = asin(aSinArg) / M_PI;
+                    
+            Hep3Vector stepPos    = localHit;
+            double     directFrac = 0.;
+            double     totalDep   = 0.;
+
+            // Does angle to surface normal put us in the range of surface reflection? 
+            if (distToCenter < 30.) 
+            {
+				// The following is based on patterns extracted from flight data
+			    double dist2Side = std::max(0., 13.5 -fabs(stepPos.y()));
+				double dist2End  = std::max(0., 165.-fabs(stepPos.x()));
+
+				// No angle factor for direct light - probably due to end roughening...
+					directFrac += fracAngle;
+
+				// Total light attenuation governed by location - strong dependence side to side, 
+				// as well as dependencce with distance from end
+				if(dist2End < 30) 
+                {
+					double attenFactor = ((30. - dist2End) * (std::max(0., 13.5-dist2Side)))/ (30.*13.5);
+					totalDep += 1. - .33*attenFactor * attenFactor;
+				}
+				else 
+                {
+					totalDep   += 1.;
+					directFrac += fracAngle;
+				}
+            }
+            // Otherwise, all light "seen" by diode and all energy deposited in crystal
+            else
+            {
+                directFrac += fracAngle;
+                totalDep   += 1.;
+            }
+
+            // Now get the direct and total energy fractions
+            double directDepE = calOverlay->getEnergy() * directFrac;
+            double totalDepE  = calOverlay->getEnergy() * totalDep;
+
+            // Retrieve reference to object to fill for this diode
+            Event::McIntegratingHit::XtalEnergyDep& xtalDep = mcHit->getXtalEnergyDep(m_diodeNames[diodeIdx-1]);
+
+            xtalDep.addEnergyItem(totalDepE, directDepE, localHit);
+
+            int stop = 0;
         }
     }
 
