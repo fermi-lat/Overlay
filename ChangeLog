@@ -1,13 +1,4 @@
 ------------------------------------------------------------
-User: usher  Mon Jan 31 15:07:32 PST 2011
-Overlay/src/MergeAlgs
-
-Modified Files:
-	CalOverlayMergeAlg.cxx 
-Log Message:
-Updating CalOverlayMergeAlg to fill the McIntegratingHit diode structures so that the overlay will actually add energy to the event...
-    *
-------------------------------------------------------------
 TAG
 Tag name: Overlay-01-07-02, operation: add
 Package: Overlay
