@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/DataServices/OverlayInputSvc.cxx,v 1.6 2009/09/15 19:20:04 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/DataServices/OverlayInputSvc.cxx,v 1.7 2011/01/17 17:13:18 usher Exp $
 
 // Include files
 #include "GaudiKernel/Service.h"
@@ -359,8 +359,8 @@ void OverlayInputSvc::setNewInputBin(double x)
             // Select a random starting position within the allowed number of events
             long long numEventsLong = m_rootIoSvc->getRootEvtMax(m_curFileType);
             double    numEvents     = numEventsLong;
-            long long startEvent    = (long long)(RandFlat::shoot() * (numEvents - 1));
-            //Long64_t startEvent    = (Long64_t)(RandFlat::shoot() * (numEvents - 1));
+            long long startEvent    = (long long)(CLHEP::RandFlat::shoot() * (numEvents - 1));
+            //Long64_t startEvent    = (Long64_t)(CLHEP::RandFlat::shoot() * (numEvents - 1));
 
             // Set the index in our local map
             m_inputIndexMap[m_curFileType] = startEvent;

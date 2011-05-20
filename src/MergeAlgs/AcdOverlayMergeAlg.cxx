@@ -4,7 +4,7 @@
  *
  * @author Zach Fewtrell zachary.fewtrell@nrl.navy.mil
  * 
- *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/AcdOverlayMergeAlg.cxx,v 1.6 2009/01/06 16:54:12 lsrea Exp $
+ *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/AcdOverlayMergeAlg.cxx,v 1.7 2009/03/18 23:19:52 usher Exp $
  */
 
 // Gaudi specific include files
@@ -32,10 +32,14 @@
 
 #include <map>
 
+typedef HepGeom::Point3D<double> HepPoint3D;
+typedef HepGeom::Vector3D<double> HepVector3D;
+
 // Class definition
 class AcdOverlayMergeAlg : public Algorithm {
 
 public:
+
 
     AcdOverlayMergeAlg(const std::string& name, ISvcLocator* pSvcLocator); 
 
