@@ -4,7 +4,7 @@
  *
  * @author Zach Fewtrell zachary.fewtrell@nrl.navy.mil
  * 
- *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/CalOverlayMergeAlg.cxx,v 1.5 2010/02/09 17:25:38 usher Exp $
+ *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/CalOverlayMergeAlg.cxx,v 1.6 2011/01/31 23:07:32 usher Exp $
  */
 
 // Gaudi specific include files
@@ -31,6 +31,9 @@
 #include "CLHEP/Geometry/Vector3D.h"
 
 #include <map>
+
+typedef HepGeom::Point3D<double> HepPoint3D;
+typedef HepGeom::Vector3D<double> HepVector3D;
 
 // Class definition
 class CalOverlayMergeAlg : public Algorithm {
@@ -298,7 +301,7 @@ StatusCode CalOverlayMergeAlg::execute()
         // translation without having to worry if this is an x or y measuring crystal
         // If both are same, average returns same value, if both are different we get the 
         // average between the two
-        Hep3Vector xtalTrans(0.5*(xtalHiTransform.dx()+xtalLowTransform.dx()), 
+        CLHEP::Hep3Vector xtalTrans(0.5*(xtalHiTransform.dx()+xtalLowTransform.dx()), 
                              0.5*(xtalHiTransform.dy()+xtalLowTransform.dy()),
                              xtalHiTransform.dz());
 
@@ -341,7 +344,7 @@ StatusCode CalOverlayMergeAlg::execute()
             // We can get that by checking if the crystal measures x or y, and
             // checking to see if the diode is on the plus or negative side
             // Assume a normal in plus y
-            Hep3Vector diodeNrml(0., 1., 0.);
+            CLHEP::Hep3Vector diodeNrml(0., 1., 0.);
 
             // Get both the distance from the center of the current xtal segment to the diode
             // And reset the diodeNrml if we are oriented along x
@@ -350,7 +353,7 @@ StatusCode CalOverlayMergeAlg::execute()
             if (calXtalId.isX()) 
             {
                 longDistToDiode = xtalTransform.dx() - trnsDiode.dx();
-                diodeNrml       = Hep3Vector(1., 0., 0.);
+                diodeNrml       = CLHEP::Hep3Vector(1., 0., 0.);
             }
 
             if (longDistToDiode < 0.) diodeNrml *= -1.;
@@ -360,7 +363,7 @@ StatusCode CalOverlayMergeAlg::execute()
             double diodeFaceBeta  = 2. * m_diodeWidth;
 
             // Get the vector from the center of the diode to the current energy deposition point
-            Hep3Vector lineToCenter = globalHit - trnsDiode.getTranslation();
+            CLHEP::Hep3Vector lineToCenter = globalHit - trnsDiode.getTranslation();
             double     distToCenter = lineToCenter.mag();
 
             // Now want the angle between this line and the diode normal
@@ -383,7 +386,7 @@ StatusCode CalOverlayMergeAlg::execute()
             double aSinArg   = diodeFaceAlpha * diodeFaceBetaPr / sqrt(radical);
             double fracAngle = asin(aSinArg) / M_PI;
                     
-            Hep3Vector stepPos    = localHit;
+            CLHEP::Hep3Vector stepPos    = localHit;
             double     directFrac = 0.;
             double     totalDep   = 0.;
 

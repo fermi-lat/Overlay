@@ -1,7 +1,7 @@
 /**  @file AcdHitToOverlayTool.cxx
     @brief implementation of class AcdHitToOverlayTool
     
-  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/AcdHitToOverlayTool.cxx,v 1.3 2009/03/18 04:08:24 usher Exp $  
+  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/AcdHitToOverlayTool.cxx,v 1.4 2009/09/15 19:20:05 usher Exp $  
 */
 
 #include "IDigiToOverlayTool.h"
@@ -42,6 +42,8 @@ a value, it expects to find a source of such events generated with that value wh
 into the Gleam output tuple.
 
 */
+typedef HepGeom::Point3D<double> HepPoint3D;
+
 class AcdHitToOverlayTool : public AlgTool, virtual public IDigiToOverlayTool
 {
 public:
