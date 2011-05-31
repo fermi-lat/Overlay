@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: lsrea  Mon May 30 20:05:48 PDT 2011
+Overlay/src/MergeAlgs
+
+Modified Files:
+	DiagDataOverlayMergeAlg.cxx 
+Log Message:
+Use the TkrDiagnostic "calibration" info to decide whether to overlay diagnostic info
+
+    *
+------------------------------------------------------------
 TAG
 Tag name: Overlay-01-07-04, operation: add
 Package: Overlay
