@@ -5,7 +5,7 @@
  *
  * @author Tracy Usher
  *
- * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/DiagDataOverlayMergeAlg.cxx,v 1.0 2009/02/12 16:46:22 usher Exp $
+ * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/DiagDataOverlayMergeAlg.cxx,v 1.2 2010/04/27 20:27:57 usher Exp $
  */
 
 
@@ -19,6 +19,8 @@
 #include "OverlayEvent/DiagDataOverlay.h"
 
 #include "LdfEvent/DiagnosticData.h"
+
+#include "Event/Recon/TkrRecon/TkrDiagnosticFlag.h"
 
 #include <map>
 
@@ -83,6 +85,14 @@ StatusCode DiagDataOverlayMergeAlg::execute()
     // Restrictions and Caveats: none
 
     StatusCode sc = StatusCode::SUCCESS; 
+
+    SmartDataPtr<Event::TkrDiagnosticFlag> diagFlag(eventSvc(), EventModel::TkrRecon::TkrDiagnosticFlag);
+    // if no diagFlag, do the default (full diagnostics), otherwise check the flag
+    if(diagFlag) {
+        bool doDiag = diagFlag->getDiagnosticFlag();
+        if (!doDiag) return sc;
+    }
+
     MsgStream log(msgSvc(), name());
     log << MSG::DEBUG << "execute" << endreq;
 
