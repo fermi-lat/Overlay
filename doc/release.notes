@@ -1,10 +1,11 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.37 2011/05/20 15:52:08 heather Exp $
+$Id: release.notes,v 1.38 2011/05/31 03:10:18 lsrea Exp $
 @verbatim
  * EOH *
 
+ Overlay-02-00-00 27-Jun-2011  TU Modifications to facilitate multiple input streams
  Overlay-01-07-05 30-May-2011  lsrea test TkrDiagnosticFlag when merging diagnostic info
  Overlay-01-07-04 20-May-2011 HMK CLHEP 2.1.0.1
  Overlay-01-07-03 31-Jan-2011 TU Fix CalOverlayMergeAlg to include diode structures for light deposition
