@@ -1,7 +1,7 @@
 /**  @file EventToOverlayTool.cxx
     @brief implementation of class EventToOverlayTool
     
-  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/EventToOverlayTool.cxx,v 1.0 2008/10/15 15:14:30 usher Exp $  
+  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/EventToOverlayTool.cxx,v 1.1 2008/12/01 22:50:12 usher Exp $  
 */
 
 #include "IDigiToOverlayTool.h"
@@ -11,6 +11,8 @@
 #include "GaudiKernel/SmartDataPtr.h"
 #include "GaudiKernel/GaudiException.h" 
 #include "GaudiKernel/IDataProviderSvc.h"
+#include "GaudiKernel/DataSvc.h"
+#include "GaudiKernel/GenericAddress.h"
 
 #include "Event/TopLevel/EventModel.h"
 #include "Event/TopLevel/Event.h"
@@ -51,6 +53,9 @@ private:
 
     /// Pointer to the event data service (aka "eventSvc")
     IDataProviderSvc*   m_edSvc;
+
+    /// Pointer to the Overlay data service
+    DataSvc*          m_dataSvc;
 };
 
 static ToolFactory<EventToOverlayTool> s_factory;
@@ -87,6 +92,13 @@ StatusCode EventToOverlayTool::initialize()
     }
     m_edSvc = dynamic_cast<IDataProviderSvc*>(iService);
 
+    sc = serviceLocator()->service("OverlayDataSvc", iService, true);
+    if ( sc.isFailure() ) {
+        log << MSG::ERROR << "could not find EventDataSvc !" << endreq;
+        return sc;
+    }
+    m_dataSvc = dynamic_cast<DataSvc*>(iService);
+
     return sc;
 }
 
@@ -107,15 +119,17 @@ StatusCode EventToOverlayTool::translate()
     SmartDataPtr<Event::EventHeader> event(m_edSvc, EventModel::EventHeader);
 
     // Create a collection of TkrOverlays and register in the TDS
-    SmartDataPtr<Event::EventOverlay> overlay(m_edSvc, OverlayEventModel::Overlay::EventOverlay);
+    SmartDataPtr<Event::EventOverlay> overlay(m_dataSvc, m_dataSvc->rootName() + OverlayEventModel::Overlay::EventOverlay);
     if(!overlay)
     {
+        // Create the overlay Event object
         overlay = new Event::EventOverlay();
 
-        status = m_edSvc->registerObject(OverlayEventModel::Overlay::EventOverlay, overlay);
+        // Set it as the root of the Overlay section in the TDS
+        status = m_dataSvc->setRoot(m_dataSvc->rootName(), overlay);
         if( status.isFailure() ) 
         {
-            log << MSG::ERROR << "could not register OverlayEventModel::Overlay::EventOverlay" << endreq;
+            log << MSG::ERROR << "could not set root for OverlayEventModel::Overlay::EventOverlay" << endreq;
             return status;
         }
     }

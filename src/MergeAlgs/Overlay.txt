@@ -1,11 +1,17 @@
 //##############################################################
 //
 // Job options file for Setting up the background overlay from input digis
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/Overlay.txt,v 1.5 2009/03/19 15:28:08 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/Overlay.txt,v 1.7 2010/04/27 17:43:15 usher Exp $
 
 // Include the Overlay package library
-ApplicationMgr.DLLs += { "Overlay"};
-ApplicationMgr.ExtSvc += {"OverlayInputSvc"};
+ApplicationMgr.DLLs   += { "Overlay"};
+
+// Add the required services to our list
+ApplicationMgr.ExtSvc += { {"OverlayCnvSvc", 
+                            "EvtPersistencySvc/OverlayPersistencySvc" , 
+                            "OverlayDataSvc/OverlayDataSvc" };
+
+OverlayPersistencySvc.CnvServices = { "OverlayCnvSvc" };
 
 // Reset the basic Trigger sequence so we can call TriggerInfoAlg in Digitization
 TriggerTest.Members = {"TriggerAlg", "Count/trigger", "TriRowBitsAlg" };
@@ -31,9 +37,6 @@ Digitization.BranchMembers = {
     "AcdDigiAlg",
     "TriggerInfoAlg"
     };
-    
-// Also modify the CalDigitization sequencer
-//CalDigitization.Members = { "CalDigiAlg", "CalOverlayMergeAlg" };
 
 // Turn off the random noise hit backgrounds in the Tracker
 ToolSvc.GeneralNoiseTool.occupancy = 0.;

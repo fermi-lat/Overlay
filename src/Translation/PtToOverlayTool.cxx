@@ -1,7 +1,7 @@
 /**  @file PtToOverlayTool.cxx
     @brief implementation of class PtToOverlayTool
     
-  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/PtToOverlayTool.cxx,v 1.1 2008/12/01 22:50:12 usher Exp $  
+  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/PtToOverlayTool.cxx,v 1.1 2009/03/16 17:31:27 usher Exp $  
 */
 
 #include "IDigiToOverlayTool.h"
@@ -11,6 +11,7 @@
 #include "GaudiKernel/SmartDataPtr.h"
 #include "GaudiKernel/GaudiException.h" 
 #include "GaudiKernel/IDataProviderSvc.h"
+#include "GaudiKernel/DataSvc.h"
 
 #include "ntupleWriterSvc/INTupleWriterSvc.h"
 
@@ -50,6 +51,9 @@ private:
 
     /// Pointer to the event data service (aka "eventSvc")
     IDataProviderSvc* m_edSvc;
+
+    /// Pointer to the Overlay data service
+    DataSvc*          m_dataSvc;
 
     /// Access to the ntuple
     INTupleWriterSvc* m_tuple;
@@ -128,11 +132,19 @@ StatusCode PtToOverlayTool::initialize()
     setProperties();
 
     IService* iService = 0;
-    if ( serviceLocator()->service("EventDataSvc", iService, true).isFailure() ) {
+    StatusCode sc = serviceLocator()->service("EventDataSvc", iService, true);
+    if ( sc.isFailure() ) {
         log << MSG::ERROR << "could not find EventDataSvc !" << endreq;
-        return StatusCode::FAILURE;
+        return sc;
     }
     m_edSvc = dynamic_cast<IDataProviderSvc*>(iService);
+
+    sc = serviceLocator()->service("OverlayDataSvc", iService, true);
+    if ( sc.isFailure() ) {
+        log << MSG::ERROR << "could not find EventDataSvc !" << endreq;
+        return sc;
+    }
+    m_dataSvc = dynamic_cast<DataSvc*>(iService);
 
     // Retrieve the ntuple service
 
@@ -358,7 +370,7 @@ StatusCode PtToOverlayTool::translate()
     {
         ptOverlay = new Event::PtOverlay();
 
-        status = m_edSvc->registerObject(OverlayEventModel::Overlay::PtOverlay, ptOverlay);
+        status = m_dataSvc->registerObject(m_dataSvc->rootName() + OverlayEventModel::Overlay::PtOverlay, ptOverlay);
         if( status.isFailure() ) 
         {
             log << MSG::ERROR << "could not register OverlayEventModel::Overlay::PtOverlay" << endreq;

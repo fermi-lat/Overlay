@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/SrcOverlayCnv.cxx,v 1.1 2008/12/02 15:27:17 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/SrcOverlayCnv.cxx,v 1.2 2009/09/15 19:20:05 usher Exp $
 /**
             @file  SrcOverlayCnv.cxx
 
@@ -14,6 +14,7 @@
 #include "GaudiKernel/MsgStream.h"
 
 #include "GaudiKernel/IOpaqueAddress.h"
+#include "GaudiKernel/IRegistry.h"
 #include "GaudiKernel/IAddressCreator.h"
 #include "GaudiKernel/IDataProviderSvc.h"
 #include "GaudiKernel/IConversionSvc.h"
@@ -42,7 +43,7 @@ public:
     /// Query interfaces of Interface
     //virtual StatusCode queryInterface(const InterfaceID& riid, void** ppvInterface);
     static const CLID&         classID()     {return Event::SrcOverlay::classID();}
-    static const unsigned char storageType() {return SICB_StorageType;}
+    static const unsigned char storageType() {return EXCEL_StorageType;}
 
     /// Initialize the converter
     virtual StatusCode initialize();
@@ -86,7 +87,6 @@ public:
 private:
     std::string      m_path;
 
-    IOverlayDataSvc* m_overlayInputSvc;
     IOverlayDataSvc* m_overlayOutputSvc;
 };
 
@@ -95,7 +95,7 @@ private:
  const ICnvFactory& SrcOverlayCnvFactory = s_factory;
 
  SrcOverlayCnv::SrcOverlayCnv( ISvcLocator* svc) : 
-                 Converter (SICB_StorageType, Event::SrcOverlay::classID(), svc) 
+                 Converter (EXCEL_StorageType, Event::SrcOverlay::classID(), svc) 
 {
     m_path = OverlayEventModel::Overlay::SrcOverlay;
 
@@ -117,14 +117,6 @@ StatusCode SrcOverlayCnv::initialize()
     // We're going rogue here, look up the OverlayDataSvc and use this as 
     // our data provider insteand of EventCnvSvc
     IService* tmpService = 0;
-    if (service("OverlayInputSvc", tmpService, false).isFailure())
-    {
-        log << MSG::INFO << "No OverlayInputSvc available, no input conversion will be performed" << endreq;
-        m_overlayInputSvc = 0;
-    }
-    else m_overlayInputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
-
-    // Now look up the output data service
     if (service("OverlayOutputSvc", tmpService, false).isFailure())
     {
         log << MSG::INFO << "No OverlayOutputSvc available, no input conversion will be performed" << endreq;
@@ -141,18 +133,30 @@ StatusCode SrcOverlayCnv::finalize()
 }
 
 // (To TDS) Conversion stuff
-StatusCode SrcOverlayCnv::createObj(IOpaqueAddress*, DataObject*& refpObject) 
+StatusCode SrcOverlayCnv::createObj(IOpaqueAddress* pOpaque, DataObject*& refpObject) 
 {
     StatusCode status = StatusCode::SUCCESS;
 
-    // If no service then we are not inputting from PDS
-    if (!m_overlayInputSvc) return StatusCode::FAILURE;
+    // If no opaque address then there is nothing to do
+    if (!pOpaque) return StatusCode::FAILURE;
+
+    // Recover the pointer to the registry
+    IRegistry* pRegistry = pOpaque->registry();
+
+    if (!pRegistry) return StatusCode::FAILURE;
+
+    // Recover pointer to the data provider service
+    IDataProviderSvc* pDataSvc = pRegistry->dataSvc();
+
+    if (!pDataSvc) return StatusCode::FAILURE;
+
+    IOverlayDataSvc* inputDataSvc = dynamic_cast<IOverlayDataSvc*>(pDataSvc);
 
     // Create the new SrcOverlay event to put in the TDS
     Event::SrcOverlay* overlayTds = new Event::SrcOverlay();
 
     // Retrieve the pointer to the digi
-    EventOverlay* overlayRoot = m_overlayInputSvc->getRootEventOverlay();
+    EventOverlay* overlayRoot = inputDataSvc->getRootEventOverlay();
 
     // Initialize the overlay object
     overlayTds->initialize(overlayRoot->getFromMc());

@@ -5,13 +5,16 @@
  *
  * @author Tracy Usher
  *
- * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/DigiToOverlayAlg.cxx,v 1.2 2009/03/16 17:31:27 usher Exp $
+ * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/DigiToOverlayAlg.cxx,v 1.3 2010/04/27 16:53:33 usher Exp $
  */
 
 #include "GaudiKernel/Algorithm.h"
 #include "GaudiKernel/MsgStream.h"
 #include "GaudiKernel/AlgFactory.h"
 #include "GaudiKernel/SmartDataPtr.h"
+
+#include "OverlayEvent/OverlayEventModel.h"
+#include "OverlayEvent/EventOverlay.h"
 
 #include "IDigiToOverlayTool.h"
 
@@ -28,10 +31,10 @@ public:
 
 private:
     /// Type of tool to run
-    std::string         m_type;
+    std::string                      m_type;
 
     /// Tools to use for translation
-    StringArrayProperty m_translateToolNames;
+    StringArrayProperty              m_translateToolNames;
 
     /// Translation tool list
     std::vector<IDigiToOverlayTool*> m_translateTools;
@@ -50,7 +53,7 @@ DigiToOverlayAlg::DigiToOverlayAlg(const std::string& name,
 
     // Build a list of default tool names
     std::vector<std::string> defaultToolNames;
-    defaultToolNames.push_back("EventToOverlayTool");
+    defaultToolNames.push_back("EventToOverlayTool");      // Must be there, must be first
     defaultToolNames.push_back("TkrDigiToOverlayTool");
     defaultToolNames.push_back("CalXtalToOverlayTool");
     defaultToolNames.push_back("AcdHitToOverlayTool");

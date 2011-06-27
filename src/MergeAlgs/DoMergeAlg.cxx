@@ -5,7 +5,7 @@
  *
  * @author Tracy Usher
  *
- * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/DoMergeAlg.cxx,v 1.1 2009/03/16 17:31:27 usher Exp $
+ * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/DoMergeAlg.cxx,v 1.2 2009/03/17 19:50:20 usher Exp $
  */
 
 
@@ -13,10 +13,18 @@
 #include "GaudiKernel/MsgStream.h"
 #include "GaudiKernel/AlgFactory.h"
 #include "GaudiKernel/SmartDataPtr.h"
+#include "GaudiKernel/ConversionSvc.h"
+#include "GaudiKernel/DataSvc.h"
+#include "GaudiKernel/GenericAddress.h"
 
 #include "Event/TopLevel/EventModel.h"
 #include "Event/MonteCarlo/McPositionHit.h"
 #include "Event/MonteCarlo/McIntegratingHit.h"
+
+#include "OverlayEvent/OverlayEventModel.h"
+#include "OverlayEvent/EventOverlay.h"
+
+#include "Overlay/IOverlayDataSvc.h"
 
 #include <map>
 
@@ -29,8 +37,12 @@ class DoMergeAlg : public Algorithm
     StatusCode execute();
     StatusCode finalize();
 
- private:
-     bool m_mergeAll;
+private:
+    StatusCode setRootEvent();
+
+    bool             m_mergeAll;
+
+    IOverlayDataSvc* m_dataSvc;
 
 };
 
@@ -64,6 +76,26 @@ StatusCode DoMergeAlg::initialize()
         return StatusCode::FAILURE;
     }
 
+    // Convention for multiple input overlay files is that there will be separate OverlayDataSvc's with 
+    // names appended by "_xx", for example OverlayDataSvc_1 for the second input file. 
+    // In order to ensure the data read in goes into a unique section of the TDS we need to modify the 
+    // base root path, which we do by examining the name of the service
+    std::string dataSvcName = "OverlayDataSvc";
+    int         subPos      = name().rfind("_");
+    std::string nameEnding  = subPos > 0 ? name().substr(subPos, name().length() - subPos) : "";
+
+    if (nameEnding != "") dataSvcName += nameEnding;
+
+    IService* dataSvc = 0;
+    sc = service(dataSvcName, dataSvc);
+    if (sc.isFailure() ) {
+        log << MSG::ERROR << "  can't get OverlayDataSvc " << endreq;
+        return sc;
+    }
+
+    // Caste back to the "correct" pointer
+    m_dataSvc = dynamic_cast<IOverlayDataSvc*>(dataSvc);
+
     return sc;
 }
 
@@ -84,7 +116,7 @@ StatusCode DoMergeAlg::execute()
     if (m_mergeAll)
     {
         log << MSG::DEBUG << "Merging all events, skipping DoMergeAlg" << endreq;
-        return sc;
+        return setRootEvent();
     }
 
     // How many hits in ACD, TKR or CAL?
@@ -102,10 +134,8 @@ StatusCode DoMergeAlg::execute()
     if (intHitCol) numIntHits = intHitCol->size();
 
     // if there are no McPositionHits AND no McIntegratingHits then the simulated particle did not interact
-    if (numPosHits == 0 && numIntHits == 0)
-    {
-        setFilterPassed(false); 
-    }
+    if (numPosHits > 0 || numIntHits > 0) setRootEvent();
+    else                                  setFilterPassed(false); 
 
     return sc;
 }
@@ -115,4 +145,28 @@ StatusCode DoMergeAlg::finalize()
     MsgStream log(msgSvc(), name());
     log << MSG::INFO << "finalize" << endreq;
     return StatusCode::SUCCESS;
+}
+    
+StatusCode DoMergeAlg::setRootEvent()
+{
+    StatusCode sc = StatusCode::SUCCESS;
+
+    // Set up the root event object
+    Event::EventOverlay overObj;
+
+    // Caste the data service into the input data service pointer
+    DataSvc* dataProviderSvc = dynamic_cast<DataSvc*>(m_dataSvc);
+
+    // Create a "simple" generic opaque address to go with this
+    IOpaqueAddress* refpAddress = new GenericAddress(EXCEL_StorageType,
+                                                     overObj.clID(),
+                                                     dataProviderSvc->rootName());
+
+    sc = dataProviderSvc->setRoot(dataProviderSvc->rootName(), refpAddress);
+
+    // This is the magic incantation to trigger the building of the directory tree...
+    SmartDataPtr<Event::EventOverlay> overHeader(dataProviderSvc, dataProviderSvc->rootName());
+    if (!overHeader) sc = StatusCode::FAILURE;
+
+    return sc;
 }

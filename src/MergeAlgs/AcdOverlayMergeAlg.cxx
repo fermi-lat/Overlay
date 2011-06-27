@@ -4,7 +4,7 @@
  *
  * @author Zach Fewtrell zachary.fewtrell@nrl.navy.mil
  * 
- *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/AcdOverlayMergeAlg.cxx,v 1.7 2009/03/18 23:19:52 usher Exp $
+ *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/AcdOverlayMergeAlg.cxx,v 1.8 2011/05/20 15:52:09 heather Exp $
  */
 
 // Gaudi specific include files
@@ -13,6 +13,7 @@
 #include "GaudiKernel/MsgStream.h"
 #include "GaudiKernel/IDataProviderSvc.h"
 #include "GaudiKernel/SmartDataPtr.h"
+#include "GaudiKernel/DataSvc.h"
 
 // Glast specific includes
 #include "Event/TopLevel/EventModel.h"
@@ -50,13 +51,16 @@ public:
 private:
 
     /// used for constants & conversion routines.
-    IGlastDetSvc*  m_detSvc;
+    IGlastDetSvc*    m_detSvc;
 
     /// Pointer to the Acd geometry svc
-    IAcdGeometrySvc*       m_acdGeoSvc;
+    IAcdGeometrySvc* m_acdGeoSvc;
     
     /// Energy threshold ("zero-suppression") for ACD hits
-    double m_energyThreshold;
+    double           m_energyThreshold;
+
+    /// Pointer to the overlay's data provider service
+    DataSvc*         m_dataSvc;
 };
 
 
@@ -109,6 +113,26 @@ StatusCode AcdOverlayMergeAlg::initialize()
         return sc;
     }
 
+    // Convention for multiple input overlay files is that there will be separate OverlayDataSvc's with 
+    // names appended by "_xx", for example OverlayDataSvc_1 for the second input file. 
+    // In order to ensure the data read in goes into a unique section of the TDS we need to modify the 
+    // base root path, which we do by examining the name of the service
+    std::string dataSvcName = "OverlayDataSvc";
+    int         subPos      = name().rfind("_");
+    std::string nameEnding  = subPos > 0 ? name().substr(subPos, name().length() - subPos) : "";
+
+    if (nameEnding != "") dataSvcName += nameEnding;
+
+    IService* dataSvc = 0;
+    sc = service(dataSvcName, dataSvc);
+    if (sc.isFailure() ) {
+        log << MSG::ERROR << "  can't get OverlayDataSvc " << endreq;
+        return sc;
+    }
+
+    // Caste back to the "correct" pointer
+    m_dataSvc = dynamic_cast<DataSvc*>(dataSvc);
+
     return sc;
 }
 
@@ -119,7 +143,7 @@ StatusCode AcdOverlayMergeAlg::execute()
     MsgStream msglog(msgSvc(), name());
 
     // First, recover any overlay digis, to see if we have anything to do
-    SmartDataPtr<Event::AcdOverlayCol> overlayCol(eventSvc(), OverlayEventModel::Overlay::AcdOverlayCol);
+    SmartDataPtr<Event::AcdOverlayCol> overlayCol(m_dataSvc, m_dataSvc->rootName() + OverlayEventModel::Overlay::AcdOverlayCol);
     if (!overlayCol) return StatusCode::SUCCESS;
 
     // The calibration will need the Event Header information for both the sim and the overlay
@@ -135,7 +159,7 @@ StatusCode AcdOverlayMergeAlg::execute()
     }
 
     // The calibration will need the Event Header information for both the sim and the overlay
-    SmartDataPtr<Event::EventOverlay> overHeader(eventSvc(), OverlayEventModel::Overlay::EventOverlay);
+    SmartDataPtr<Event::EventOverlay> overHeader(m_dataSvc, m_dataSvc->rootName() + OverlayEventModel::Overlay::EventOverlay);
   
     if (!overHeader) {
       msglog << MSG::ERROR << "Unable to retrieve event timestamp for overlay" << endreq;

@@ -1,7 +1,7 @@
 /**  @file GemToOverlayTool.cxx
     @brief implementation of class GemToOverlayTool
     
-  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/GemToOverlayTool.cxx,v 1.0 2008/10/15 15:14:30 usher Exp $  
+  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/GemToOverlayTool.cxx,v 1.1 2008/12/01 22:50:12 usher Exp $  
 */
 
 #include "IDigiToOverlayTool.h"
@@ -11,6 +11,7 @@
 #include "GaudiKernel/SmartDataPtr.h"
 #include "GaudiKernel/GaudiException.h" 
 #include "GaudiKernel/IDataProviderSvc.h"
+#include "GaudiKernel/DataSvc.h"
 
 #include "LdfEvent/Gem.h"
 
@@ -50,6 +51,9 @@ private:
 
     /// Pointer to the event data service (aka "eventSvc")
     IDataProviderSvc*      m_edSvc;
+
+    /// Pointer to the Overlay data service
+    DataSvc*          m_dataSvc;
 };
 
 static ToolFactory<GemToOverlayTool> s_factory;
@@ -88,6 +92,13 @@ StatusCode GemToOverlayTool::initialize()
     }
     m_edSvc = dynamic_cast<IDataProviderSvc*>(iService);
 
+    sc = serviceLocator()->service("OverlayDataSvc", iService, true);
+    if ( sc.isFailure() ) {
+        log << MSG::ERROR << "could not find EventDataSvc !" << endreq;
+        return sc;
+    }
+    m_dataSvc = dynamic_cast<DataSvc*>(iService);
+
     return sc;
 }
 
@@ -108,12 +119,12 @@ StatusCode GemToOverlayTool::translate()
     SmartDataPtr<LdfEvent::Gem> gem(m_edSvc, "/Event/Gem");
 
     // Create a collection of AcdOverlays and register in the TDS
-    SmartDataPtr<Event::GemOverlay> gemOverlay(m_edSvc, OverlayEventModel::Overlay::GemOverlay);
+    SmartDataPtr<Event::GemOverlay> gemOverlay(m_dataSvc, m_dataSvc->rootName() + OverlayEventModel::Overlay::GemOverlay);
     if(!gemOverlay)
     {
         gemOverlay = new Event::GemOverlay();
 
-        status = m_edSvc->registerObject(OverlayEventModel::Overlay::GemOverlay, gemOverlay);
+        status = m_dataSvc->registerObject(m_dataSvc->rootName() + OverlayEventModel::Overlay::GemOverlay, gemOverlay);
         if( status.isFailure() ) 
         {
             log << MSG::ERROR << "could not register OverlayEventModel::Overlay::GemOverlay" << endreq;
