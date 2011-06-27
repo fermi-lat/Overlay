@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: usher  Mon Jun 27 10:57:44 PDT 2011
+Overlay/src/MergeAlgs
+
+Modified Files:
+	Overlay.txt 
+Log Message:
+Fix typo in JO file (grrrr)
+    *
+------------------------------------------------------------
 TAG
 Tag name: Overlay-02-00-00, operation: add
 Package: Overlay
