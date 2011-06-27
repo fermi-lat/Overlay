@@ -5,7 +5,7 @@
  *
  * @author Tracy Usher
  *
- * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/GemOverlayMergeAlg.cxx,v 1.1 2008/12/18 23:36:51 usher Exp $
+ * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/GemOverlayMergeAlg.cxx,v 1.2 2009/02/12 16:46:22 usher Exp $
  */
 
 
@@ -13,6 +13,7 @@
 #include "GaudiKernel/MsgStream.h"
 #include "GaudiKernel/AlgFactory.h"
 #include "GaudiKernel/SmartDataPtr.h"
+#include "GaudiKernel/DataSvc.h"
 
 #include "Event/TopLevel/EventModel.h"
 #include "Event/Trigger/TriggerInfo.h"
@@ -33,6 +34,9 @@ class GemOverlayMergeAlg : public Algorithm
     StatusCode finalize();
 
  private:
+    /// Pointer to the overlay's data provider service
+    DataSvc*         m_dataSvc;
+    
     /// Type of tool to run
     std::string m_type;
 };
@@ -68,6 +72,26 @@ StatusCode GemOverlayMergeAlg::initialize()
         return StatusCode::FAILURE;
     }
 
+    // Convention for multiple input overlay files is that there will be separate OverlayDataSvc's with 
+    // names appended by "_xx", for example OverlayDataSvc_1 for the second input file. 
+    // In order to ensure the data read in goes into a unique section of the TDS we need to modify the 
+    // base root path, which we do by examining the name of the service
+    std::string dataSvcName = "OverlayDataSvc";
+    int         subPos      = name().rfind("_");
+    std::string nameEnding  = subPos > 0 ? name().substr(subPos, name().length() - subPos) : "";
+
+    if (nameEnding != "") dataSvcName += nameEnding;
+
+    IService* dataSvc = 0;
+    sc = service(dataSvcName, dataSvc);
+    if (sc.isFailure() ) {
+        log << MSG::ERROR << "  can't get OverlayDataSvc " << endreq;
+        return sc;
+    }
+
+    // Caste back to the "correct" pointer
+    m_dataSvc = dynamic_cast<DataSvc*>(dataSvc);
+
     return sc;
 }
 
@@ -86,7 +110,7 @@ StatusCode GemOverlayMergeAlg::execute()
     log << MSG::DEBUG << "execute" << endreq;
 
     // First, recover any overlay digis, to see if we have anything to do
-    SmartDataPtr<Event::GemOverlay> gemOverlay(eventSvc(), OverlayEventModel::Overlay::GemOverlay);
+    SmartDataPtr<Event::GemOverlay> gemOverlay(m_dataSvc, m_dataSvc->rootName() + OverlayEventModel::Overlay::GemOverlay);
     if(!gemOverlay) return sc;
 
     // Now recover the TriggerInfo for this event

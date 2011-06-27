@@ -4,7 +4,7 @@
  *
  * @author Zach Fewtrell zachary.fewtrell@nrl.navy.mil
  * 
- *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/CalOverlayMergeAlg.cxx,v 1.6 2011/01/31 23:07:32 usher Exp $
+ *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/CalOverlayMergeAlg.cxx,v 1.7 2011/05/20 15:52:09 heather Exp $
  */
 
 // Gaudi specific include files
@@ -13,6 +13,7 @@
 #include "GaudiKernel/MsgStream.h"
 #include "GaudiKernel/IDataProviderSvc.h"
 #include "GaudiKernel/SmartDataPtr.h"
+#include "GaudiKernel/DataSvc.h"
 
 // Glast specific includes
 #include "Event/TopLevel/EventModel.h"
@@ -56,6 +57,9 @@ private:
 
     /// Pointer to the propagator
     IPropagator*             m_propagator;
+
+    /// Pointer to the overlay's data provider service
+    DataSvc*         m_dataSvc;
 
     /// store first range option ("autoRng" ---> best range first, "lex8", "lex1", "hex8", "hex1" ---> lex8-hex1 first)
     StringProperty           m_firstRng;
@@ -101,6 +105,26 @@ StatusCode CalOverlayMergeAlg::initialize()
         return sc;
     }
 
+    // Convention for multiple input overlay files is that there will be separate OverlayDataSvc's with 
+    // names appended by "_xx", for example OverlayDataSvc_1 for the second input file. 
+    // In order to ensure the data read in goes into a unique section of the TDS we need to modify the 
+    // base root path, which we do by examining the name of the service
+    std::string dataSvcName = "OverlayDataSvc";
+    int         subPos      = name().rfind("_");
+    std::string nameEnding  = subPos > 0 ? name().substr(subPos, name().length() - subPos) : "";
+
+    if (nameEnding != "") dataSvcName += nameEnding;
+
+    IService* dataSvc = 0;
+    sc = service(dataSvcName, dataSvc);
+    if (sc.isFailure() ) {
+        log << MSG::ERROR << "  can't get OverlayDataSvc " << endreq;
+        return sc;
+    }
+
+    // Caste back to the "correct" pointer
+    m_dataSvc = dynamic_cast<DataSvc*>(dataSvc);
+
     // Get a copy of the propagator
     sc = toolSvc()->retrieveTool("G4PropagationTool", m_propagator);
     if (sc.isSuccess()) 
@@ -144,7 +168,7 @@ StatusCode CalOverlayMergeAlg::execute()
     MsgStream log(msgSvc(), name());
 
     // First, recover any overlay digis, to see if we have anything to do
-    SmartDataPtr<Event::CalOverlayCol> overlayCol(eventSvc(), OverlayEventModel::Overlay::CalOverlayCol);
+    SmartDataPtr<Event::CalOverlayCol> overlayCol(m_dataSvc, m_dataSvc->rootName() + OverlayEventModel::Overlay::CalOverlayCol);
     if(!overlayCol) return StatusCode::SUCCESS;
 
     // Now recover the McIntegratingHits for this event

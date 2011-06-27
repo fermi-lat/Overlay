@@ -1,7 +1,7 @@
 /**  @file CalXtalToOverlayTool.cxx
     @brief implementation of class CalXtalToOverlayTool
     
-  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/CalXtalToOverlayTool.cxx,v 1.0 2008/10/15 15:14:30 usher Exp $  
+  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/CalXtalToOverlayTool.cxx,v 1.1 2008/12/01 22:50:11 usher Exp $  
 */
 
 #include "IDigiToOverlayTool.h"
@@ -11,6 +11,7 @@
 #include "GaudiKernel/SmartDataPtr.h"
 #include "GaudiKernel/GaudiException.h" 
 #include "GaudiKernel/IDataProviderSvc.h"
+#include "GaudiKernel/DataSvc.h"
 
 #include "Event/TopLevel/EventModel.h"
 #include "Event/Recon/CalRecon/CalXtalRecData.h"
@@ -51,6 +52,9 @@ private:
 
     /// Pointer to the event data service (aka "eventSvc")
     IDataProviderSvc*   m_edSvc;
+
+    /// Pointer to the Overlay data service
+    DataSvc*          m_dataSvc;
 };
 
 static ToolFactory<CalXtalToOverlayTool> s_factory;
@@ -87,6 +91,13 @@ StatusCode CalXtalToOverlayTool::initialize()
     }
     m_edSvc = dynamic_cast<IDataProviderSvc*>(iService);
 
+    sc = serviceLocator()->service("OverlayDataSvc", iService, true);
+    if ( sc.isFailure() ) {
+        log << MSG::ERROR << "could not find EventDataSvc !" << endreq;
+        return sc;
+    }
+    m_dataSvc = dynamic_cast<DataSvc*>(iService);
+
     return sc;
 }
 
@@ -107,12 +118,12 @@ StatusCode CalXtalToOverlayTool::translate()
     SmartDataPtr<Event::CalXtalRecCol> calXtalRecCol(m_edSvc, EventModel::CalRecon::CalXtalRecCol);
 
     // Create a collection of TkrOverlays and register in the TDS
-    SmartDataPtr<Event::CalOverlayCol> overlayCol(m_edSvc, OverlayEventModel::Overlay::CalOverlayCol);
+    SmartDataPtr<Event::CalOverlayCol> overlayCol(m_dataSvc, m_dataSvc->rootName() + OverlayEventModel::Overlay::CalOverlayCol);
     if(!overlayCol)
     {
         overlayCol = new Event::CalOverlayCol();
 
-        status = m_edSvc->registerObject(OverlayEventModel::Overlay::CalOverlayCol, overlayCol);
+        status = m_dataSvc->registerObject(m_dataSvc->rootName() + OverlayEventModel::Overlay::CalOverlayCol, overlayCol);
         if( status.isFailure() ) 
         {
             log << MSG::ERROR << "could not register OverlayEventModel::Overlay::CalOverlayCol" << endreq;

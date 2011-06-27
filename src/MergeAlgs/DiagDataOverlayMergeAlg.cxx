@@ -5,7 +5,7 @@
  *
  * @author Tracy Usher
  *
- * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/DiagDataOverlayMergeAlg.cxx,v 1.2 2010/04/27 20:27:57 usher Exp $
+ * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/DiagDataOverlayMergeAlg.cxx,v 1.3 2011/05/31 03:05:48 lsrea Exp $
  */
 
 
@@ -13,6 +13,7 @@
 #include "GaudiKernel/MsgStream.h"
 #include "GaudiKernel/AlgFactory.h"
 #include "GaudiKernel/SmartDataPtr.h"
+#include "GaudiKernel/DataSvc.h"
 
 #include "Event/TopLevel/EventModel.h"
 #include "OverlayEvent/OverlayEventModel.h"
@@ -34,6 +35,9 @@ class DiagDataOverlayMergeAlg : public Algorithm
     StatusCode finalize();
 
  private:
+    /// Pointer to the overlay's data provider service
+    DataSvc*         m_dataSvc;
+
     /// Type of tool to run
     std::string m_type;
 };
@@ -69,6 +73,26 @@ StatusCode DiagDataOverlayMergeAlg::initialize()
         return StatusCode::FAILURE;
     }
 
+    // Convention for multiple input overlay files is that there will be separate OverlayDataSvc's with 
+    // names appended by "_xx", for example OverlayDataSvc_1 for the second input file. 
+    // In order to ensure the data read in goes into a unique section of the TDS we need to modify the 
+    // base root path, which we do by examining the name of the service
+    std::string dataSvcName = "OverlayDataSvc";
+    int         subPos      = name().rfind("_");
+    std::string nameEnding  = subPos > 0 ? name().substr(subPos, name().length() - subPos) : "";
+
+    if (nameEnding != "") dataSvcName += nameEnding;
+
+    IService* dataSvc = 0;
+    sc = service(dataSvcName, dataSvc);
+    if (sc.isFailure() ) {
+        log << MSG::ERROR << "  can't get OverlayDataSvc " << endreq;
+        return sc;
+    }
+
+    // Caste back to the "correct" pointer
+    m_dataSvc = dynamic_cast<DataSvc*>(dataSvc);
+
     return sc;
 }
 
@@ -97,7 +121,7 @@ StatusCode DiagDataOverlayMergeAlg::execute()
     log << MSG::DEBUG << "execute" << endreq;
 
     // First, recover any overlay diagnostic data, to see if we have anything to do
-    SmartDataPtr<Event::DiagDataOverlay> diagDataOverlay(eventSvc(), OverlayEventModel::Overlay::DiagDataOverlay);
+    SmartDataPtr<Event::DiagDataOverlay> diagDataOverlay(m_dataSvc, m_dataSvc->rootName() + OverlayEventModel::Overlay::DiagDataOverlay);
     if(!diagDataOverlay) return sc;
 
     // Successful recovery of an overlay TDS object! 

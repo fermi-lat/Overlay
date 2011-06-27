@@ -1,7 +1,7 @@
 /**  @file AcdHitToOverlayTool.cxx
     @brief implementation of class AcdHitToOverlayTool
     
-  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/AcdHitToOverlayTool.cxx,v 1.4 2009/09/15 19:20:05 usher Exp $  
+  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/AcdHitToOverlayTool.cxx,v 1.5 2011/05/20 15:52:09 heather Exp $  
 */
 
 #include "IDigiToOverlayTool.h"
@@ -11,6 +11,7 @@
 #include "GaudiKernel/SmartDataPtr.h"
 #include "GaudiKernel/GaudiException.h" 
 #include "GaudiKernel/IDataProviderSvc.h"
+#include "GaudiKernel/DataSvc.h"
 
 #include "Event/TopLevel/EventModel.h"
 #include "Event/Digi/AcdDigi.h"
@@ -91,6 +92,9 @@ private:
     /// Pointer to the event data service (aka "eventSvc")
     IDataProviderSvc*      m_edSvc;
 
+    /// Pointer to the Overlay data service
+    DataSvc*          m_dataSvc;
+
     /// Pointer to the Acd geometry svc
     IAcdGeometrySvc*       m_acdGeoSvc;
 
@@ -143,6 +147,13 @@ StatusCode AcdHitToOverlayTool::initialize()
     }
     m_edSvc = dynamic_cast<IDataProviderSvc*>(iService);
 
+    sc = serviceLocator()->service("OverlayDataSvc", iService, true);
+    if ( sc.isFailure() ) {
+        log << MSG::ERROR << "could not find EventDataSvc !" << endreq;
+        return sc;
+    }
+    m_dataSvc = dynamic_cast<DataSvc*>(iService);
+
     sc = serviceLocator()->service("AcdGeometrySvc", iService, true);
     if (sc.isSuccess() ) 
     {
@@ -186,12 +197,12 @@ StatusCode AcdHitToOverlayTool::translate()
     SmartDataPtr<Event::AcdDigiCol> acdDigiCol(m_edSvc, EventModel::Digi::AcdDigiCol);
 
     // Create a collection of AcdOverlays and register in the TDS
-    SmartDataPtr<Event::AcdOverlayCol> overlayCol(m_edSvc, OverlayEventModel::Overlay::AcdOverlayCol);
+    SmartDataPtr<Event::AcdOverlayCol> overlayCol(m_dataSvc, m_dataSvc->rootName() + OverlayEventModel::Overlay::AcdOverlayCol);
     if(!overlayCol)
     {
         overlayCol = new Event::AcdOverlayCol();
 
-        status = m_edSvc->registerObject(OverlayEventModel::Overlay::AcdOverlayCol, overlayCol);
+        status = m_dataSvc->registerObject(m_dataSvc->rootName() + OverlayEventModel::Overlay::AcdOverlayCol, overlayCol);
         if( status.isFailure() ) 
         {
             log << MSG::ERROR << "could not register OverlayEventModel::Overlay::AcdOverlayCol" << endreq;

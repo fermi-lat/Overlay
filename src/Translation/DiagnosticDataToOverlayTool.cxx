@@ -1,7 +1,7 @@
 /**  @file DiagnosticDataToOverlayTool.cxx
     @brief implementation of class DiagnosticDataToOverlayTool
     
-  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/DiagnosticDataToOverlayTool.cxx,v 1.0 2008/12/01 22:50:12 usher Exp $  
+  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/DiagnosticDataToOverlayTool.cxx,v 1.2 2010/04/27 17:43:15 usher Exp $  
 */
 
 #include "IDigiToOverlayTool.h"
@@ -11,6 +11,7 @@
 #include "GaudiKernel/SmartDataPtr.h"
 #include "GaudiKernel/GaudiException.h" 
 #include "GaudiKernel/IDataProviderSvc.h"
+#include "GaudiKernel/DataSvc.h"
 
 #include "LdfEvent/DiagnosticData.h"
 
@@ -50,6 +51,9 @@ private:
 
     /// Pointer to the event data service (aka "eventSvc")
     IDataProviderSvc*      m_edSvc;
+
+    /// Pointer to the Overlay data service
+    DataSvc*          m_dataSvc;
 };
 
 static ToolFactory<DiagnosticDataToOverlayTool> s_factory;
@@ -88,6 +92,13 @@ StatusCode DiagnosticDataToOverlayTool::initialize()
     }
     m_edSvc = dynamic_cast<IDataProviderSvc*>(iService);
 
+    sc = serviceLocator()->service("OverlayDataSvc", iService, true);
+    if ( sc.isFailure() ) {
+        log << MSG::ERROR << "could not find EventDataSvc !" << endreq;
+        return sc;
+    }
+    m_dataSvc = dynamic_cast<DataSvc*>(iService);
+
     return sc;
 }
 
@@ -108,13 +119,13 @@ StatusCode DiagnosticDataToOverlayTool::translate()
     SmartDataPtr<LdfEvent::DiagnosticData> diagnosticData(m_edSvc, "/Event/Diagnostic");
 
     // Create a collection of AcdOverlays and register in the TDS
-    SmartDataPtr<Event::DiagDataOverlay> diagDataOverlay(m_edSvc, OverlayEventModel::Overlay::DiagDataOverlay);
+    SmartDataPtr<Event::DiagDataOverlay> diagDataOverlay(m_dataSvc, m_dataSvc->rootName() + OverlayEventModel::Overlay::DiagDataOverlay);
 
     if(!diagDataOverlay)
     {
         diagDataOverlay = new Event::DiagDataOverlay();
 
-        status = m_edSvc->registerObject(OverlayEventModel::Overlay::DiagDataOverlay, diagDataOverlay);
+        status = m_dataSvc->registerObject(m_dataSvc->rootName() + OverlayEventModel::Overlay::DiagDataOverlay, diagDataOverlay);
         if( status.isFailure() ) 
         {
             log << MSG::ERROR << "could not register OverlayEventModel::Overlay::DiagDataOverlay" << endreq;

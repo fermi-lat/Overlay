@@ -4,13 +4,15 @@
 // digis to the overlay output that will be used in overlay jobs
 // Append this to the end of a job options file like readigi_runrecon.txt
 //
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Overlay.txt,v 1.0 2008/10/15 15:14:30 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/DigiToOverlay.txt,v 1.1 2008/12/01 22:50:12 usher Exp $
 
 // Include the Overlay package library
 ApplicationMgr.DLLs+= { "Overlay"};
 
 // Include the Overlay output service which will make sure file is output
-ApplicationMgr.ExtSvc += {"OverlayOutputSvc"};
+ApplicationMgr.ExtSvc += {"OverlayDataSvc"};
+
+OverlayDataSvc.ConfigureForOutput = true;
 
 // Replace the Output sequencer members with just this one algorithm
 Output.Members = { "DigiToOverlayAlg" };
