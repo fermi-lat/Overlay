@@ -1,10 +1,11 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.38 2011/05/31 03:10:18 lsrea Exp $
+$Id: release.notes,v 1.39 2011/06/27 17:47:31 usher Exp $
 @verbatim
  * EOH *
 
+ Overlay-02-00-01 27-Jun-2011  TU Fix type on JO include file
  Overlay-02-00-00 27-Jun-2011  TU Modifications to facilitate multiple input streams
  Overlay-01-07-05 30-May-2011  lsrea test TkrDiagnosticFlag when merging diagnostic info
  Overlay-01-07-04 20-May-2011 HMK CLHEP 2.1.0.1
