@@ -7,9 +7,9 @@
 ApplicationMgr.DLLs   += { "Overlay"};
 
 // Add the required services to our list
-ApplicationMgr.ExtSvc += { {"OverlayCnvSvc", 
-                            "EvtPersistencySvc/OverlayPersistencySvc" , 
-                            "OverlayDataSvc/OverlayDataSvc" };
+ApplicationMgr.ExtSvc += { "OverlayCnvSvc", 
+                           "EvtPersistencySvc/OverlayPersistencySvc" , 
+                           "OverlayDataSvc/OverlayDataSvc" };
 
 OverlayPersistencySvc.CnvServices = { "OverlayCnvSvc" };
 
