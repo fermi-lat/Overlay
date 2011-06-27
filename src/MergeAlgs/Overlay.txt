@@ -12,6 +12,7 @@ ApplicationMgr.ExtSvc += { "OverlayCnvSvc",
                            "OverlayDataSvc/OverlayDataSvc" };
 
 OverlayPersistencySvc.CnvServices = { "OverlayCnvSvc" };
+OverlayDataSvc.ConfigureForInput  = true;
 
 // Reset the basic Trigger sequence so we can call TriggerInfoAlg in Digitization
 TriggerTest.Members = {"TriggerAlg", "Count/trigger", "TriRowBitsAlg" };
