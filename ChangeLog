@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: usher  Wed Jun 29 08:32:00 PDT 2011
+Overlay/src/DataServices
+
+Modified Files:
+	OverlayCnvSvc.cxx 
+Log Message:
+Fix compile issue on linux
+
+    *
+------------------------------------------------------------
 TAG
 Tag name: Overlay-02-00-02, operation: add
 Package: Overlay
