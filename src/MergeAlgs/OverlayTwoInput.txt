@@ -1,0 +1,65 @@
+//##############################################################
+//
+// Job options file for Setting up the background overlay from input digis
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/Overlay.txt,v 1.7 2010/04/27 17:43:15 usher Exp $
+
+// Include the Overlay package library
+ApplicationMgr.DLLs   += { "Overlay"};
+
+// Completely experimental 
+ApplicationMgr.ExtSvc += { "OverlayCnvSvc",
+                           "EvtPersistencySvc/OverlayPersistencySvc" , 
+                           "OverlayDataSvc", 
+                           "OverlayDataSvc/OverlayDataSvc_1" };
+
+OverlayPersistencySvc.CnvServices  = { "OverlayCnvSvc" };
+OverlayDataSvc.ConfigureForInput   = true;
+OverlayDataSvc_1.ConfigureForInput = true;
+
+// For the second input overlay file, point to the input xml description file
+OverlayDataSvc_1.InputXmlFilePath = "C:/Glast/data/McIlwain_new";
+
+// Reset the basic Trigger sequence so we can call TriggerInfoAlg in Digitization
+TriggerTest.Members = {"TriggerAlg", "Count/trigger", "TriRowBitsAlg" };
+
+// Modify the Digitization sequencer to include background overlay
+Digitization.Members = {
+    "DoMergeAlg", 
+    "DoMergeAlg/DoMergeAlg_1", 
+    "TkrDigiAlg",
+    "TkrFillTDInfoAlg",
+    "AcdOverlayMergeAlg",
+    "AcdOverlayMergeAlg/AcdOverlayMergeAlg_1",
+    "AcdDigiAlg",
+    "CalOverlayMergeAlg",
+    "CalOverlayMergeAlg/CalOverlayMergeAlg_1",
+    "TriggerInfoAlg",
+    "GemOverlayMergeAlg",
+    "GemOverlayMergeAlg/GemOverlayMergeAlg_1",
+    "DiagDataOverlayMergeAlg",
+    "DiagDataOverlayMergeAlg/DiagDataOverlayMergeAlg_1",
+    "TkrOverlayMergeAlg",
+    "TkrOverlayMergeAlg/TkrOverlayMergeAlg_1",
+    "TkrDigiMergeTruncationAlg",
+    "TkrDigiMergeTruncationAlg/TkrDigiMergeTruncationAlg_1"
+    };
+
+Digitization.BranchMembers = {
+    "DoMergeAlg", 
+    "DoMergeAlg/DoMergeAlg_1", 
+    "TkrDigiAlg",
+    "AcdDigiAlg",
+    "TriggerInfoAlg"
+    };
+
+// Turn off the random noise hit backgrounds in the Tracker
+ToolSvc.GeneralNoiseTool.occupancy = 0.;
+
+// Make sure the Overlay information goes to the ntuple
+AnalysisNtupleAlg.toolList = {"+", "Overlay"};
+
+//==============================================================
+//
+// End of job options file
+//
+//##############################################################
