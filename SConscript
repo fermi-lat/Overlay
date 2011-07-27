@@ -1,7 +1,7 @@
 # -*- python -*-
-# $Header: /nfs/slac/g/glast/ground/cvs/Overlay/SConscript,v 1.2 2009/12/08 06:48:05 jrb Exp $
+# $Header: /nfs/slac/g/glast/ground/cvs/Overlay/SConscript,v 1.15 2011/07/25 23:42:55 usher Exp $
 # Authors: Tracy Usher <usher@slac.stanford.edu>
-# Version: Overlay-01-06-00
+# Version: Overlay-01-06-00-gr01
 import os
 Import('baseEnv')
 Import('listFiles')
@@ -9,7 +9,7 @@ Import('packages')
 progEnv = baseEnv.Clone()
 libEnv = baseEnv.Clone()
 
-libEnv.Tool('OverlayLib', depsOnly = 1)
+libEnv.Tool('addLinkDeps', package='Overlay', toBuild='component')
 OverlayLib = libEnv.SharedLibrary('Overlay',
                                    listFiles(['src/Dll/*.cxx',
                                               'src/cnv/*.cxx',
@@ -21,12 +21,14 @@ OverlayLib = libEnv.SharedLibrary('Overlay',
 
 progEnv.Tool('OverlayLib')
 test_Overlay = progEnv.GaudiProgram('test_Overlay',
-                                     listFiles(['src/test/*.cxx']), test = 1)
+                                    listFiles(['src/test/*.cxx']), test = 1,
+                                    package='Overlay')
 
 progEnv.Tool('registerTargets', package = 'Overlay',
              libraryCxts = [[OverlayLib, libEnv]],
              testAppCxts = [[test_Overlay, progEnv]],
-             includes = listFiles(['Overlay/*']))
+             includes = listFiles(['Overlay/*']),
+             jo = listFiles(['src/*/*.txt']))
 
 
 
