@@ -1,5 +1,15 @@
 ------------------------------------------------------------
 User: heather  Wed Jul 27 07:44:55 PDT 2011
+Overlay/cmt
+
+Modified Files:
+      Tag: GlastReleasev17r35p23
+	requirements 
+Log Message:
+merge in SCons updates for P7
+    *
+------------------------------------------------------------
+User: heather  Wed Jul 27 07:44:55 PDT 2011
 Overlay
 
 Modified Files:
