@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: heather  Wed Jul 27 07:44:55 PDT 2011
+Overlay
+
+Modified Files:
+      Tag: GlastReleasev17r35p23
+	SConscript 
+Log Message:
+merge in SCons updates for P7
+    *
+------------------------------------------------------------
 TAG
 Tag name: Overlay-02-00-03, operation: add
 Package: Overlay
