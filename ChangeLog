@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jrb  Tue Aug 16 12:32:18 PDT 2011
+GlastRelease-scons/Overlay/src/test
+
+Modified Files:
+	jobOptions.txt 
+Log Message:
+use SCons-friendly env. variable
+    *
+------------------------------------------------------------
 TAG
 Tag name: GlastRelease-17-35-24-gr02, operation: add
 Package: Overlay
