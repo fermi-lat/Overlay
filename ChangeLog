@@ -1,5 +1,15 @@
 ------------------------------------------------------------
 User: heather  Thu Aug 18 19:38:51 PDT 2011
+Overlay/doc
+
+Modified Files:
+      Tag: GlastReleasev17r35p23
+	release.notes 
+Log Message:
+fix up unit test JO for env vars
+    *
+------------------------------------------------------------
+User: heather  Thu Aug 18 19:38:51 PDT 2011
 Overlay/cmt
 
 Modified Files:
