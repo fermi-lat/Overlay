@@ -176,7 +176,7 @@ OverlayDataSvc::OverlayDataSvc(const std::string& name,ISvcLocator* svc)
     declareProperty("PersistencySvcName", m_persistencySvcName = "OverlayPersistencySvc");
 
     // The following parameters are oriented to output
-    declareProperty("overlayRootFile",    m_outputFileName     = "$(GLEAMDATAPATH)/overlay.root");
+    declareProperty("overlayRootFile",    m_outputFileName     = "overlay.root");
     declareProperty("splitMode",          m_splitMode          = 1);
     declareProperty("bufferSize",         m_bufSize            = 64000);
     // ROOT default compression
@@ -203,6 +203,9 @@ OverlayDataSvc::~OverlayDataSvc()
 StatusCode OverlayDataSvc::initialize()    
 {
     MsgStream log(msgSvc(), name());
+
+    // Make sure our JO's get set
+    setProperties();
 
     // Nothing to do: just call base class initialisation
     StatusCode      status  = DataSvc::initialize();
