@@ -1,13 +1,4 @@
 ------------------------------------------------------------
-User: usher  Tue Aug 23 16:43:07 PDT 2011
-Overlay/src/DataServices
-
-Modified Files:
-	OverlayDataSvc.cxx 
-Log Message:
-Remove explicit reference to GLEAMDATAPATH and leave with no path defined (sending output to default directory)
-    *
-------------------------------------------------------------
 TAG
 Tag name: Overlay-01-06-00-gr02, operation: add
 Package: Overlay
