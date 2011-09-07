@@ -1,5 +1,23 @@
 ------------------------------------------------------------
 TAG
+Tag name: GlastRelease-19-03-07, operation: add
+Package: Overlay
+User: heather  Wed Sep  7 10:53:31 2011
+Files:
+  Overlay/.cvsignore  1.2
+  Overlay/ChangeLog  1.281
+  Overlay/SConscript  1.17
+  Overlay/OverlayLib.py  1.1
+  Overlay/Overlay/IOverlayDataSvc.h  1.2
+  Overlay/Overlay/IFetchEvents.h  1.1
+  Overlay/Overlay/IBackgroundBinTool.h  1.1
+  Overlay/cmt/.cvsignore  1.1.1.1
+  Overlay/cmt/NMake  1.1.1.1
+  Overlay/cmt/requirements  1.44
+
+    *
+------------------------------------------------------------
+TAG
 Tag name: GlastRelease-19-03-07, operation: del
 Package: Overlay
 User: glastrm  Tue Sep  6 14:15:27 2011
