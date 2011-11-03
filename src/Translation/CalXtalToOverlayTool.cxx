@@ -1,7 +1,7 @@
 /**  @file CalXtalToOverlayTool.cxx
     @brief implementation of class CalXtalToOverlayTool
     
-  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/CalXtalToOverlayTool.cxx,v 1.1 2008/12/01 22:50:11 usher Exp $  
+  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/CalXtalToOverlayTool.cxx,v 1.2 2011/06/27 17:45:57 usher Exp $  
 */
 
 #include "IDigiToOverlayTool.h"
@@ -91,7 +91,7 @@ StatusCode CalXtalToOverlayTool::initialize()
     }
     m_edSvc = dynamic_cast<IDataProviderSvc*>(iService);
 
-    sc = serviceLocator()->service("OverlayDataSvc", iService, true);
+    sc = serviceLocator()->service("OverlayOutputSvc", iService, true);
     if ( sc.isFailure() ) {
         log << MSG::ERROR << "could not find EventDataSvc !" << endreq;
         return sc;
