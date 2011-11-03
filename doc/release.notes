@@ -1,10 +1,11 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.43 2011/08/16 19:34:23 jrb Exp $
+$Id: release.notes,v 1.44 2011/08/23 23:54:48 usher Exp $
 @verbatim
  * EOH *
 
+ Overlay-02-00-06 03-Nov-2011  TU This fixes a hole in the logic where the TDS can be left uncleared
  Overlay-02-00-05 23-Aug-2011  TU Remove "GLEAMDATAPATH" from data service for test program
  Overlay-02-00-04 16-Aug-2011    jrb make test program jo SCons-compatible
  Overlay-02-00-03 25-Jul-2011  TU Fix compile bug on linux
