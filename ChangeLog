@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: usher  Thu Nov  3 11:13:50 PDT 2011
+Overlay/src/MergeAlgs
+
+Modified Files:
+	DoMergeAlg.cxx 
+Log Message:
+This fixes a hole in the logic where the Overlay TDS section does not get cleared in the event of an event which would  not otherwise trigger the LAT
+    *
+------------------------------------------------------------
 TAG
 Tag name: GlastRelease-17-35-24-gr12, operation: add
 Package: Overlay
