@@ -1,7 +1,7 @@
 /**  @file AcdHitToOverlayTool.cxx
     @brief implementation of class AcdHitToOverlayTool
     
-  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/AcdHitToOverlayTool.cxx,v 1.5 2011/05/20 15:52:09 heather Exp $  
+  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/AcdHitToOverlayTool.cxx,v 1.6 2011/06/27 17:45:57 usher Exp $  
 */
 
 #include "IDigiToOverlayTool.h"
@@ -147,7 +147,7 @@ StatusCode AcdHitToOverlayTool::initialize()
     }
     m_edSvc = dynamic_cast<IDataProviderSvc*>(iService);
 
-    sc = serviceLocator()->service("OverlayDataSvc", iService, true);
+    sc = serviceLocator()->service("OverlayOutputSvc", iService, true);
     if ( sc.isFailure() ) {
         log << MSG::ERROR << "could not find EventDataSvc !" << endreq;
         return sc;

@@ -1,7 +1,7 @@
 /**  @file DiagnosticDataToOverlayTool.cxx
     @brief implementation of class DiagnosticDataToOverlayTool
     
-  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/DiagnosticDataToOverlayTool.cxx,v 1.2 2010/04/27 17:43:15 usher Exp $  
+  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/DiagnosticDataToOverlayTool.cxx,v 1.3 2011/06/27 17:45:57 usher Exp $  
 */
 
 #include "IDigiToOverlayTool.h"
@@ -92,7 +92,7 @@ StatusCode DiagnosticDataToOverlayTool::initialize()
     }
     m_edSvc = dynamic_cast<IDataProviderSvc*>(iService);
 
-    sc = serviceLocator()->service("OverlayDataSvc", iService, true);
+    sc = serviceLocator()->service("OverlayOutputSvc", iService, true);
     if ( sc.isFailure() ) {
         log << MSG::ERROR << "could not find EventDataSvc !" << endreq;
         return sc;

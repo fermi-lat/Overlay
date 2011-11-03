@@ -19,6 +19,7 @@
 
 #include "GaudiKernel/SvcFactory.h"
 #include "GaudiKernel/ISvcLocator.h"
+#include "GaudiKernel/IPersistencySvc.h"
 #include "GaudiKernel/IAddressCreator.h"
 #include "GaudiKernel/IOpaqueAddress.h"
 #include "GaudiKernel/IIncidentSvc.h"
@@ -282,9 +283,16 @@ StatusCode OverlayDataSvc::initialize()
     incsvc->addListener(this, "BeginEvent", 100);
     incsvc->addListener(this, "EndEvent", 0);
 
-    // Attach data loader facility
-    status = svc_loc->service(m_persistencySvcName, m_cnvSvc, true);
+    // Need to attach the actual OverlayCnvSvc to the persistency service
+    // why? 
+    status = svc_loc->service("OverlayCnvSvc", m_cnvSvc, true);
     status = setDataLoader( m_cnvSvc );
+
+    // Attach data loader facility
+    IPersistencySvc* iPersSvc = 0;
+    status = svc_loc->service(m_persistencySvcName, iPersSvc, true);
+    status = iPersSvc->addCnvService(m_cnvSvc);
+    status = iPersSvc->setDefaultCnvService(EXCEL_StorageType);
 
     // Convention for multiple input overlay files is that there will be separate OverlayDataSvc's with 
     // names appended by "_xx", for example OverlayDataSvc_1 for the second input file. 
@@ -455,15 +463,15 @@ void OverlayDataSvc::endEvent()  // must be called at the end of an event to upd
         if (m_saveEvent)
         {
             // For now, go through the list and make sure the objects have been converted...
-            for(std::vector<std::string>::iterator dataIter = m_objectList.begin();
-                                                   dataIter != m_objectList.end();
-                                                   dataIter++)
-            {
-                std::string path = *dataIter;
+//            for(std::vector<std::string>::iterator dataIter = m_objectList.begin();
+//                                                   dataIter != m_objectList.end();
+//                                                   dataIter++)
+//            {
+//                std::string path = *dataIter;
 
-                DataObject* object = 0;
-                StatusCode status = retrieveObject(path, object);
-            }
+//                DataObject* object = 0;
+//                StatusCode status = retrieveObject(path, object);
+//            }
 
             // Now do a clear of the root DigiEvent root object
             m_eventOverlay->Clear();
@@ -476,7 +484,7 @@ void OverlayDataSvc::endEvent()  // must be called at the end of an event to upd
                 std::string path = *dataIter;
 
                 DataObject* object = 0;
-                StatusCode status = retrieveObject(path, object);
+                StatusCode status = retrieveObject(rootName() + path, object);
 
                 IOpaqueAddress* address = 0;
                 status = m_cnvSvc->createRep(object, address);

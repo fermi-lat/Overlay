@@ -1,7 +1,7 @@
 /**  @file EventToOverlayTool.cxx
     @brief implementation of class EventToOverlayTool
     
-  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/EventToOverlayTool.cxx,v 1.1 2008/12/01 22:50:12 usher Exp $  
+  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/EventToOverlayTool.cxx,v 1.2 2011/06/27 17:45:57 usher Exp $  
 */
 
 #include "IDigiToOverlayTool.h"
@@ -92,7 +92,7 @@ StatusCode EventToOverlayTool::initialize()
     }
     m_edSvc = dynamic_cast<IDataProviderSvc*>(iService);
 
-    sc = serviceLocator()->service("OverlayDataSvc", iService, true);
+    sc = serviceLocator()->service("OverlayOutputSvc", iService, true);
     if ( sc.isFailure() ) {
         log << MSG::ERROR << "could not find EventDataSvc !" << endreq;
         return sc;
@@ -118,20 +118,19 @@ StatusCode EventToOverlayTool::translate()
     // Recover the TkrDigi collection from the TDS
     SmartDataPtr<Event::EventHeader> event(m_edSvc, EventModel::EventHeader);
 
-    // Create a collection of TkrOverlays and register in the TDS
-    SmartDataPtr<Event::EventOverlay> overlay(m_dataSvc, m_dataSvc->rootName() + OverlayEventModel::Overlay::EventOverlay);
-    if(!overlay)
-    {
-        // Create the overlay Event object
-        overlay = new Event::EventOverlay();
+    // The EventOverlay object is special, it is the root of the Overlay section of the
+    // TDS. Therefore, we MUST create a new one each event and be sure to call the 
+    // "setRoot" method of the data service to properly clear and initialize each 
+    // event, otherwise stale information will be left lying about. 
+    Event::EventOverlay* overlay = new Event::EventOverlay();
 
-        // Set it as the root of the Overlay section in the TDS
-        status = m_dataSvc->setRoot(m_dataSvc->rootName(), overlay);
-        if( status.isFailure() ) 
-        {
-            log << MSG::ERROR << "could not set root for OverlayEventModel::Overlay::EventOverlay" << endreq;
-            return status;
-        }
+    // Set it as the root of the Overlay section in the TDS
+    status = m_dataSvc->setRoot(m_dataSvc->rootName(), overlay);
+
+    if( status.isFailure() ) 
+    {
+        log << MSG::ERROR << "could not set root for OverlayEventModel::Overlay::EventOverlay" << endreq;
+        return status;
     }
 
     // Check to see if the event and run ids have already been set.
