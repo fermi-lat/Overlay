@@ -1,4 +1,15 @@
 ------------------------------------------------------------
+User: usher  Thu Nov  3 11:21:15 PDT 2011
+Overlay/src/Translation
+
+Modified Files:
+	AcdHitToOverlayTool.cxx CalXtalToOverlayTool.cxx 
+	DiagnosticDataToOverlayTool.cxx DigiToOverlay.txt 
+	EventToOverlayTool.cxx GemToOverlayTool.cxx 
+	PtToOverlayTool.cxx TkrDigiToOverlayTool.cxx 
+Log Message:
+    *
+------------------------------------------------------------
 User: usher  Thu Nov  3 11:21:14 PDT 2011
 Overlay/src/DataServices
 
