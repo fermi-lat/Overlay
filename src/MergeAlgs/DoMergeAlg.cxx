@@ -5,7 +5,7 @@
  *
  * @author Tracy Usher
  *
- * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/DoMergeAlg.cxx,v 1.2 2009/03/17 19:50:20 usher Exp $
+ * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/DoMergeAlg.cxx,v 1.3 2011/06/27 17:45:57 usher Exp $
  */
 
 
@@ -113,10 +113,20 @@ StatusCode DoMergeAlg::execute()
     MsgStream log(msgSvc(), name());
     log << MSG::DEBUG << "execute" << endreq;
 
+    // Since our overlay stuff is not stored in the /Event section of the TDS, we need 
+    // to explicitly "set the root" each event - or risk it not getting cleared. 
+    sc = setRootEvent();
+
+    if (sc.isFailure())
+    {
+        log << MSG::ERROR << "Clearing of the Overlay section of TDS failed" << endreq;
+        return sc;
+    }
+
     if (m_mergeAll)
     {
         log << MSG::DEBUG << "Merging all events, skipping DoMergeAlg" << endreq;
-        return setRootEvent();
+        return sc;
     }
 
     // How many hits in ACD, TKR or CAL?
@@ -134,8 +144,7 @@ StatusCode DoMergeAlg::execute()
     if (intHitCol) numIntHits = intHitCol->size();
 
     // if there are no McPositionHits AND no McIntegratingHits then the simulated particle did not interact
-    if (numPosHits > 0 || numIntHits > 0) setRootEvent();
-    else                                  setFilterPassed(false); 
+    if (!(numPosHits > 0 || numIntHits > 0)) setFilterPassed(false); 
 
     return sc;
 }
