@@ -5,7 +5,7 @@
  *
  * @author Tracy Usher
  *
- * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/DigiToOverlayAlg.cxx,v 1.3 2010/04/27 16:53:33 usher Exp $
+ * $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/Translation/DigiToOverlayAlg.cxx,v 1.4 2011/06/27 17:45:57 usher Exp $
  */
 
 #include "GaudiKernel/Algorithm.h"
@@ -41,8 +41,9 @@ private:
 };
 
 // Used by Gaudi for identifying this algorithm
-static const AlgFactory<DigiToOverlayAlg>    Factory;
-const IAlgFactory& DigiToOverlayAlgFactory = Factory;
+//static const AlgFactory<DigiToOverlayAlg>    Factory;
+//const IAlgFactory& DigiToOverlayAlgFactory = Factory;
+DECLARE_ALGORITHM_FACTORY(DigiToOverlayAlg);
 
 DigiToOverlayAlg::DigiToOverlayAlg(const std::string& name,
                                          ISvcLocator* pSvcLocator)

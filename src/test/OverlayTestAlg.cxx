@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/test/OverlayTestAlg.cxx,v 1.3 2008/12/07 16:53:24 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/test/OverlayTestAlg.cxx,v 1.4.136.1 2010/09/20 16:15:42 heather Exp $
 
 // Include files
 
@@ -42,8 +42,9 @@ private:
 };
 
 
-static const AlgFactory<OverlayTestAlg>  Factory;
-const IAlgFactory& OverlayTestAlgFactory = Factory;
+//static const AlgFactory<OverlayTestAlg>  Factory;
+//const IAlgFactory& OverlayTestAlgFactory = Factory;
+DECLARE_ALGORITHM_FACTORY(OverlayTestAlg);
 
 //
 OverlayTestAlg::OverlayTestAlg(const std::string& name, ISvcLocator* pSvcLocator) :
@@ -72,7 +73,8 @@ StatusCode OverlayTestAlg::initialize()
     }
     else 
     {
-        m_overlayInputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
+        m_overlayInputSvc = SmartIF<IOverlayDataSvc>(tmpService);
+        //m_overlayInputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
 
         if (!m_overlayInputSvc) log << MSG::INFO << "Could not find input data service interface" << endreq;
         else                  log << MSG::INFO << "Input data service successfully retrieved" << endreq;
@@ -85,7 +87,8 @@ StatusCode OverlayTestAlg::initialize()
     }
     else 
     {
-        IOverlayDataSvc* overlayInputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
+        IOverlayDataSvc* overlayInputSvc = SmartIF<IOverlayDataSvc>(tmpService);
+        //IOverlayDataSvc* overlayInputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
 
         if (!overlayInputSvc) log << MSG::INFO << "Could not find output data service interface" << endreq;
         else                  log << MSG::INFO << "Output data service successfully retrieved" << endreq;

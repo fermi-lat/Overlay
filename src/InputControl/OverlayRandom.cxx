@@ -30,5 +30,6 @@ public:
 };
 
 // Static factory for instantiation of algtool objects
-static ToolFactory<OverlayRandom> s_factory;
-const IToolFactory& OverlayRandomFactory = s_factory;
+//static ToolFactory<OverlayRandom> s_factory;
+//const IToolFactory& OverlayRandomFactory = s_factory;
+DECLARE_TOOL_FACTORY(OverlayRandom);

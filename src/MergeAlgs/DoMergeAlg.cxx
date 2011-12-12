@@ -5,7 +5,7 @@
  *
  * @author Tracy Usher
  *
- * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/DoMergeAlg.cxx,v 1.3 2011/06/27 17:45:57 usher Exp $
+ * $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/MergeAlgs/DoMergeAlg.cxx,v 1.4 2011/11/03 18:13:50 usher Exp $
  */
 
 
@@ -47,8 +47,9 @@ private:
 };
 
 // Used by Gaudi for identifying this algorithm
-static const AlgFactory<DoMergeAlg>    Factory;
-const IAlgFactory& DoMergeAlgFactory = Factory;
+//static const AlgFactory<DoMergeAlg>    Factory;
+//const IAlgFactory& DoMergeAlgFactory = Factory;
+DECLARE_ALGORITHM_FACTORY(DoMergeAlg);
 
 DoMergeAlg::DoMergeAlg(const std::string& name, ISvcLocator* pSvcLocator)
     : Algorithm(name, pSvcLocator) 

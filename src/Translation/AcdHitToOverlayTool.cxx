@@ -1,7 +1,7 @@
 /**  @file AcdHitToOverlayTool.cxx
     @brief implementation of class AcdHitToOverlayTool
     
-  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/AcdHitToOverlayTool.cxx,v 1.6 2011/06/27 17:45:57 usher Exp $  
+  $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/Translation/AcdHitToOverlayTool.cxx,v 1.7 2011/11/03 18:21:15 usher Exp $  
 */
 
 #include "IDigiToOverlayTool.h"
@@ -102,8 +102,9 @@ private:
     AcdUtil::IAcdCalibSvc* m_calibSvc;
 };
 
-static ToolFactory<AcdHitToOverlayTool> s_factory;
-const IToolFactory& AcdHitToOverlayToolFactory = s_factory;
+//static ToolFactory<AcdHitToOverlayTool> s_factory;
+//const IToolFactory& AcdHitToOverlayToolFactory = s_factory;
+DECLARE_TOOL_FACTORY(AcdHitToOverlayTool);
 
 //------------------------------------------------------------------------
 AcdHitToOverlayTool::AcdHitToOverlayTool(const std::string& type, 

@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/PtOverlayCnv.cxx,v 1.4 2011/06/27 17:45:58 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/cnv/PtOverlayCnv.cxx,v 1.5 2011/11/03 18:21:15 usher Exp $
 /**
             @file  PtOverlayCnv.cxx
 
@@ -91,8 +91,9 @@ private:
 };
 
 
- static CnvFactory<PtOverlayCnv> s_factory;
- const ICnvFactory& PtOverlayCnvFactory = s_factory;
+ //static CnvFactory<PtOverlayCnv> s_factory;
+ //const ICnvFactory& PtOverlayCnvFactory = s_factory;
+DECLARE_CONVERTER_FACTORY(PtOverlayCnv);
 
  PtOverlayCnv::PtOverlayCnv( ISvcLocator* svc) : Converter (EXCEL_StorageType, Event::PtOverlay::classID(), svc) 
 {

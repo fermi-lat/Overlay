@@ -5,7 +5,7 @@
  *
  * @author Tracy Usher
  *
- * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/DiagDataOverlayMergeAlg.cxx,v 1.3 2011/05/31 03:05:48 lsrea Exp $
+ * $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/MergeAlgs/DiagDataOverlayMergeAlg.cxx,v 1.4 2011/06/27 17:45:57 usher Exp $
  */
 
 
@@ -43,8 +43,9 @@ class DiagDataOverlayMergeAlg : public Algorithm
 };
 
 // Used by Gaudi for identifying this algorithm
-static const AlgFactory<DiagDataOverlayMergeAlg>    Factory;
-const IAlgFactory& DiagDataOverlayMergeAlgFactory = Factory;
+//static const AlgFactory<DiagDataOverlayMergeAlg>    Factory;
+//const IAlgFactory& DiagDataOverlayMergeAlgFactory = Factory;
+DECLARE_ALGORITHM_FACTORY(DiagDataOverlayMergeAlg);
 
 DiagDataOverlayMergeAlg::DiagDataOverlayMergeAlg(const std::string& name,
                                          ISvcLocator* pSvcLocator)

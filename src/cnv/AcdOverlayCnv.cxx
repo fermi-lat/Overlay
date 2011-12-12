@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/AcdOverlayCnv.cxx,v 1.4 2011/06/27 17:45:57 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/cnv/AcdOverlayCnv.cxx,v 1.5 2011/11/03 18:21:15 usher Exp $
 /**
             @file  AcdOverlayCnv.cxx
 
@@ -93,8 +93,9 @@ private:
 };
 
 
- static CnvFactory<AcdOverlayCnv> s_factory;
- const ICnvFactory& AcdOverlayCnvFactory = s_factory;
+ //static CnvFactory<AcdOverlayCnv> s_factory;
+ //const ICnvFactory& AcdOverlayCnvFactory = s_factory;
+DECLARE_CONVERTER_FACTORY(AcdOverlayCnv);
 
  AcdOverlayCnv::AcdOverlayCnv( ISvcLocator* svc) : Converter (EXCEL_StorageType, ObjectVector<Event::AcdOverlay>::classID(), svc) 
 {

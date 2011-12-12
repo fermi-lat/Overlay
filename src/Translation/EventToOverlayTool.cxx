@@ -1,7 +1,7 @@
 /**  @file EventToOverlayTool.cxx
     @brief implementation of class EventToOverlayTool
     
-  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/EventToOverlayTool.cxx,v 1.2 2011/06/27 17:45:57 usher Exp $  
+  $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/Translation/EventToOverlayTool.cxx,v 1.3 2011/11/03 18:21:15 usher Exp $  
 */
 
 #include "IDigiToOverlayTool.h"
@@ -58,8 +58,9 @@ private:
     DataSvc*          m_dataSvc;
 };
 
-static ToolFactory<EventToOverlayTool> s_factory;
-const IToolFactory& EventToOverlayToolFactory = s_factory;
+//static ToolFactory<EventToOverlayTool> s_factory;
+//const IToolFactory& EventToOverlayToolFactory = s_factory;
+DECLARE_TOOL_FACTORY(EventToOverlayTool);
 
 //------------------------------------------------------------------------
 EventToOverlayTool::EventToOverlayTool(const std::string& type, 
