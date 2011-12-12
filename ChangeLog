@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: heather  Mon Dec 12 12:54:55 PST 2011
+GlastRelease-scons/Overlay/src/DataServices
+
+Modified Files:
+	OverlayCnvSvc.cxx OverlayDataSvc.cxx OverlayInputSvc.cxx 
+	OverlayOutputSvc.cxx 
+Log Message:
+merge Gaudi v21r7
+    *
+------------------------------------------------------------
 User: heather  Mon Dec 12 12:54:54 PST 2011
 GlastRelease-scons/Overlay/doc
 
