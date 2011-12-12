@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/DataServices/OverlayOutputSvc.cxx,v 1.2 2009/01/14 20:07:51 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/DataServices/OverlayOutputSvc.cxx,v 1.3.30.1 2010/09/20 16:15:40 heather Exp $
 
 // Include files
 #include "GaudiKernel/Service.h"
@@ -86,8 +86,9 @@ private:
 
 // Instantiation of a static factory class used by clients to create
 // instances of this service
-static SvcFactory<OverlayOutputSvc> s_factory;
-const ISvcFactory& OverlayOutputSvcFactory = s_factory;
+//static SvcFactory<OverlayOutputSvc> s_factory;
+//const ISvcFactory& OverlayOutputSvcFactory = s_factory;
+DECLARE_SERVICE_FACTORY(OverlayOutputSvc);
 
 /// Standard Constructor
 OverlayOutputSvc::OverlayOutputSvc(const std::string& name,ISvcLocator* svc) : Service(name,svc),
@@ -237,7 +238,7 @@ void OverlayOutputSvc::endEvent()  // must be called at the end of an event to u
     {
         // Get the converstion service with an IConverter* interface
         IConverter* cnvService = 0;
-        if (serviceLocator()->getService("EventCnvSvc", IID_IConverter, (IInterface*&)cnvService).isFailure())
+        if (serviceLocator()->getService("EventCnvSvc", IConverter::interfaceID(), (IInterface*&)cnvService).isFailure())
         {
             MsgStream log(msgSvc(), name());
             log << MSG::ERROR << "Could not retrieve the EventCnvSvc! " << endreq;

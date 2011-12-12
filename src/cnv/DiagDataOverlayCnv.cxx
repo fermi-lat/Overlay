@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/DiagDataOverlayCnv.cxx,v 1.2 2011/06/27 17:45:57 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/cnv/DiagDataOverlayCnv.cxx,v 1.3 2011/11/03 18:21:15 usher Exp $
 /**
             @file  DiagDataOverlayCnv.cxx
 
@@ -91,8 +91,9 @@ private:
 };
 
 
- static CnvFactory<DiagDataOverlayCnv> s_factory;
- const ICnvFactory& DiagDataOverlayCnvFactory = s_factory;
+ //static CnvFactory<DiagDataOverlayCnv> s_factory;
+ //const ICnvFactory& DiagDataOverlayCnvFactory = s_factory;
+DECLARE_CONVERTER_FACTORY(DiagDataOverlayCnv);
 
  DiagDataOverlayCnv::DiagDataOverlayCnv( ISvcLocator* svc) : Converter (EXCEL_StorageType, Event::DiagDataOverlay::classID(), svc) 
 {

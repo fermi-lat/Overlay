@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/TkrOverlayCnv.cxx,v 1.3 2011/06/27 17:45:58 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/cnv/TkrOverlayCnv.cxx,v 1.4 2011/11/03 18:21:15 usher Exp $
 /**
             @file  TkrOverlayCnv.cxx
 
@@ -92,8 +92,9 @@ private:
 };
 
 
- static CnvFactory<TkrOverlayCnv> s_factory;
- const ICnvFactory& TkrOverlayCnvFactory = s_factory;
+ //static CnvFactory<TkrOverlayCnv> s_factory;
+ //const ICnvFactory& TkrOverlayCnvFactory = s_factory;
+DECLARE_CONVERTER_FACTORY(TkrOverlayCnv);
 
  TkrOverlayCnv::TkrOverlayCnv( ISvcLocator* svc) : Converter (EXCEL_StorageType, ObjectVector<Event::TkrOverlay>::classID(), svc) 
 {

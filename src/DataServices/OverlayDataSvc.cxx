@@ -158,8 +158,9 @@ private:
 
 // Instantiation of a static factory class used by clients to create
 // instances of this service
-static SvcFactory<OverlayDataSvc> s_factory;
-const ISvcFactory& OverlayDataSvcFactory = s_factory;
+//static SvcFactory<OverlayDataSvc> s_factory;
+//const ISvcFactory& OverlayDataSvcFactory = s_factory;
+DECLARE_SERVICE_FACTORY(OverlayDataSvc);
 
 /// Standard Constructor
 OverlayDataSvc::OverlayDataSvc(const std::string& name,ISvcLocator* svc) 

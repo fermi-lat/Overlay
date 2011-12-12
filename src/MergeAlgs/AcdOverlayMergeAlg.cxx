@@ -4,7 +4,7 @@
  *
  * @author Zach Fewtrell zachary.fewtrell@nrl.navy.mil
  * 
- *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/AcdOverlayMergeAlg.cxx,v 1.8 2011/05/20 15:52:09 heather Exp $
+ *  $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/MergeAlgs/AcdOverlayMergeAlg.cxx,v 1.9 2011/06/27 17:45:57 usher Exp $
  */
 
 // Gaudi specific include files
@@ -65,8 +65,9 @@ private:
 
 
 // Define the factory for this algorithm
-static const AlgFactory<AcdOverlayMergeAlg>  Factory;
-const IAlgFactory& AcdOverlayMergeAlgFactory = Factory;
+//static const AlgFactory<AcdOverlayMergeAlg>  Factory;
+//const IAlgFactory& AcdOverlayMergeAlgFactory = Factory;
+DECLARE_ALGORITHM_FACTORY(AcdOverlayMergeAlg);
 
 /// construct object & declare jobOptions
 AcdOverlayMergeAlg::AcdOverlayMergeAlg(const std::string& name, ISvcLocator* pSvcLocator) :
