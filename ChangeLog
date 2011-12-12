@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Mon Dec 12 12:54:57 PST 2011
+GlastRelease-scons/Overlay/src/test
+
+Modified Files:
+	OverlayTestAlg.cxx jobOptions.txt 
+Log Message:
+merge Gaudi v21r7
+    *
+------------------------------------------------------------
 User: heather  Mon Dec 12 12:54:56 PST 2011
 GlastRelease-scons/Overlay/src/cnv
 
