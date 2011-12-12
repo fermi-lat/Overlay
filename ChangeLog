@@ -1,5 +1,17 @@
 ------------------------------------------------------------
 User: heather  Mon Dec 12 12:54:56 PST 2011
+GlastRelease-scons/Overlay/src/Translation
+
+Modified Files:
+	AcdHitToOverlayTool.cxx CalXtalToOverlayTool.cxx 
+	DiagnosticDataToOverlayTool.cxx DigiToOverlayAlg.cxx 
+	EventToOverlayTool.cxx GemToOverlayTool.cxx 
+	PtToOverlayTool.cxx TkrDigiToOverlayTool.cxx 
+Log Message:
+merge Gaudi v21r7
+    *
+------------------------------------------------------------
+User: heather  Mon Dec 12 12:54:56 PST 2011
 GlastRelease-scons/Overlay/src/Tasks
 
 Modified Files:
