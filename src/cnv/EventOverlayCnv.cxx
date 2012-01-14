@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/cnv/EventOverlayCnv.cxx,v 1.4 2011/11/03 18:21:15 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/cnv/EventOverlayCnv.cxx,v 1.5 2011/12/12 20:54:56 heather Exp $
 /**
             @file  EventOverlayCnv.cxx
 
@@ -27,7 +27,7 @@
 #include "OverlayEvent/EventOverlay.h"
 #include "OverlayEvent/SrcOverlay.h"
 
-#include "Trigger/TriRowBits.h"
+//   #include "Trigger/TriRowBits.h" unused
 #include "LdfEvent/LdfTime.h"
 
 #include "overlayRootData/EventOverlay.h"
