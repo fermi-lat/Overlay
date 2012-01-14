@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jrb  Fri Jan 13 17:38:13 PST 2012
+GlastRelease-scons/Overlay
+
+Modified Files:
+	OverlayLib.py SConscript 
+Log Message:
+rationalize SCons dependencies
+    *
+------------------------------------------------------------
 User: jrb  Fri Jan 13 17:33:26 PST 2012
 GlastRelease-scons/Overlay/src/cnv
 
