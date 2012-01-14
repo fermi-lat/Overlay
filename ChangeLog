@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jrb  Fri Jan 13 17:32:27 PST 2012
+GlastRelease-scons/Overlay/src/cnv
+
+Modified Files:
+	EventOverlayCnv.cxx 
+Log Message:
+comment out unused #include 
+    *
+------------------------------------------------------------
 TAG
 Tag name: GlastRelease-17-35-24-gr17, operation: add
 Package: Overlay
