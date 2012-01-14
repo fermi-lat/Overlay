@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jrb  Fri Jan 13 17:33:26 PST 2012
+GlastRelease-scons/Overlay/src/cnv
+
+Modified Files:
+	SrcOverlayCnv.cxx 
+Log Message:
+patch needed to generate rootmap
+    *
+------------------------------------------------------------
 User: jrb  Fri Jan 13 17:32:27 PST 2012
 GlastRelease-scons/Overlay/src/cnv
 
