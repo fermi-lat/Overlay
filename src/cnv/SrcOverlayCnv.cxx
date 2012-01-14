@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/cnv/SrcOverlayCnv.cxx,v 1.4 2011/11/03 18:21:15 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/cnv/SrcOverlayCnv.cxx,v 1.5 2011/12/12 20:54:56 heather Exp $
 /**
             @file  SrcOverlayCnv.cxx
 
@@ -42,7 +42,10 @@ public:
 
     /// Query interfaces of Interface
     //virtual StatusCode queryInterface(const InterfaceID& riid, void** ppvInterface);
-    static const CLID&         classID()     {return Event::SrcOverlay::classID();}
+    static const CLID&         classID() {
+      return InterfaceID("SrcOverlay", 1, 0);
+    }
+
     static const unsigned char storageType() {return EXCEL_StorageType;}
 
     /// Initialize the converter
@@ -87,6 +90,7 @@ public:
 private:
     std::string      m_path;
 
+  //static CLID s_clid;
     IOverlayDataSvc* m_overlayOutputSvc;
 };
 
@@ -96,7 +100,8 @@ private:
 DECLARE_CONVERTER_FACTORY(SrcOverlayCnv);
 
  SrcOverlayCnv::SrcOverlayCnv( ISvcLocator* svc) : 
-                 Converter (EXCEL_StorageType, Event::SrcOverlay::classID(), svc) 
+   //                 Converter (EXCEL_StorageType, Event::SrcOverlay::classID(), svc) 
+   Converter (EXCEL_StorageType, InterfaceID("SrcOverlay", 1, 0), svc) 
 {
     m_path = OverlayEventModel::Overlay::SrcOverlay;
 
@@ -160,11 +165,13 @@ StatusCode SrcOverlayCnv::createObj(IOpaqueAddress* pOpaque, DataObject*& refpOb
     // Create the new SrcOverlay event to put in the TDS
     Event::SrcOverlay* overlayTds = new Event::SrcOverlay();
 
+
     // Retrieve the pointer to the digi
     EventOverlay* overlayRoot = inputDataSvc->getRootEventOverlay();
 
     // Initialize the overlay object
     overlayTds->initialize(overlayRoot->getFromMc());
+
 
     // Return the pointer to it
     refpObject = overlayTds;
@@ -180,3 +187,14 @@ StatusCode SrcOverlayCnv::createRep(DataObject*, IOpaqueAddress*&)
 
     return status;
 }
+
+/*
+CLID SrcOverlayCnv::s_clid = 0;
+
+
+const CLID& SrcOverlayCnv::classID() {
+    s_clid = InterfaceID("SrcOverlay", 1, 0);
+    return s_clid;
+}
+*/
+
