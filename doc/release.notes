@@ -1,10 +1,11 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.45 2011/11/03 18:17:35 usher Exp $
+$Id: release.notes,v 1.46 2011/12/12 20:54:54 heather Exp $
 @verbatim
  * EOH *
 
+ Overlay-02-01-01 13-Jan-2012    jrb get rootmap working on Linux; rationalize dependencies
  Overlay-02-01-00 08-Dec-2011 HMK Merge Gaudi v21r7
  Overlay-02-00-06 03-Nov-2011  TU This fixes a hole in the logic where the TDS can be left uncleared
  Overlay-02-00-05 23-Aug-2011  TU Remove "GLEAMDATAPATH" from data service for test program
