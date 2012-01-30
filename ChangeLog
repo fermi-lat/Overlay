@@ -1,5 +1,15 @@
 ------------------------------------------------------------
 User: heather  Mon Jan 30 12:26:19 PST 2012
+Overlay/src/DataServices
+
+Modified Files:
+      Tag: GlastRelease-17-35-24-br01
+	OverlayInputSvc.cxx OverlayOutputSvc.cxx 
+Log Message:
+Gaudi v21r7
+    *
+------------------------------------------------------------
+User: heather  Mon Jan 30 12:26:19 PST 2012
 Overlay/doc
 
 Modified Files:
