@@ -1,7 +1,7 @@
 /**  @file GemToOverlayTool.cxx
     @brief implementation of class GemToOverlayTool
     
-  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/GemToOverlayTool.cxx,v 1.0 2008/10/15 15:14:30 usher Exp $  
+  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/GemToOverlayTool.cxx,v 1.1 2008/12/01 22:50:12 usher Exp $  
 */
 
 #include "IDigiToOverlayTool.h"
@@ -52,8 +52,9 @@ private:
     IDataProviderSvc*      m_edSvc;
 };
 
-static ToolFactory<GemToOverlayTool> s_factory;
-const IToolFactory& GemToOverlayToolFactory = s_factory;
+//static ToolFactory<GemToOverlayTool> s_factory;
+//const IToolFactory& GemToOverlayToolFactory = s_factory;
+DECLARE_TOOL_FACTORY(GemToOverlayTool);
 
 //------------------------------------------------------------------------
 GemToOverlayTool::GemToOverlayTool(const std::string& type, 

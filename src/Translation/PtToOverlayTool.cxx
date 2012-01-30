@@ -1,7 +1,7 @@
 /**  @file PtToOverlayTool.cxx
     @brief implementation of class PtToOverlayTool
     
-  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/PtToOverlayTool.cxx,v 1.1 2008/12/01 22:50:12 usher Exp $  
+  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/PtToOverlayTool.cxx,v 1.1 2009/03/16 17:31:27 usher Exp $  
 */
 
 #include "IDigiToOverlayTool.h"
@@ -79,8 +79,9 @@ private:
     float*            m_bUp;
 };
 
-static ToolFactory<PtToOverlayTool> s_factory;
-const IToolFactory& PtToOverlayToolFactory = s_factory;
+//static ToolFactory<PtToOverlayTool> s_factory;
+//const IToolFactory& PtToOverlayToolFactory = s_factory;
+DECLARE_TOOL_FACTORY(PtToOverlayTool);
 
 //------------------------------------------------------------------------
 PtToOverlayTool::PtToOverlayTool(const std::string& type, 
