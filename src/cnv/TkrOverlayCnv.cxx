@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/TkrOverlayCnv.cxx,v 1.1 2008/12/02 15:27:17 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/TkrOverlayCnv.cxx,v 1.2 2009/09/15 19:20:05 usher Exp $
 /**
             @file  TkrOverlayCnv.cxx
 
@@ -92,8 +92,9 @@ private:
 };
 
 
- static CnvFactory<TkrOverlayCnv> s_factory;
- const ICnvFactory& TkrOverlayCnvFactory = s_factory;
+ //static CnvFactory<TkrOverlayCnv> s_factory;
+ //const ICnvFactory& TkrOverlayCnvFactory = s_factory;
+DECLARE_CONVERTER_FACTORY(TkrOverlayCnv);
 
  TkrOverlayCnv::TkrOverlayCnv( ISvcLocator* svc) : Converter (SICB_StorageType, ObjectVector<Event::TkrOverlay>::classID(), svc) 
 {

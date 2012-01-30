@@ -1,10 +1,11 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.31.36.1 2011/07/27 14:44:55 heather Exp $
+$Id: release.notes,v 1.31.36.2 2011/08/19 02:38:51 heather Exp $
 @verbatim
  * EOH *
 
+ Overlay-01-06-00-gr03 30-Jan-2012 HMK Gaudi v21r7
  Overlay-01-06-00-gr02 18-Aug-2011 HMK fix up unit test JO for env vars
  Overlay-01-06-00-gr01 27-Jul-2011 HMK Merge in SCons updates for P7
  Overlay-01-06-00 27-Jan-2010  TU  Fix the way Cal adds energy to McIntegratingHits

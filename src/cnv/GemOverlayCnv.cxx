@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/GemOverlayCnv.cxx,v 1.1 2008/12/02 15:27:17 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/GemOverlayCnv.cxx,v 1.2 2009/09/15 19:20:05 usher Exp $
 /**
             @file  GemOverlayCnv.cxx
 
@@ -91,8 +91,9 @@ private:
 };
 
 
- static CnvFactory<GemOverlayCnv> s_factory;
- const ICnvFactory& GemOverlayCnvFactory = s_factory;
+ //static CnvFactory<GemOverlayCnv> s_factory;
+ //const ICnvFactory& GemOverlayCnvFactory = s_factory;
+DECLARE_CONVERTER_FACTORY(GemOverlayCnv);
 
  GemOverlayCnv::GemOverlayCnv( ISvcLocator* svc) : Converter (SICB_StorageType, Event::GemOverlay::classID(), svc) 
 {

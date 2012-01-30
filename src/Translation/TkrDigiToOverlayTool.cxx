@@ -1,7 +1,7 @@
 /**  @file TkrDigiToOverlayTool.cxx
     @brief implementation of class TkrDigiToOverlayTool
     
-  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/TkrDigiToOverlayTool.cxx,v 1.0 2008/10/15 15:14:30 usher Exp $  
+  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/TkrDigiToOverlayTool.cxx,v 1.1 2008/12/01 22:50:12 usher Exp $  
 */
 
 #include "IDigiToOverlayTool.h"
@@ -53,8 +53,9 @@ private:
     IDataProviderSvc*   m_edSvc;
 };
 
-static ToolFactory<TkrDigiToOverlayTool> s_factory;
-const IToolFactory& TkrDigiToOverlayToolFactory = s_factory;
+//static ToolFactory<TkrDigiToOverlayTool> s_factory;
+//const IToolFactory& TkrDigiToOverlayToolFactory = s_factory;
+DECLARE_TOOL_FACTORY(TkrDigiToOverlayTool);
 
 //------------------------------------------------------------------------
 TkrDigiToOverlayTool::TkrDigiToOverlayTool(const std::string& type, 

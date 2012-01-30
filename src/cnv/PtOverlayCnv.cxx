@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/PtOverlayCnv.cxx,v 1.2 2009/03/23 20:01:33 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/PtOverlayCnv.cxx,v 1.3 2009/09/15 19:20:05 usher Exp $
 /**
             @file  PtOverlayCnv.cxx
 
@@ -91,8 +91,9 @@ private:
 };
 
 
- static CnvFactory<PtOverlayCnv> s_factory;
- const ICnvFactory& PtOverlayCnvFactory = s_factory;
+ //static CnvFactory<PtOverlayCnv> s_factory;
+ //const ICnvFactory& PtOverlayCnvFactory = s_factory;
+DECLARE_CONVERTER_FACTORY(PtOverlayCnv);
 
  PtOverlayCnv::PtOverlayCnv( ISvcLocator* svc) : Converter (SICB_StorageType, Event::PtOverlay::classID(), svc) 
 {
