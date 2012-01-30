@@ -1,5 +1,16 @@
 ------------------------------------------------------------
 User: heather  Mon Jan 30 12:26:20 PST 2012
+Overlay/src/MergeAlgs
+
+Modified Files:
+      Tag: GlastRelease-17-35-24-br01
+	AcdOverlayMergeAlg.cxx CalOverlayMergeAlg.cxx DoMergeAlg.cxx 
+	GemOverlayMergeAlg.cxx TkrOverlayMergeAlg.cxx 
+Log Message:
+Gaudi v21r7
+    *
+------------------------------------------------------------
+User: heather  Mon Jan 30 12:26:20 PST 2012
 Overlay/src/InputControl
 
 Modified Files:
