@@ -1,4 +1,16 @@
 ------------------------------------------------------------
+User: heather  Tue Jan 31 19:13:17 PST 2012
+GlastRelease-scons/Overlay/src/cnv
+
+Modified Files:
+      Tag: GlastRelease-17-35-24-br01
+	AcdOverlayCnv.cxx CalOverlayiCnv.cxx EventOverlayCnv.cxx 
+	GemOverlayCnv.cxx PtOverlayCnv.cxx SrcOverlayCnv.cxx 
+	TkrOverlayCnv.cxx 
+Log Message:
+patches
+    *
+------------------------------------------------------------
 User: heather  Tue Jan 31 19:13:16 PST 2012
 GlastRelease-scons/Overlay/doc
 
