@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/TkrOverlayCnv.cxx,v 1.2 2009/09/15 19:20:05 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/cnv/TkrOverlayCnv.cxx,v 1.2.96.1 2012/01/30 20:26:20 heather Exp $
 /**
             @file  TkrOverlayCnv.cxx
 
@@ -117,13 +117,14 @@ StatusCode TkrOverlayCnv::initialize()
 
     // We're going rogue here, look up the OverlayDataSvc and use this as 
     // our data provider insteand of EventCnvSvc
-    IService* tmpService = 0;
+    IDataProviderSvc* tmpService = 0;
     if (service("OverlayInputSvc", tmpService, false).isFailure())
     {
         log << MSG::INFO << "No OverlayInputSvc available, no input conversion will be performed" << endreq;
         m_overlayInputSvc = 0;
     }
-    else m_overlayInputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
+    else m_overlayInputSvc = dynamic_cast<IOverlayDataSvc*>(tmpService);
+    //else m_overlayInputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
 
     // Now look up the output data service
     if (service("OverlayOutputSvc", tmpService, false).isFailure())
@@ -131,7 +132,8 @@ StatusCode TkrOverlayCnv::initialize()
         log << MSG::INFO << "No OverlayOutputSvc available, no input conversion will be performed" << endreq;
         m_overlayOutputSvc = 0;
     }
-    else m_overlayOutputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
+    else m_overlayOutputSvc = dynamic_cast<IOverlayDataSvc*>(tmpService);
+    //else m_overlayOutputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
 
     if (m_overlayOutputSvc) m_overlayOutputSvc->registerOutputPath(m_path);
 
