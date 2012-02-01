@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/SrcOverlayCnv.cxx,v 1.2 2009/09/15 19:20:05 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/cnv/SrcOverlayCnv.cxx,v 1.2.96.1 2012/01/30 20:26:20 heather Exp $
 /**
             @file  SrcOverlayCnv.cxx
 
@@ -41,7 +41,8 @@ public:
 
     /// Query interfaces of Interface
     //virtual StatusCode queryInterface(const InterfaceID& riid, void** ppvInterface);
-    static const CLID&         classID()     {return Event::SrcOverlay::classID();}
+    //static const CLID&         classID()     {return Event::SrcOverlay::classID();}
+    static const CLID&         classID()     {return InterfaceID("SrcOverlay",1,0);}
     static const unsigned char storageType() {return SICB_StorageType;}
 
     /// Initialize the converter
@@ -96,7 +97,8 @@ private:
 DECLARE_CONVERTER_FACTORY(SrcOverlayCnv);
 
  SrcOverlayCnv::SrcOverlayCnv( ISvcLocator* svc) : 
-                 Converter (SICB_StorageType, Event::SrcOverlay::classID(), svc) 
+                 Converter (SICB_StorageType, InterfaceID("SrcOverlay",1,0), svc) 
+                 //Converter (SICB_StorageType, Event::SrcOverlay::classID(), svc) 
 {
     m_path = OverlayEventModel::Overlay::SrcOverlay;
 
@@ -117,13 +119,14 @@ StatusCode SrcOverlayCnv::initialize()
 
     // We're going rogue here, look up the OverlayDataSvc and use this as 
     // our data provider insteand of EventCnvSvc
-    IService* tmpService = 0;
+    IDataProviderSvc* tmpService = 0;
     if (service("OverlayInputSvc", tmpService, false).isFailure())
     {
         log << MSG::INFO << "No OverlayInputSvc available, no input conversion will be performed" << endreq;
         m_overlayInputSvc = 0;
     }
-    else m_overlayInputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
+    else m_overlayInputSvc = dynamic_cast<IOverlayDataSvc*>(tmpService);
+    //else m_overlayInputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
 
     // Now look up the output data service
     if (service("OverlayOutputSvc", tmpService, false).isFailure())
@@ -131,7 +134,8 @@ StatusCode SrcOverlayCnv::initialize()
         log << MSG::INFO << "No OverlayOutputSvc available, no input conversion will be performed" << endreq;
         m_overlayOutputSvc = 0;
     }
-    else m_overlayOutputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
+    else m_overlayOutputSvc = dynamic_cast<IOverlayDataSvc*>(tmpService);
+    //else m_overlayOutputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
 
     return status;
 }
