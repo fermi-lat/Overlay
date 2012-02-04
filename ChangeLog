@@ -1,4 +1,15 @@
 ------------------------------------------------------------
+User: lsrea  Fri Feb  3 20:29:50 PST 2012
+Overlay/src/MergeAlgs
+
+Modified Files:
+      Tag: GlastReleasev19r4p1
+	Overlay.txt 
+Log Message:
+Adjusts jO for new truncation stuff
+
+    *
+------------------------------------------------------------
 TAG
 Tag name: GlastRelease-17-35-24-gr21, operation: add
 Package: Overlay
