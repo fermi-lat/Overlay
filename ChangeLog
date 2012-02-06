@@ -1,4 +1,15 @@
 ------------------------------------------------------------
+User: lsrea  Mon Feb  6 11:11:00 PST 2012
+Overlay/src/MergeAlgs
+
+Modified Files:
+      Tag: GlastRelease-17-35-24-br02
+	Overlay.txt 
+Log Message:
+Mods for truncations
+
+    *
+------------------------------------------------------------
 TAG
 Tag name: Overlay-02-00-05-gr01, operation: add
 Package: Overlay
