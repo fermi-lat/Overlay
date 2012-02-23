@@ -1,9 +1,9 @@
 package Overlay
-version v2r1p1
+version v2r1p2
 
 author Tracy Usher <usher@slac.stanford.edu>
 
-# $Header: /nfs/slac/g/glast/ground/cvs/Overlay/cmt/requirements,v 1.46 2011/12/12 20:54:54 heather Exp $
+# $Header: /nfs/slac/g/glast/ground/cvs/Overlay/cmt/requirements,v 1.47 2012/01/14 02:04:06 jrb Exp $
 
 branches src doc
 
@@ -49,7 +49,9 @@ library Overlay  \
         -s=../src/Translation $(source) \
         -s=../src/Tasks $(source) 
 
-apply_pattern generate_rootmap library=Overlay
+
+# Take this out for now in hopes that we really don't need rootmap
+#apply_pattern generate_rootmap library=Overlay
 
 
 # simple test program
