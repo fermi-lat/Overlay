@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Thu Feb 23 10:17:50 PST 2012
+Overlay
+
+Modified Files:
+	SConscript 
+Log Message:
+try skipping rootmap in cmt build
+    *
+------------------------------------------------------------
 TAG
 Tag name: GlastRelease-17-35-24-gr23, operation: add
 Package: Overlay
