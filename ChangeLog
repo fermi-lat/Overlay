@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Thu Feb 23 10:17:50 PST 2012
+Overlay/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+try skipping rootmap in cmt build
+    *
+------------------------------------------------------------
+User: heather  Thu Feb 23 10:17:50 PST 2012
 Overlay
 
 Modified Files:
