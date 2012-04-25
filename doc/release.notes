@@ -1,14 +1,20 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.47 2012/01/14 02:04:06 jrb Exp $
+$Id: release.notes,v 1.48 2012/02/23 18:17:51 heather Exp $
+=======
+$Id: release.notes,v 1.44.14.1 2012/02/04 05:04:41 lsrea Exp $
 @verbatim
  * EOH *
 
+ Overlay-02-02-00 24-Apr-2012 hmk Merge GlastReleasev19r4p1 branch
  Overlay-02-01-02 23-Feb-2012 heather Skip rootmap step in requirments for now
  Overlay-02-01-01 13-Jan-2012    jrb get rootmap working on Linux; rationalize dependencies
  Overlay-02-01-00 08-Dec-2011 HMK Merge Gaudi v21r7
  Overlay-02-00-06 03-Nov-2011  TU This fixes a hole in the logic where the TDS can be left uncleared
+ -- End GlastReleasev19r4p1 branch
+ Overlay-02-00-05-gr01 03-Feb-2012  lsrea fix Overlay.txt for truncation stuff
+ -- Start GlastReleasev19r4p1 branch
  Overlay-02-00-05 23-Aug-2011  TU Remove "GLEAMDATAPATH" from data service for test program
  Overlay-02-00-04 16-Aug-2011    jrb make test program jo SCons-compatible
  Overlay-02-00-03 25-Jul-2011  TU Fix compile bug on linux
