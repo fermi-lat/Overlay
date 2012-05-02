@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed May  2 12:16:12 PDT 2012
+Overlay/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+comment out use of RootmapPolicy
+    *
+------------------------------------------------------------
 User: heather  Wed May  2 12:16:11 PDT 2012
 Overlay
 
