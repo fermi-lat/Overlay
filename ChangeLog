@@ -1,13 +1,4 @@
 ------------------------------------------------------------
-User: heather  Wed May  2 12:16:11 PDT 2012
-Overlay
-
-Modified Files:
-	SConscript 
-Log Message:
-comment out use of RootmapPolicy
-    *
-------------------------------------------------------------
 TAG
 Tag name: GlastRelease-17-35-24-gr30, operation: add
 Package: Overlay
