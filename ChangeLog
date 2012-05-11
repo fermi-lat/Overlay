@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Fri May 11 13:33:27 PDT 2012
+Overlay
+
+Modified Files:
+	SConscript 
+Log Message:
+fix unit test on windows
+    *
+------------------------------------------------------------
 TAG
 Tag name: GlastRelease-17-35-24-gr31, operation: add
 Package: Overlay
