@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Fri May 11 13:33:27 PDT 2012
+Overlay/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+fix unit test on windows
+    *
+------------------------------------------------------------
+User: heather  Fri May 11 13:33:27 PDT 2012
 Overlay/cmt
 
 Modified Files:
