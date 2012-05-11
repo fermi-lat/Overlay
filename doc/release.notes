@@ -1,12 +1,13 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.49 2012/04/25 04:55:55 heather Exp $
+$Id: release.notes,v 1.50 2012/05/02 19:16:12 heather Exp $
 =======
-$Id: release.notes,v 1.49 2012/04/25 04:55:55 heather Exp $
+$Id: release.notes,v 1.50 2012/05/02 19:16:12 heather Exp $
 @verbatim
  * EOH *
 
+ Overlay-02-02-02 11-May-2012 hmk fix unit test on windows
  Overlay-02-02-01 02-May-2012 hmk Comment out use of RootmapPolicy
  Overlay-02-02-00 24-Apr-2012 hmk Merge GlastReleasev19r4p1 branch
  Overlay-02-01-02 23-Feb-2012 heather Skip rootmap step in requirments for now

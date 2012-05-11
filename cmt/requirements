@@ -3,7 +3,7 @@ version v2r2p1
 
 author Tracy Usher <usher@slac.stanford.edu>
 
-# $Header: /nfs/slac/g/glast/ground/cvs/Overlay/cmt/requirements,v 1.49 2012/04/25 04:55:55 heather Exp $
+# $Header: /nfs/slac/g/glast/ground/cvs/Overlay/cmt/requirements,v 1.50 2012/05/02 19:16:12 heather Exp $
 
 branches src doc
 
@@ -67,4 +67,8 @@ public
 # ROOTTESTDATA and output a file in Overlay format. 
 
 # Test program
-apply_pattern package_test
+#apply_pattern package_test
+set TESTJOBOPTIONS ${OVERLAYROOT}/src/test/jobOptions.txt ; \
+macro jobOptions ""                      WIN32 "test/jobOptions.txt" ; \
+application test_Overlay -group=test $(TestGlastMain) test/*.cxx $(WinMain) $(jobOptions)
+
