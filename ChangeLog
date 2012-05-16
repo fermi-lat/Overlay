@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Wed May 16 08:56:08 PDT 2012
+Overlay/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+drop unit test for CMT
+    *
+------------------------------------------------------------
+User: heather  Wed May 16 08:56:08 PDT 2012
 Overlay
 
 Modified Files:
