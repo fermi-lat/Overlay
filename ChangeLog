@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed May 16 08:56:08 PDT 2012
+Overlay
+
+Modified Files:
+	SConscript 
+Log Message:
+drop unit test for CMT
+    *
+------------------------------------------------------------
 TAG
 Tag name: Overlay-02-02-03, operation: add
 Package: Overlay
