@@ -1,9 +1,9 @@
 package Overlay
-version v2r2p3
+version v2r2p4
 
 author Tracy Usher <usher@slac.stanford.edu>
 
-# $Header: /nfs/slac/g/glast/ground/cvs/Overlay/cmt/requirements,v 1.51 2012/05/11 20:33:27 heather Exp $
+# $Header: /nfs/slac/g/glast/ground/cvs/Overlay/cmt/requirements,v 1.52 2012/05/15 15:03:55 heather Exp $
 
 branches src doc
 
@@ -68,7 +68,7 @@ public
 
 # Test program
 #apply_pattern package_test
-set TESTJOBOPTIONS ${OVERLAYROOT}/src/test/jobOptions.txt ; \
-macro jobOptions ""                      WIN32 "test/jobOptions.txt" ; \
-application test_Overlay $(TestGlastMain) test/*.cxx $(WinMain) $(jobOptions)
+#set TESTJOBOPTIONS ${OVERLAYROOT}/src/test/jobOptions.txt ; \
+#macro jobOptions ""                      WIN32 "test/jobOptions.txt" ; \
+#application test_Overlay $(TestGlastMain) test/*.cxx $(WinMain) $(jobOptions)
 
