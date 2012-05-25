@@ -1,37 +1,41 @@
 // File and Version Information:
-//      $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/DataServices/OverlayCnvSvc.cxx,v 1.2 2011/06/29 15:32:00 usher Exp $
+//      $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/DataServices/OverlayCnvSvc.cxx,v 1.3 2011/12/12 20:54:54 heather Exp $
 //
 // Description:
 //      OverlayCnvSvc is the GLAST converter service.
 //
 // Author(s):
-
 #define OverlayCnvSvc_CPP
 
 #include <iostream>
 #include "GaudiKernel/ConversionSvc.h"
 #include "GaudiKernel/SvcFactory.h"
-//#include "GaudiKernel/CnvFactory.h"
+#include "GaudiKernel/CnvFactory.h"
 #include "GaudiKernel/MsgStream.h"
-//#include "GaudiKernel/SmartIF.h"
+#include "GaudiKernel/SmartIF.h"
 //#include "GaudiKernel/ICnvManager.h"
 #include "GaudiKernel/ISvcLocator.h"
 #include "GaudiKernel/IDataProviderSvc.h"
 #include "GaudiKernel/IDataManagerSvc.h"
 #include "GaudiKernel/DataSvc.h"
-#include "GaudiKernel/IPersistencySvc.h"
-#include "GaudiKernel/IRegistry.h"
 #include "GaudiKernel/RegistryEntry.h"
 #include "GaudiKernel/GenericAddress.h"
-#include "GaudiKernel/IAddressCreator.h"
 
-//#include "GlastSvc/EventSelector/IGlastCnv.h"
+#include "GlastSvc/EventSelector/IGlastCnv.h"
 
-//#include <map>
+#include "OverlayEvent/EventOverlay.h"
+#include "OverlayEvent/AcdOverlay.h"
+#include "OverlayEvent/CalOverlay.h"
+#include "OverlayEvent/DiagDataOverlay.h"
+#include "OverlayEvent/GemOverlay.h"
+#include "OverlayEvent/PtOverlay.h"
+#include "OverlayEvent/SrcOverlay.h"
+#include "OverlayEvent/TkrOverlay.h"
+
+#include <map>
+#include <vector>
 
 template <class TYPE> class SvcFactory;
-
-//static const InterfaceID IID_OverlayCnvSvc("OverlayCnvSvc", 1, 0);
 
 /** @class OverlayCnvSvc
  * @brief GLAST Event Conversion Service which coordinates all of our converters.
@@ -41,10 +45,10 @@ template <class TYPE> class SvcFactory;
  * access to the data and put it on the TDS.
  * Based on SICb service written by Markus Frank.
  *
- * $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/DataServices/OverlayCnvSvc.cxx,v 1.2 2011/06/29 15:32:00 usher Exp $
+ * $Header: /usr/local/CVS/SLAC/Overlay/src/DataServices/OverlayCnvSvc.cxx,v 1.2 2011/06/29 15:32:00 usher Exp $
  */
 
-class OverlayCnvSvc  : public ConversionSvc	
+class OverlayCnvSvc  : virtual public ConversionSvc	
 {
     friend class SvcFactory<OverlayCnvSvc>;
 
@@ -57,8 +61,6 @@ public:
 
     /// Override inherited queryInterface due to enhanced interface
     virtual StatusCode queryInterface(const InterfaceID& riid, void** ppvInterface);
-
-    //virtual const CLID& objType() const;
 
     /** IAddressCreator implementation: Address creation.
       Create an address using the link infotmation together with
@@ -82,40 +84,46 @@ protected:
 
   virtual ~OverlayCnvSvc() { };
 
-  IDataManagerSvc* m_dataMgr;
-
 private:
-//    typedef std::map<std::string, IGlastCnv*>                PathToCnvMap;
-//    typedef std::map<std::string, std::vector<std::string> > SubPathMap;
+    typedef std::vector<CLID>                                CLIDvector;
 
-//    typedef std::map<const CLID,  IGlastCnv*>                CLIDToCnvMap;
-//    typedef std::map<const CLID,  std::vector<CLID> >        SubCLIDMap;
+    typedef std::map<std::string, IGlastCnv*>                PathToCnvMap;
+    typedef std::map<std::string, std::vector<std::string> > SubPathMap;
 
+    typedef std::map<const CLID,  IGlastCnv*>                CLIDToCnvMap;
+    typedef std::map<const CLID,  std::vector<CLID> >        SubCLIDMap;
 
- //   PathToCnvMap        m_pathToCnvMap;
- //   SubPathMap          m_subPathMap;
-//    CLIDToCnvMap        m_clidToCnvMap;
- //   SubCLIDMap          m_subClidMap;
+    CLIDvector          m_clidVector;
 
-  IAddressCreator *m_addressCreator;
+    PathToCnvMap        m_pathToCnvMap;
+    SubPathMap          m_subPathMap;
+    CLIDToCnvMap        m_clidToCnvMap;
+    SubCLIDMap          m_subClidMap;
 };
 
-//#include "GlastSvc/EventSelector/IGlastCnv.h"
+#include "GlastSvc/EventSelector/IGlastCnv.h"
 
 // Instantiation of a static factory class used by clients to create
 // instances of this service
-//static const SvcFactory<OverlayCnvSvc> s_OverlayCnvSvcFactory;
-//const ISvcFactory& OverlayCnvSvcFactory = s_OverlayCnvSvcFactory;
-
 DECLARE_SERVICE_FACTORY( OverlayCnvSvc );
 
 OverlayCnvSvc::OverlayCnvSvc(const std::string& name, ISvcLocator* svc)
-             : ConversionSvc(name, svc, EXCEL_StorageType), m_dataMgr(0)              
+             : ConversionSvc(name, svc, EXCEL_StorageType)              
 {
-    //m_pathToCnvMap.clear();
-   // m_subPathMap.clear();
-   // m_clidToCnvMap.clear();
-   // m_subClidMap.clear();
+    m_pathToCnvMap.clear();
+    m_subPathMap.clear();
+    m_clidToCnvMap.clear();
+    m_subClidMap.clear();
+
+    // Hardwired list of Class ID's 
+    m_clidVector.push_back(Event::EventOverlay::classID());
+    m_clidVector.push_back(ObjectVector<Event::AcdOverlay>::classID());
+    m_clidVector.push_back(ObjectVector<Event::CalOverlay>::classID());
+    m_clidVector.push_back(Event::DiagDataOverlay::classID());
+    m_clidVector.push_back(Event::GemOverlay::classID());
+    m_clidVector.push_back(Event::PtOverlay::classID());
+    m_clidVector.push_back(Event::SrcOverlay::classID());
+    m_clidVector.push_back(ObjectVector<Event::TkrOverlay>::classID());
 }
 
 StatusCode OverlayCnvSvc::initialize()     
@@ -127,60 +135,18 @@ StatusCode OverlayCnvSvc::initialize()
 
     StatusCode status = ConversionSvc::initialize();
 
-    if(!status.isSuccess()) return status;
-
-
-     IPersistencySvc *pSvc = 0;
-     status = service("EventPersistencySvc",pSvc,true);
-     if ( !status.isSuccess() )  {
-         log << MSG::ERROR << "Unable to localize EventPersistencySvc." << endmsg;
-         return status;
-      }
- 	 
-      status = pSvc->addCnvService( this );
-      if ( !status.isSuccess() )  {
-          log << MSG::ERROR << "Unable to add conversion service" << endmsg;
-          return status;
-      }
-	 	 
-      m_addressCreator = 0;
-      status = service("EventPersistencySvc",m_addressCreator);
-      if ( !status.isSuccess() )  {
-          log << MSG::ERROR << "Unable to localize IAddressCreator." << endmsg;
-          return status;
-      }
-      status = service ( "EventDataSvc" , m_dataMgr , true ) ;
-      if ( !status.isSuccess() )  {
-          log << MSG::ERROR << "Conversion service " << name()
-              << "not registered to EventPersistencySvc." << endmsg;
-          return status;
-      }
-
-
-/*    
-    // Add known converters to the service: 
-    for (ICnvManager::CnvIterator i = cnvManager()->cnvBegin(); i != cnvManager()->cnvEnd(); i++ )   
+    // First loop through the hardwired list of objects we need to register converters for
+    for(CLIDvector::iterator clidItr = m_clidVector.begin(); clidItr != m_clidVector.end(); clidItr++)
     {
-        // Make sure the converters are of our "type" (EXCEL_StorageType)
-        if ( repSvcType() == (*i)->repSvcType() )   
-        {
-            // Add the converter
-            StatusCode iret = addConverter( (*i)->objType() );  
+        CLID& clid = *clidItr;
 
-            // Was there a problem?
-            if ( iret.isFailure() )   
-            {
-                log << MSG::ERROR << "Unable to add converter! " << endreq;
-                return iret;
-            }
+        // This call will register the converter if it is not yet known and
+        // then return a pointer to it
+        IGlastCnv* glastCnv = dynamic_cast<IGlastCnv*>(converter(clid));
 
-            // Caste back to our conversion type
-            IGlastCnv* glastCnv = dynamic_cast<IGlastCnv*>(converter((*i)->objType()));
-
-            // Store the pointer to the converter in our map
-            m_pathToCnvMap[glastCnv->getPath()] = glastCnv;
-            m_clidToCnvMap[glastCnv->objType()] = glastCnv;
-        }
+        // Store the pointer to the converter in our map
+        m_pathToCnvMap[glastCnv->getPath()] = glastCnv;
+        m_clidToCnvMap[glastCnv->objType()] = glastCnv;
     }
 
     // Loop back through the map to build the list of immediate daughter paths
@@ -207,15 +173,8 @@ StatusCode OverlayCnvSvc::initialize()
                 orphan = false;
             }
         } 
-
-        // An orphan?
-        if (orphan)
-        {
-            // HMK Unused int j = 0;
-        }
     }
-    */
-
+    
     return status;
 }
 
@@ -224,8 +183,6 @@ StatusCode OverlayCnvSvc::finalize()
     MsgStream log(msgSvc(), name());
 
     log << MSG::DEBUG << "Finalizing" << endreq;
-    if (m_dataMgr) m_dataMgr->release();
-    m_dataMgr = 0;
 
     return StatusCode::SUCCESS;
 }
@@ -237,16 +194,12 @@ StatusCode OverlayCnvSvc::updateServiceState(IOpaqueAddress* pAddress)
     MsgStream log(msgSvc(), name());
     StatusCode status = INVALID_ADDRESS;
 
-    IRegistry *ent = pAddress->registry();
-
     // Need a valid opaque address entry to proceed
-    if ( 0 != ent )   
+    if ( 0 != pAddress )   
     {
         status = StatusCode::SUCCESS;
 
-        std::string path = ent->identifier();
-     
-        // RecoveOr class id we are starting with
+        // Recover class id we are starting with
         const CLID& clID = pAddress->clID();
 
         // We need to recover the data service that is being using to supply our data
@@ -256,70 +209,67 @@ StatusCode OverlayCnvSvc::updateServiceState(IOpaqueAddress* pAddress)
         if (!registry) return StatusCode::FAILURE;
 
         // Caste back to the actual DataSvc...
-        //DataSvc* dataSvc  = dynamic_cast<DataSvc*>(registry->dataSvc());
+        DataSvc* dataSvc  = dynamic_cast<DataSvc*>(registry->dataSvc());
 
         // If caste failed then simply return as if nothing has happened
-        //if (!dataSvc) return status;
+        if (!dataSvc) return status;
 
         // Now recover the root path name
-        //std::string rootPath = dataSvc->rootName();
+        std::string rootPath = dataSvc->rootName();
         
         // From the data service, recover the address manager
 //        SmartIF<IDataManagerSvc> iaddrReg(IID_IDataManagerSvc, dataProvider());
-       // SmartIF<IDataManagerSvc> iaddrReg(IID_IDataManagerSvc, registry->dataSvc());
+//        SmartIF<IDataManagerSvc> iaddrReg(IID_IDataManagerSvc, registry->dataSvc());
+        SmartIF<IDataManagerSvc> iaddrReg(registry->dataSvc());
 
         // Find the list of related converters
-//        SubCLIDMap::iterator clidIter = m_subClidMap.find(clID);
+        SubCLIDMap::iterator clidIter = m_subClidMap.find(clID);
 
         // Check to be sure something was found
-//        if (clidIter != m_subClidMap.end())
-//        {
+        if (clidIter != m_subClidMap.end())
+        {
             // Loop over the list of daughter converters and activate them
-//            for(std::vector<CLID>::iterator subIter = clidIter->second.begin(); subIter != clidIter->second.end(); subIter++)
-//            {
- //               // Now look up the pointer to the converter
-//                CLIDToCnvMap::iterator cnvIter  = m_clidToCnvMap.find(*subIter);
-//                IGlastCnv*             glastCnv = cnvIter->second;
+            for(std::vector<CLID>::iterator subIter = clidIter->second.begin(); subIter != clidIter->second.end(); subIter++)
+            {
+                // Now look up the pointer to the converter
+                CLIDToCnvMap::iterator cnvIter  = m_clidToCnvMap.find(*subIter);
+                IGlastCnv*             glastCnv = cnvIter->second;
 
-  //              if (glastCnv)
-   //             {
+                if (glastCnv)
+                {
                     // Avoid self reference, though this should not happen here
-     //               if (glastCnv->objType() == clID) continue;
+                    if (glastCnv->objType() == clID) continue;
 
                     IOpaqueAddress*   newAddr  = 0;
                     unsigned long     ipars[2] = {0, 0};
-                    //const std::string spars[2] = {rootPath + glastCnv->getPath(), ""}; 
-                    const std::string spars[2] = { "", "" };
+                    const std::string spars[2] = {rootPath + glastCnv->getPath(), ""}; 
                     
                     StatusCode ir = addressCreator()->createAddress(EXCEL_StorageType, 
-                                                                    clID, 
+                                                                    glastCnv->objType(), 
                                                                     spars, 
                                                                     ipars,
                                                                     newAddr);
-
-                    ir = m_dataMgr->registerAddress(path, newAddr);
-                    if ( !ir.isSuccess() )    
+                    if (ir.isSuccess())
                     {
-                        newAddr->release();
-                        status = ir;
+                        ir = iaddrReg->registerAddress(rootPath + glastCnv->getPath(), newAddr);
+//                        ir = dataSvc->registerAddress(rootPath + glastCnv->getPath(), newAddr);
+                        if ( !ir.isSuccess() )    
+                        {
+                            newAddr->release();
+                            status = ir;
+                        }
                     }
                 }
+            }
+        }
+    }
     return status;
 }
 
 StatusCode OverlayCnvSvc::queryInterface(const InterfaceID& riid, void** ppvInterface)  
 {
-//    if ( IID_OverlayCnvSvc == riid )  
-//    {
- //       *ppvInterface = (OverlayCnvSvc*)this;
- //   }
-//    else  
-//    {
-        // Interface is not directly availible: try out a base class
-        return ConversionSvc::queryInterface(riid, ppvInterface);
- //   }
-    //addRef();
- //   return StatusCode::SUCCESS;
+    // Return the results of querying the interface
+    return ConversionSvc::queryInterface(riid, ppvInterface);
 }
 
 StatusCode OverlayCnvSvc::createAddress( long svc_type,
@@ -330,12 +280,14 @@ StatusCode OverlayCnvSvc::createAddress( long svc_type,
 {
     if ( svc_type == repSvcType() )   
     {
-        GenericAddress* pAdd = new GenericAddress(EXCEL_StorageType, clid);
+        GenericAddress* pAdd = new GenericAddress(svc_type, clid, par[0], par[1], ip[0], ip[1]);
         if ( pAdd )
         {
             refpAddress = pAdd;
             return StatusCode::SUCCESS;
         }
+        // Call to GenericAddress routine
+        pAdd->release();
     }
     return StatusCode::FAILURE;
 }
