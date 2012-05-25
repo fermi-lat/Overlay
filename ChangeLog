@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: usher  Fri May 25 12:51:00 PDT 2012
+Overlay/src/cnv
+
+Modified Files:
+	SrcOverlayCnv.cxx 
+Log Message:
+Resurrecting the overlay from the ash heap of the new gaudi
+    *
+------------------------------------------------------------
 User: usher  Fri May 25 12:50:59 PDT 2012
 Overlay/src/DataServices
 
