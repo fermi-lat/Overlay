@@ -172,7 +172,7 @@ OverlayDataSvc::OverlayDataSvc(const std::string& name,ISvcLocator* svc)
 
     // The following parameters are oriented to input
     declareProperty("OverlayTool",        m_overlay            = "McIlwain_L");
-    declareProperty("InputXmlFilePath",   m_inputXmlFilePath   = "$(OVERLAYROOT)/xml");
+    declareProperty("InputXmlFilePath",   m_inputXmlFilePath   = "$(OVERLAYXMLPATH)/xml");
     declareProperty("clearOption",        m_clearOption        = "");
     declareProperty("RootName",           m_rootName           = OverlayEventModel::OverlayEventHeader);
     declareProperty("PersistencySvcName", m_persistencySvcName = "OverlayPersistencySvc");
