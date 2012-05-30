@@ -1,13 +1,4 @@
 ------------------------------------------------------------
-User: heather  Wed May 30 05:38:19 PDT 2012
-Overlay
-
-Modified Files:
-	SConscript 
-Log Message:
-fix up xml file handling for SCons builds
-    *
-------------------------------------------------------------
 TAG
 Tag name: Overlay-02-02-05, operation: add
 Package: Overlay
