@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: heather  Wed May 30 05:38:20 PDT 2012
+Overlay/src/test
+
+Modified Files:
+	TestReadJobOptions.txt 
+Log Message:
+fix up xml file handling for SCons builds
+    *
+------------------------------------------------------------
+User: heather  Wed May 30 05:38:20 PDT 2012
 Overlay/src/DataServices
 
 Modified Files:
