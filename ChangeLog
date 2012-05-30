@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed May 30 05:38:20 PDT 2012
+Overlay/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+fix up xml file handling for SCons builds
+    *
+------------------------------------------------------------
 User: heather  Wed May 30 05:38:19 PDT 2012
 Overlay
 
