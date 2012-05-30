@@ -1,7 +1,7 @@
 # -*- python -*-
-# $Header: /nfs/slac/g/glast/ground/cvs/Overlay/SConscript,v 1.27 2012/05/16 15:56:08 heather Exp $
+# $Header: /nfs/slac/g/glast/ground/cvs/Overlay/SConscript,v 1.28 2012/05/25 19:54:10 usher Exp $
 # Authors: Tracy Usher <usher@slac.stanford.edu>
-# Version: Overlay-02-02-05
+# Version: Overlay-02-02-06
 import os
 Import('baseEnv')
 Import('listFiles')
@@ -37,6 +37,7 @@ progEnv.Tool('registerTargets', package = 'Overlay',
              libraryCxts = [[OverlayLib, libEnv]],
              testAppCxts = [[test_Overlay, progEnv]],
              includes = listFiles(['Overlay/*']),
+             xml = listFiles(['xml/*.xml', 'xml/*.xsd']),
              jo = listFiles(['src/*/*.txt']))
 
 

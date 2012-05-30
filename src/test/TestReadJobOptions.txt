@@ -2,13 +2,13 @@
 //
 // Job options file for testing Overlay reading of Overlay files
 // 
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/test/TestReadJobOptions.txt,v 1.1 2008/12/01 22:47:50 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/test/TestReadJobOptions.txt,v 1.2 2008/12/04 21:50:17 usher Exp $
 
 //  -------------- basic Glast/Gaudi run enviornment -----------
 ApplicationMgr.DLLs   = {  "Overlay", "RootIo"};
 //ApplicationMgr.ExtSvc += {"OverlayInputSvc"};
 
-OverlayInputSvc.InputXmlFilePath="$(OVERLAYROOT)/src/test";
+OverlayInputSvc.InputXmlFilePath="$(OVERLAYXMLPATH)/test";
 
 // ----------------------------
 // setup basic event loop stuff

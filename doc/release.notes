@@ -1,10 +1,11 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.53 2012/05/16 15:56:08 heather Exp $
+$Id: release.notes,v 1.54 2012/05/25 19:54:11 usher Exp $
 @verbatim
  * EOH *
 
+ Overlay-02-02-06 30-May-2012 hmk fix default JO settings which use env var
  Overlay-02-02-05 25-May-2012 TU  De-neutralize the overlay with the new gaudi
  Overlay-02-02-04 16-May-2012 hmk drop unit test in CMT
  Overlay-02-02-03 15-May-2012 hmk fix up unit test for linux
