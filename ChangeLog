@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jrb  Mon Jun  4 11:09:21 PDT 2012
+GlastRelease-scons/Overlay
+
+Modified Files:
+	SConscript 
+Log Message:
+disable test program for SCons builds
+    *
+------------------------------------------------------------
 TAG
 Tag name: GlastRelease-17-35-24-tr06, operation: add
 Package: Overlay
