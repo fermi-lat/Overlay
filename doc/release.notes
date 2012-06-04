@@ -1,10 +1,11 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.54 2012/05/25 19:54:11 usher Exp $
+$Id: release.notes,v 1.55 2012/05/30 12:38:20 heather Exp $
 @verbatim
  * EOH *
 
+ Overlay-02-02-07 04-Jun-2012    jrb disable test program for SCons builds
  Overlay-02-02-06 30-May-2012 hmk fix default JO settings which use env var
  Overlay-02-02-05 25-May-2012 TU  De-neutralize the overlay with the new gaudi
  Overlay-02-02-04 16-May-2012 hmk drop unit test in CMT
