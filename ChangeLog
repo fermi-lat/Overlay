@@ -1,5 +1,15 @@
 ------------------------------------------------------------
 User: heather  Wed Jun  6 13:08:17 PDT 2012
+Overlay/src/cnv
+
+Modified Files:
+      Tag: GlastRelease-17-35-24-br01
+	SrcOverlayCnv.cxx 
+Log Message:
+minor fixes
+    *
+------------------------------------------------------------
+User: heather  Wed Jun  6 13:08:17 PDT 2012
 Overlay/src/DataServices
 
 Modified Files:
