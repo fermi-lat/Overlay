@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/DataServices/OverlayInputSvc.cxx,v 1.9 2011/12/12 20:54:54 heather Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/DataServices/OverlayInputSvc.cxx,v 1.10 2012/05/30 12:38:20 heather Exp $
 
 // Include files
 #include "GaudiKernel/Service.h"
@@ -113,7 +113,7 @@ OverlayInputSvc::OverlayInputSvc(const std::string& name,ISvcLocator* svc) : Ser
     // The files will be ignored if RootIoSvc is provided a meta (event collection) ROOT file
 
     declareProperty("OverlayTool",      m_overlay="McIlwain_L");
-    declareProperty("InputXmlFilePath", m_inputXmlFilePath="$(OVERLAYXMLPATH)/xml");
+    declareProperty("InputXmlFilePath", m_inputXmlFilePath="$(OVERLAYXMLPATH)");
     declareProperty("clearOption",      m_clearOption="");
 
     m_inputFileMap.clear();
