@@ -1,10 +1,12 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.31.36.2.2.1 2012/01/30 20:26:19 heather Exp $
+$Id: release.notes,v 1.31.36.2.2.2 2012/02/01 03:13:16 heather Exp $
 @verbatim
  * EOH *
 
+ Overlay-01-06-00-gr05 06-Jun-2012 HMK minor fixes - the P8 mods don't seem
+   to translate well to this version - hopefully things are working
  Overlay-01-06-00-gr04 31-Jan-2012 HMK fix merge 
  Overlay-01-06-00-gr03 30-Jan-2012 HMK Gaudi v21r7
  Overlay-01-06-00-gr02 18-Aug-2011 HMK fix up unit test JO for env vars
