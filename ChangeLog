@@ -1,22 +1,4 @@
 ------------------------------------------------------------
-User: heather  Wed Jun  6 13:17:27 PDT 2012
-Overlay/cmt
-
-Modified Files:
-	requirements 
-Log Message:
-fix JO defaults
-    *
-------------------------------------------------------------
-User: heather  Wed Jun  6 13:17:27 PDT 2012
-Overlay
-
-Modified Files:
-	SConscript 
-Log Message:
-fix JO defaults
-    *
-------------------------------------------------------------
 TAG
 Tag name: Overlay-01-06-00-gr05, operation: add
 Package: Overlay
