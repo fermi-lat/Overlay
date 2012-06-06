@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: heather  Wed Jun  6 13:17:28 PDT 2012
+Overlay/src/DataServices
+
+Modified Files:
+	OverlayDataSvc.cxx OverlayInputSvc.cxx 
+Log Message:
+fix JO defaults
+    *
+------------------------------------------------------------
 User: heather  Wed Jun  6 13:17:27 PDT 2012
 Overlay/doc
 
