@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/cnv/SrcOverlayCnv.cxx,v 1.2.96.1 2012/01/30 20:26:20 heather Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/SrcOverlayCnv.cxx,v 1.2.96.2 2012/02/01 03:13:16 heather Exp $
 /**
             @file  SrcOverlayCnv.cxx
 
@@ -41,8 +41,8 @@ public:
 
     /// Query interfaces of Interface
     //virtual StatusCode queryInterface(const InterfaceID& riid, void** ppvInterface);
-    //static const CLID&         classID()     {return Event::SrcOverlay::classID();}
-    static const CLID&         classID()     {return InterfaceID("SrcOverlay",1,0);}
+    static const CLID&         classID()     {return Event::SrcOverlay::classID();}
+    //static const CLID&         classID()     {return InterfaceID("SrcOverlay",1,0);}
     static const unsigned char storageType() {return SICB_StorageType;}
 
     /// Initialize the converter
