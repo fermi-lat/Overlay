@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: usher  Mon Jul 23 16:32:02 PDT 2012
+Overlay/xml/test
+
+Added Files:
+	McIlwain_L.xml 
+Log Message:
+Add test input overlay file and test xml control file, in appropriate folders, to enable test program. Also add modified job options to handle it all.
+    *
+------------------------------------------------------------
+User: usher  Mon Jul 23 16:32:02 PDT 2012
 Overlay/data/test
 
 Added Files:
