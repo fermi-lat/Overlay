@@ -3,7 +3,7 @@ version v2r2p8
 
 author Tracy Usher <usher@slac.stanford.edu>
 
-# $Header: /nfs/slac/g/glast/ground/cvs/Overlay/cmt/requirements,v 1.56 2012/06/04 18:11:43 jrb Exp $
+# $Header: /nfs/slac/g/glast/ground/cvs/Overlay/cmt/requirements,v 1.57 2012/06/06 20:17:27 heather Exp $
 
 branches src doc
 
@@ -68,7 +68,10 @@ public
 
 # Test program
 #apply_pattern package_test
-#set TESTJOBOPTIONS ${OVERLAYROOT}/src/test/jobOptions.txt ; \
+set JOBOPTIONS ${OVERLAYROOT}/src/test/TestReadJobOptions.txt ; \
 #macro jobOptions ""                      WIN32 "test/jobOptions.txt" ; \
-#application test_Overlay $(TestGlastMain) test/*.cxx $(WinMain) $(jobOptions)
+private
+use GuiSvc v*
+application test_Overlay ${GuiMain} test/*.cxx ${Win32Resource} ${WinMain}
+
 
