@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+$Header$
+-->
+
+<sourceList xmlns='http://xml.netbeans.org/examples/targetNS'
+  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+  xsi:schemaLocation='http://xml.netbeans.org/examples/targetNS file:/./backgroundOverlay.xsd'>
+
+<source name="Periodic_triggers" type="McIlwain_L" rangeUnits="none" rangeMin="0.95" rangeMax="1.85">
+
+  <bin min="0.95" max="1.85">
+    <fileList>
+      <file filePath="$OVERLAYDATAPATH/test/Overlay.root"
+          treeName="Overlay" branchName="EventOverlay" />
+    </fileList>
+  </bin>
+</source>
+</sourceList>
