@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/SrcOverlayCnv.cxx,v 1.6 2012/01/14 01:33:26 jrb Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/SrcOverlayCnv.cxx,v 1.7 2012/05/25 19:50:59 usher Exp $
 /**
             @file  SrcOverlayCnv.cxx
 
@@ -43,6 +43,7 @@ public:
     /// Query interfaces of Interface
     //virtual StatusCode queryInterface(const InterfaceID& riid, void** ppvInterface);
     static const CLID&         classID()     {return Event::SrcOverlay::classID();}
+
     static const unsigned char storageType() {return EXCEL_StorageType;}
 
     /// Initialize the converter
@@ -96,9 +97,8 @@ private:
  //const ICnvFactory& SrcOverlayCnvFactory = s_factory;
 DECLARE_CONVERTER_FACTORY(SrcOverlayCnv);
 
- SrcOverlayCnv::SrcOverlayCnv( ISvcLocator* svc) : 
-   //                 Converter (EXCEL_StorageType, Event::SrcOverlay::classID(), svc) 
-   Converter (EXCEL_StorageType, InterfaceID("SrcOverlay", 1, 0), svc) 
+SrcOverlayCnv::SrcOverlayCnv( ISvcLocator* svc) :  Converter (storageType(), classID(), svc)
+   //  Converter (EXCEL_StorageType, Event::SrcOverlay::classID(), svc) 
 {
     m_path = OverlayEventModel::Overlay::SrcOverlay;
 
