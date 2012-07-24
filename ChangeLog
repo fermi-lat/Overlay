@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: usher  Tue Jul 24 09:00:38 PDT 2012
+Overlay/src/cnv
+
+Modified Files:
+	PtOverlayCnv.cxx SrcOverlayCnv.cxx 
+Log Message:
+Small mods to fix the library issue with the TDS objects
+
+    *
+------------------------------------------------------------
 User: usher  Mon Jul 23 16:32:02 PDT 2012
 Overlay/xml/test
 
