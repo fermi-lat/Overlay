@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jrb  Tue Jul 24 13:10:01 PDT 2012
+GlastRelease-scons/Overlay/src/test
+
+Modified Files:
+	TestReadJobOptions.txt 
+Log Message:
+change OVERLAYROOT/src to SCons-compatible OVERLAYJOBOPTIONSPATH
+    *
+------------------------------------------------------------
 TAG
 Tag name: Overlay-02-02-09, operation: add
 Package: Overlay
