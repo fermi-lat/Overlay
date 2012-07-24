@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-$Header$
+$Header: /nfs/slac/g/glast/ground/cvs/Overlay/xml/test/McIlwain_L.xml,v 1.1 2012/07/23 23:32:02 usher Exp $
 -->
 
 <sourceList xmlns='http://xml.netbeans.org/examples/targetNS'
@@ -12,7 +12,7 @@ $Header$
 
   <bin min="0.95" max="1.85">
     <fileList>
-      <file filePath="$OVERLAYDATAPATH/test/Overlay.root"
+      <file filePath="$(OVERLAYDATAPATH)/test/overlay.root"
           treeName="Overlay" branchName="EventOverlay" />
     </fileList>
   </bin>
