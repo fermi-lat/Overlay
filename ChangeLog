@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: usher  Tue Jul 24 09:01:16 PDT 2012
+Overlay/xml/test
+
+Modified Files:
+	McIlwain_L.xml 
+Log Message:
+Fix the use of OVERLAYDATAPATH so it will dereference properly
+
+    *
+------------------------------------------------------------
 User: usher  Tue Jul 24 09:00:38 PDT 2012
 Overlay/src/cnv
 
