@@ -1,10 +1,11 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.56 2012/06/04 18:11:43 jrb Exp $
+$Id: release.notes,v 1.57 2012/06/06 20:17:27 heather Exp $
 @verbatim
  * EOH *
 
+ Overlay-02-02-09 24-Jul-2012 TU  Re-enable test program, fix library clash issue with OverlayEvent
  Overlay-02-02-08 06-Jun-2012 hmk Fix defaults JO settings
  Overlay-02-02-07 04-Jun-2012    jrb disable test program for SCons builds
  Overlay-02-02-06 30-May-2012 hmk fix default JO settings which use env var
