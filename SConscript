@@ -1,5 +1,5 @@
 # -*- python -*-
-# $Header: /nfs/slac/g/glast/ground/cvs/Overlay/SConscript,v 1.32 2012/06/06 20:17:27 heather Exp $
+# $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/SConscript,v 1.33 2012/07/24 16:17:56 usher Exp $
 # Authors: Tracy Usher <usher@slac.stanford.edu>
 # Version: Overlay-02-02-09
 import os
@@ -15,7 +15,7 @@ OverlayLib = libEnv.ComponentLibrary('Overlay',
                               listFiles(['src/cnv/EventOverlayCnv.cxx',
                                          'src/cnv/AcdOverlayCnv.cxx',
                                          'src/cnv/CalOverlayiCnv.cxx',
-                                         'src/cnv/DiagOverlayiCnv.cxx',
+                                         'src/cnv/DiagDataOverlayCnv.cxx',
                                          'src/cnv/GemOverlayCnv.cxx', 
                                          'src/cnv/PtOverlayCnv.cxx', 
                                          'src/cnv/TkrOverlayCnv.cxx',
@@ -29,15 +29,16 @@ OverlayLib = libEnv.ComponentLibrary('Overlay',
                                          ]))
  
 progEnv.Tool('OverlayLib', depsOnly = 1)
-#test_Overlay = progEnv.GaudiProgram('test_Overlay',
-#                                    listFiles(['src/test/*.cxx']), test = 1,
-#                                    package='Overlay')
+test_Overlay = progEnv.GaudiProgram('test_Overlay',
+                                    listFiles(['src/test/*.cxx']), test = 1,
+                                    package='Overlay')
 
 progEnv.Tool('registerTargets', package = 'Overlay',
              libraryCxts = [[OverlayLib, libEnv]],
-             #testAppCxts = [[test_Overlay, progEnv]],
+             testAppCxts = [[test_Overlay, progEnv]],
              includes = listFiles(['Overlay/*']),
-             xml = listFiles(['xml/*.xml', 'xml/*.xsd']),
+             xml = listFiles(['xml/*.xml', 'xml/*.xsd', 'xml/test/*.xml']),
+             data = listFiles(['data/test/overlay.root']),
              jo = listFiles(['src/*/*.txt']))
 
 
