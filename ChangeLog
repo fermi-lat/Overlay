@@ -2,6 +2,14 @@
 TAG
 Tag name: Overlay-02-02-10, operation: add
 Package: Overlay
+User: glastrm  Tue Jul 24 15:17:43 2012
+Files:
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: Overlay-02-02-10, operation: add
+Package: Overlay
 User: jrb  Tue Jul 24 13:33:55 2012
 Files:
   Overlay/.cvsignore  1.2
