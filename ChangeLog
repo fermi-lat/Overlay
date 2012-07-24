@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jrb  Tue Jul 24 13:13:37 PDT 2012
+GlastRelease-scons/Overlay
+
+Modified Files:
+	SConscript 
+Log Message:
+reinstate test program; install data file, etc.; fix mistyped filename
+    *
+------------------------------------------------------------
 User: jrb  Tue Jul 24 13:10:01 PDT 2012
 GlastRelease-scons/Overlay/src/test
 
