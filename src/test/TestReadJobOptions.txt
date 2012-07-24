@@ -2,7 +2,7 @@
 //
 // Job options file for testing Overlay reading of Overlay files
 // 
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/test/TestReadJobOptions.txt,v 1.4 2012/07/23 20:20:47 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/test/TestReadJobOptions.txt,v 1.5 2012/07/23 23:32:01 usher Exp $
 
 // primary DLLs, including auditor 
 
@@ -27,7 +27,7 @@ EventPersistencySvc.CnvServices = {"EventCnvSvc"};
 ApplicationMgr.DLLs   = {  "Overlay", "RootIo"};
 
 // Set up overlay
-#include "$OVERLAYROOT/src/MergeAlgs/Overlay.txt"
+#include "$OVERLAYJOBOPTIONSPATH/MergeAlgs/Overlay.txt"
 
 OverlayDataSvc.InputXmlFilePath="$OVERLAYXMLPATH/test";
 //OverlayInputSvc.InputXmlFilePath="$(OVERLAYXMLPATH)/test";
