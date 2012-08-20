@@ -1,10 +1,11 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.58 2012/07/24 16:17:56 usher Exp $
+$Id: release.notes,v 1.59 2012/07/24 20:33:44 jrb Exp $
 @verbatim
  * EOH *
 
+ Overlay-02-03-00 20-Aug-2012    jrb for Windows no-install-headers
  Overlay-02-02-10 24-Jul-2012    jrb patches for SCons
  Overlay-02-02-09 24-Jul-2012 TU  Re-enable test program, fix library clash issue with OverlayEvent
  Overlay-02-02-08 06-Jun-2012 hmk Fix defaults JO settings
