@@ -4,7 +4,7 @@
  *
  * @author Zach Fewtrell zachary.fewtrell@nrl.navy.mil
  * 
- *  $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/MergeAlgs/CalOverlayMergeAlg.cxx,v 1.8 2011/06/27 17:45:57 usher Exp $
+ *  $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/MergeAlgs/CalOverlayMergeAlg.cxx,v 1.9 2011/12/12 20:54:55 heather Exp $
  */
 
 // Gaudi specific include files
@@ -260,6 +260,12 @@ StatusCode CalOverlayMergeAlg::execute()
 
         // Does the identifier for this CalOverlay match an McIntegratingHit in the sim map?
         std::map<idents::VolumeIdentifier,Event::McIntegratingHit*>::iterator calIter = idToMcHitMap.find(overId);
+
+		// If not a pure overlay McIntegratingHit then set iterator to end
+		// This will insure that the overlay information in the McIntegratingHit collection in the TDS is 
+		// included in a unique (to the simulated hits) McIntegratingHit object
+        if (calIter != idToMcHitMap.end() && (calIter->second)->getPackedFlags() != Event::McIntegratingHit::overlayHit) 
+			calIter = idToMcHitMap.end();
 
         // Pointer to the mcHit
         Event::McIntegratingHit* mcHit = 0;
