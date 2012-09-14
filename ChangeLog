@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: usher  Fri Sep 14 07:46:11 PDT 2012
+GlastRelease-scons/Overlay/src/MergeAlgs
+
+Modified Files:
+	CalOverlayMergeAlg.cxx 
+Log Message:
+Prepare to tag Overlay-02-04-00
+    *
+------------------------------------------------------------
+User: usher  Fri Sep 14 07:46:11 PDT 2012
 GlastRelease-scons/Overlay/doc
 
 Modified Files:
