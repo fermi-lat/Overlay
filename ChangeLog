@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: usher  Fri Sep 14 07:46:11 PDT 2012
+GlastRelease-scons/Overlay
+
+Modified Files:
+	SConscript 
+Log Message:
+Prepare to tag Overlay-02-04-00
+    *
+------------------------------------------------------------
 TAG
 Tag name: GlastRelease-20-05-00, operation: add
 Package: Overlay
