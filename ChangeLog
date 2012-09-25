@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: usher  Tue Sep 25 10:02:42 PDT 2012
+Overlay/src/DataServices
+
+Modified Files:
+	OverlayDataSvc.cxx 
+Log Message:
+Add a property which allows explicty naming of the input xml file, separately from the name of the associated tool, for input control.
+    *
+------------------------------------------------------------
 User: usher  Tue Sep 25 07:27:38 PDT 2012
 Overlay/src/DataServices
 
