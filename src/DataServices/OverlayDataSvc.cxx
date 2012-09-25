@@ -123,6 +123,8 @@ private:
 
     bool                               m_needToReadEvent;
 
+	StringProperty                     m_inputXmlFileName;
+
     StringProperty                     m_inputXmlFilePath;
 
     /// Option string which will be passed to McEvent::Clear
@@ -177,6 +179,7 @@ OverlayDataSvc::OverlayDataSvc(const std::string& name,ISvcLocator* svc)
 
     // The following parameters are oriented to input
     declareProperty("OverlayTool",        m_overlay            = "McIlwain_L");
+    declareProperty("InputXmlFileName",   m_inputXmlFileName   = "McIlwain_L");
     declareProperty("InputXmlFilePath",   m_inputXmlFilePath   = "$(OVERLAYXMLPATH)");
     declareProperty("clearOption",        m_clearOption        = "");
     declareProperty("RootName",           m_rootName           = OverlayEventModel::OverlayEventHeader);
@@ -258,7 +261,7 @@ StatusCode OverlayDataSvc::initialize()
         if( !m_overlay.value().empty())
         {
             // Start with input xml file name
-            std::string xmlFile = m_inputXmlFilePath.value() + "/" + m_overlay.value() + ".xml";
+            std::string xmlFile = m_inputXmlFilePath.value() + "/" + m_inputXmlFileName.value() + ".xml";
 
             facilities::Util::expandEnvVar(&xmlFile);
             log << MSG::INFO << "Using xml file " << xmlFile 
