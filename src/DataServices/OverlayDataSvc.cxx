@@ -43,6 +43,8 @@
 #include "Overlay/IBackgroundBinTool.h"
 #include "Overlay/IFetchEvents.h"
 
+#include "enums/TriggerBits.h"
+
 /** @class OverlayDataSvc OverlayDataSvc.h
  * 
  *   A OverlayDataSvc is the base class for event services
@@ -129,6 +131,9 @@ private:
     /// Name of the Background Overlay tool to use
     StringProperty                     m_overlay; 
 
+	/// Use this mask to reject overlay events which might "trigger" 
+	unsigned int                       m_triggerRejectMask;
+
     //***** OUTPUT SPECIFIC VARIABLES HERE *****
 
     /// List of objects to store (from converters
@@ -181,9 +186,16 @@ OverlayDataSvc::OverlayDataSvc(const std::string& name,ISvcLocator* svc)
     declareProperty("overlayRootFile",    m_outputFileName     = "overlay.root");
     declareProperty("splitMode",          m_splitMode          = 1);
     declareProperty("bufferSize",         m_bufSize            = 64000);
+
     // ROOT default compression
     declareProperty("compressionLevel",   m_compressionLevel   = 1);
     declareProperty("treeName",           m_treeName           = "Overlay");
+
+	// This will allow the user to select out events which might have set one or more trigger bits
+	declareProperty("triggerRejectMask",  m_triggerRejectMask  = 0);
+
+	// Make sure the mask is one or more of the allowed bits
+	m_triggerRejectMask &= enums::b_ACDH+enums::b_HI_CAL+enums::b_LO_CAL+enums::b_Track+enums::b_ROI;
 
     m_objectList.clear();
 
@@ -392,25 +404,44 @@ StatusCode OverlayDataSvc::selectNextEvent()
         // Retrieve and increment the index (and, by definition, it exists!)
         std::map<std::string, long long>::iterator inputIndexIter = m_inputIndexMap.find(m_curFileType);
 
-        long long inputIndex = inputIndexIter->second;
+		bool happy = false;
 
-        // update the input index
-        inputIndexIter->second = inputIndex + 1;
+		while(!happy)
+		{
+			long long inputIndex = inputIndexIter->second;
 
-        // Try reading the event this way... 
-        // using treename as the key
-        m_eventOverlay = dynamic_cast<EventOverlay*>(m_rootIoSvc->getNextEvent(m_curFileType, inputIndex));
+			// update the input index
+			inputIndexIter->second = inputIndex + 1;
 
-        // If the call returns a null pointer then most likely we have hit the end of file
-        // Try to wrap back to first event and try again
-        if( m_eventOverlay == 0)
-        { 
-            long long inputIndex = 0;
+			// Try reading the event this way... 
+			// using treename as the key
+			m_eventOverlay = dynamic_cast<EventOverlay*>(m_rootIoSvc->getNextEvent(m_curFileType, inputIndex));
 
-            m_inputIndexMap[m_curFileType] = inputIndex;
+			// If the call returns a null pointer then most likely we have hit the end of file
+			// Try to wrap back to first event and try again
+			if( m_eventOverlay == 0)
+			{ 
+				long long inputIndex = 0;
+
+				//m_inputIndexMap[m_curFileType] = inputIndex;
+				inputIndexIter->second = inputIndex + 1;
             
-            m_eventOverlay = dynamic_cast<EventOverlay*>(m_rootIoSvc->getNextEvent(m_curFileType, inputIndex));
-        }
+				m_eventOverlay = dynamic_cast<EventOverlay*>(m_rootIoSvc->getNextEvent(m_curFileType, inputIndex));
+			}
+
+			// If the trigger reject mask is non-zero then check to see if allowed input overlay event
+			if (m_triggerRejectMask)
+			{
+				unsigned int trigger = m_eventOverlay->getGemOverlay().getConditionSummary();
+
+				if (trigger & m_triggerRejectMask)
+				{
+					continue;
+				}
+			}
+
+			happy = true;
+		}
 
         // Set flag to indicate we have read the event
         m_needToReadEvent = false;
