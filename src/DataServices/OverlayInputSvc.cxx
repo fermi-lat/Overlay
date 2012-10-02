@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/DataServices/OverlayInputSvc.cxx,v 1.10 2012/05/30 12:38:20 heather Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/DataServices/OverlayInputSvc.cxx,v 1.11 2012/06/06 20:17:28 heather Exp $
 
 // Include files
 #include "GaudiKernel/Service.h"
@@ -218,11 +218,13 @@ StatusCode OverlayInputSvc::queryInterface(const InterfaceID& riid, void** ppvIn
 {
     StatusCode status = StatusCode::SUCCESS;
 
-    if ( IID_IOverlayDataSvc.versionMatch(riid) )  
-    {
-        *ppvInterface = (IOverlayDataSvc*)this;
-    }
-    else status = Service::queryInterface(riid, ppvInterface);
+//    if ( IID_IOverlayDataSvc.versionMatch(riid) )  
+//    {
+//        *ppvInterface = (IOverlayDataSvc*)this;
+//    }
+//    else status = Service::queryInterface(riid, ppvInterface);
+
+	status = Service::queryInterface(riid, ppvInterface);
 
     return status;
 }

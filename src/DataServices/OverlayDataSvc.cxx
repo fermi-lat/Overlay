@@ -51,9 +51,12 @@
  *
  *  @author M.Frank
  */
-class OverlayDataSvc  : virtual public IOverlayDataSvc, virtual public IIncidentListener, public DataSvc   
+//class OverlayDataSvc  : virtual public IOverlayDataSvc, virtual public IIncidentListener, public DataSvc   
+class OverlayDataSvc  : public extends3<DataSvc, IOverlayDataSvc, IIncidentListener, IService>
 {
-    friend class SvcFactory<OverlayDataSvc>;
+private:
+    //friend class SvcFactory<OverlayDataSvc>;
+    friend class Factory<OverlayDataSvc,IService* (std::string,ISvcLocator *)>;
 
 public:
     virtual StatusCode initialize();
@@ -70,15 +73,14 @@ public:
     virtual StatusCode registerOutputPath(const std::string&);
 
     /// For output service, set store events flag
-    virtual void storeEvent(bool) {return;}
+    virtual void storeEvent(bool flag) {m_saveEvent = flag;}
 
     /// For output service, return current value of store events flag
-    virtual bool getStoreEventFlag() {return true;}
+    virtual bool getStoreEventFlag() {return m_saveEvent;}
 
     /// Handles incidents, implementing IIncidentListener interface
     virtual void handle( const Incident & ) ; 
 
-protected:
     /// Standard Constructor
     OverlayDataSvc(const std::string& name, ISvcLocator* svc);
 
@@ -170,10 +172,15 @@ private:
 DECLARE_SERVICE_FACTORY(OverlayDataSvc);
 
 /// Standard Constructor
+//OverlayDataSvc::OverlayDataSvc(const std::string& name,ISvcLocator* svc) 
+//: DataSvc(name,svc) , m_cnvSvc(0),
 OverlayDataSvc::OverlayDataSvc(const std::string& name,ISvcLocator* svc) 
-: DataSvc(name,svc) , m_cnvSvc(0),
+: base_class(name,svc) , m_cnvSvc(0),
                m_rootIoSvc(0), m_curFileType(""), m_eventOverlay(0), m_myOverlayPtr(&m_myOverlay), m_needToReadEvent(true)
 {
+    //Declare the additional interface
+//    declareInterface<IOverlayDataSvc>(this);
+
     declareProperty("ConfigureForInput",  m_configureForInput  = false);
     declareProperty("ConfigureForOutput", m_configureForOutput = false);
 
@@ -497,17 +504,6 @@ void OverlayDataSvc::endEvent()  // must be called at the end of an event to upd
         // Should event be saved?
         if (m_saveEvent)
         {
-            // For now, go through the list and make sure the objects have been converted...
-//            for(std::vector<std::string>::iterator dataIter = m_objectList.begin();
-//                                                   dataIter != m_objectList.end();
-//                                                   dataIter++)
-//            {
-//                std::string path = *dataIter;
-
-//                DataObject* object = 0;
-//                StatusCode status = retrieveObject(path, object);
-//            }
-
             // Now do a clear of the root DigiEvent root object
             m_eventOverlay->Clear();
 
