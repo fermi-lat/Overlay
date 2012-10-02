@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/cnv/CalOverlayiCnv.cxx,v 1.4 2011/11/03 18:21:15 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/CalOverlayiCnv.cxx,v 1.5 2011/12/12 20:54:56 heather Exp $
 /**
             @file  CalOverlayCnv.cxx
 
@@ -125,7 +125,7 @@ StatusCode CalOverlayCnv::initialize()
     else 
     {
         // Need to up convert to point to the OverlayDataSvc
-        m_overlayOutputSvc = dynamic_cast<IOverlayDataSvc*>(tmpService);
+        m_overlayOutputSvc = SmartIF<IOverlayDataSvc>(tmpService);
     }
 
     if (m_overlayOutputSvc) m_overlayOutputSvc->registerOutputPath(m_path);
@@ -156,7 +156,7 @@ StatusCode CalOverlayCnv::createObj(IOpaqueAddress* pOpaque, DataObject*& refpOb
 
     if (!pDataSvc) return StatusCode::FAILURE;
 
-    IOverlayDataSvc* inputDataSvc = dynamic_cast<IOverlayDataSvc*>(pDataSvc);
+    IOverlayDataSvc* inputDataSvc = SmartIF<IOverlayDataSvc>(pDataSvc);
 
     // Retrieve the pointer to the digi
     EventOverlay* overlayRoot = inputDataSvc->getRootEventOverlay();

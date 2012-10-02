@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/SrcOverlayCnv.cxx,v 1.7 2012/05/25 19:50:59 usher Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/SrcOverlayCnv.cxx,v 1.8 2012/07/24 16:00:36 usher Exp $
 /**
             @file  SrcOverlayCnv.cxx
 
@@ -128,7 +128,7 @@ StatusCode SrcOverlayCnv::initialize()
     else 
     {
         // Need to up convert to point to the OverlayDataSvc
-        m_overlayOutputSvc = dynamic_cast<IOverlayDataSvc*>(tmpService);
+        m_overlayOutputSvc = SmartIF<IOverlayDataSvc>(tmpService);
     }
 
     return status;
@@ -157,7 +157,7 @@ StatusCode SrcOverlayCnv::createObj(IOpaqueAddress* pOpaque, DataObject*& refpOb
 
     if (!pDataSvc) return StatusCode::FAILURE;
 
-    IOverlayDataSvc* inputDataSvc = dynamic_cast<IOverlayDataSvc*>(pDataSvc);
+    IOverlayDataSvc* inputDataSvc = SmartIF<IOverlayDataSvc>(pDataSvc);
 
     // Create the new SrcOverlay event to put in the TDS
     Event::SrcOverlay* overlayTds = new Event::SrcOverlay();
