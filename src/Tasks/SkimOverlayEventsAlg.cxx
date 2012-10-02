@@ -1,7 +1,7 @@
 /** @file SkimOverlayEventsAlg.cxx
     @brief declartion, implementaion of the class SkimOverlayEventsAlg
 
-    $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/Tasks/SkimOverlayEventsAlg.cxx,v 1.1.124.1 2010/09/20 16:15:41 heather Exp $
+    $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Tasks/SkimOverlayEventsAlg.cxx,v 1.2 2011/12/12 20:54:55 heather Exp $
 */
 // Gaudi system includes
 #include "GaudiKernel/MsgStream.h"
@@ -73,18 +73,6 @@ private:
     IOverlayDataSvc*    m_overlayOutputSvc;
 
 
-    /// access the ntupleWriter service to write out to ROOT ntuples
-    //INTupleWriterSvc *m_rootTupleSvc;
-
-    /// parameter to store the logical name of the ROOT file to write to
-    //std::string m_treeName;
-
-    /// geometry propagator
-    //IPropagator* m_prop;
-
-    /// distance of conversion point and nearest ACD along the vertex
-    /// aka completely useless variable
-    //double m_cuv;
 };
 
 
@@ -119,12 +107,6 @@ StatusCode SkimOverlayEventsAlg::initialize(){
         return StatusCode::FAILURE;
     }
     
-    // get the Gui service (not required)
-    //if (service("GuiSvc", m_guiSvc).isFailure ()){
-    //    log << MSG::WARNING << "No GuiSvc, so no display" << endreq;
-    //}else{
-    //    //m_guiSvc->guiMgr()->display().add(new Rep, "User rep");
-    //}
     
 
     IService* tmpService = 0;
@@ -136,29 +118,6 @@ StatusCode SkimOverlayEventsAlg::initialize(){
         m_overlayOutputSvc = 0;
     }
     else m_overlayOutputSvc = SmartIF<IOverlayDataSvc>(tmpService);
-    //else m_overlayOutputSvc = SmartIF<IOverlayDataSvc>(IID_IOverlayDataSvc, tmpService);
-    
-    // example code to create a ROOT tuple and schedule it for filling 
-
-    // get a pointer to RootTupleSvc
-    //sc = service("RootTupleSvc", m_rootTupleSvc);
-
-    //if( sc.isFailure() ) {
-    //    log << MSG::ERROR << "SkimOverlayEventsAlg failed to get the RootTupleSvc" << endreq;
-    //    return sc;
-    //}
-    //m_rootTupleSvc->addItem(m_treeName, "count", &m_count);
-    //m_rootTupleSvc->addItem(m_treeName, "completely_useless", &m_cuv);
-
-    //IToolSvc* toolSvc = 0;
-    //if ( service("ToolSvc", toolSvc, true).isFailure() ) {
-    //    log << MSG::ERROR << "Couldn't find the ToolSvc!" << endreq;
-    //    return StatusCode::FAILURE;
-    //}
-    //if ( !toolSvc->retrieveTool("G4PropagationTool", m_prop) ) {
-    //    log << MSG::ERROR << "Couldn't find the G4PropagationTool!" << endreq;
-    //    return StatusCode::FAILURE;
-    //}
 
     return sc;
 }
@@ -169,10 +128,6 @@ StatusCode SkimOverlayEventsAlg::execute()
     MsgStream   log( msgSvc(), name() );
     log << MSG::DEBUG << "executing " << ++m_count << " time" << endreq;
 
-    //if( m_rootTupleSvc!=0) {
-    //    // necessary to store the tuple entry
-    //    m_rootTupleSvc->storeRowFlag(m_treeName, true);
-    //}
     
 
     // Retrieving pointers from the TDS
@@ -197,65 +152,6 @@ StatusCode SkimOverlayEventsAlg::execute()
         return sc;
     }
      
-    // *************************************************************************
-    // exercise 1:
-    // Apply cuts using the TDS data to determine we want this event to be
-    // written to output or not
-    // For example we could use the number of vertices to determine if we 
-    // want this event written to output.  
-    // If not, we setFilterPassed false and return - 
-    // and in addition we must set up the
-    // jobOptions such that this algorithm is used to filter - which means
-    // it determines what algorithms are run after it    
-    // One should redefine the Triggered sequence such that SkimOverlayEventsAlg appears
-    // before either meritAlg or the Output sequence.
-    //  Triggered.Members={
-    //    "Sequencer/Trigger",
-    //    "Sequencer/Reconstruction",
-    //    "Sequencer/RecoDisplay",
-    //    "SkimOverlayEventsAlg",
-    //    "Sequencer/Output",
-    //    "FilterTracks","FilterAlg",
-    //    "meritAlg" };
-
-    //if ((!vertices) || (vertices.size() <= 0)) {
-    //    setFilterPassed( false );
-    //    return sc;
-    //}
-
-
-    // *************************************************************************
-    // exercise 2:
-    // 1) get the first vertex of the TkrVertexCol.
-    //    We need a pointer to Event::TkrVertexCol in the TDS.  No new code, was
-    //    here anyway.
-    // 2) retrieve position and direction.
-    // 3) use a propagator to propagate back to the ACD.
-    //    We need the IPropagator* m_prop. The pointer to it has to be retrieved
-    //    in initialize().
-    // 4) determine the distance of the vertex (conversion point) and the ACD.
-    // 5) store this completely useless variable in MeritTuple.
-    //    Not exactly true, actually.  It is stored in the tree specified by
-    //    SkimOverlayEventsAlg.treeName in jobOptions.txt.  We need m_ntupleSvc and the
-    //    pointer to it.  No new code, was here anyway.
-
-    //m_cuv = 0.;
-
-    
-#if 0 // enable to use pause with the display
-    // An example of pausing the display 
-    bool pause = false;
-    // calculate some condition here...
-    // pause = .....;
-    if (pause) {
-        log << MSG::INFO << "Pausing at event " << m_count <<  endreq;
-        m_guiSvc->guiMgr()->pause();
-    } 
-#endif
-#if 0
-    log << MSG::FATAL << "test of a fatal error " << endreq;
-    sc = StatusCode::FAILURE;
-#endif
     return sc;
 }
 
