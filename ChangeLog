@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: usher  Tue Oct  2 11:14:22 PDT 2012
+Overlay/src/DataServices
+
+Modified Files:
+	OverlayDataSvc.cxx OverlayInputSvc.cxx OverlayOutputSvc.cxx 
+Log Message:
+Modify OverlayDataSvc to make interface work again (accessible again via SmartIF), "saveEvent" flag operational again.
+    *
+------------------------------------------------------------
 TAG
 Tag name: GlastRelease-20-05-01, operation: add
 Package: Overlay
