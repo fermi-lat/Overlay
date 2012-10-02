@@ -1,4 +1,15 @@
 ------------------------------------------------------------
+User: usher  Tue Oct  2 11:20:11 PDT 2012
+Overlay/src/cnv
+
+Modified Files:
+	AcdOverlayCnv.cxx CalOverlayiCnv.cxx DiagDataOverlayCnv.cxx 
+	EventOverlayCnv.cxx GemOverlayCnv.cxx PtOverlayCnv.cxx 
+	SrcOverlayCnv.cxx TkrOverlayCnv.cxx 
+Log Message:
+change dynamic casts back to SmartIF references
+    *
+------------------------------------------------------------
 User: usher  Tue Oct  2 11:14:22 PDT 2012
 Overlay/src/DataServices
 
