@@ -77,10 +77,10 @@ AnalysisNtupleAlg1.realData = true;
 AnalysisNtupleAlg2.realData = true;
 ClassifyAlg1.UseTMine = false;
 
-OverlayOutputSvc.overlayRootFile = "$MYUSERS/overlay5/r0369760008-Oct2_overlay.root";
-RootTupleSvc.filename            = "$MYUSERS/overlay5/r0369760008-Oct2_merit.root";
+OverlayOutputSvc.overlayRootFile = "$MYUSERS/overlay5/r0369760008_overlay.root";
+RootTupleSvc.filename            = "$MYUSERS/overlay5/r0369760008_merit.root";
 
-ApplicationMgr.EvtMax = 1000;
+ApplicationMgr.EvtMax = 10000000;
 
 // for making the overlays, sets the Output sequence
 #include "$OVERLAYJOBOPTIONSPATH/Translation/DigiToOverlay.txt"
