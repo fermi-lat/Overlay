@@ -1,4 +1,4 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/cnv/TkrOverlayCnv.cxx,v 1.5 2011/12/12 20:54:56 heather Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/cnv/TkrOverlayCnv.cxx,v 1.5 2011/12/12 20:54:56 heather Exp $
 /**
             @file  TkrOverlayCnv.cxx
 
@@ -157,7 +157,7 @@ StatusCode TkrOverlayCnv::createObj(IOpaqueAddress* pOpaque, DataObject*& refpOb
 
     if (!pDataSvc) return StatusCode::FAILURE;
 
-    IOverlayDataSvc* inputDataSvc = SmartIF<IOverlayDataSvc>(tmpService);
+    IOverlayDataSvc* inputDataSvc = SmartIF<IOverlayDataSvc>(pDataSvc);
 
     Event::TkrOverlayCol* TkrOverlayTdsCol = 0;
 
