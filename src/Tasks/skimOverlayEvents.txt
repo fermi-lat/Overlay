@@ -1,9 +1,8 @@
-// $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/Tasks/skimOverlayEvents.txt,v 1.3 2009/01/24 21:58:04 lsrea Exp $
-//##############################################################
 //
-// Job options file to skim the Periodic-Trigger events from a data file
-//   and write out already-processed Overlay events
+// Job Option file for readigi_runrecon:
+// Read in a digi Root file and run recon on it!
 //
+
 // start with the basic program defined in Gleam
 #include "$GLEAMJOBOPTIONSPATH/basicOptions.txt"
 
@@ -13,63 +12,79 @@
 ApplicationMgr.ExtSvc +={"RootIoSvc"};  
 ApplicationMgr.Runable=  "RootIoSvc";
 
-//#include "$GLEAMROOT/src/fredOptions.txt" 
 
-Top.StopOverride = true;
-Top.Members += {"Sequencer/OutputEvent"};
+// ----------------------------------------------
+//         Algorithm sequence 
 
-// to kill the memory leak
-RootIoSvc.RebuildIndex = false;
+Generation.Members = {};
 
-//#include "$GLEAMJOBOPTIONSPATH/makeOverlay_test.txt"
+// Make sure calibration gets called *after* readin in the digis
+Digitization.Members = {
+    "digiRootReaderAlg",
+    "TkrCalibAlg/TkrReconCalib"
+    };
 
-// choose one or the other below for old Gui or FRED
-// note that FRED should start up automatically
-//#include "$GLEAMJOBOPTIONSPATH/guiOptions.txt"
-//#include "$GLEAMJOBOPTIONSPATH/fredOptions.txt"
+Gcr.Members = {};
 
-Generation.Members={ };
-Digitization.Members = {"digiRootReaderAlg"};
-    
+// New CAL calib file:
+CalTupleAlg.NeighborXtalkToolName   = "NeighborXtalkTool";
+CalXtalRecAlg.NeighborXtalkToolName = "NeighborXtalkTool";
+ToolSvc.NeighborXtalkTool.txtFile   = "$(LATCalibRoot)/CAL/LAT-flight_gain/pre_launch_calib_0608/digitization-licos-v3r9p12_077015240_digi_DIGI.neighborXtalk.txt";
+
+//
+// S/C alignment:
+//
+FT1Alg.CorrectForAberration = true;
+FT1Alg.AlignmentFlavor      = "vanilla";
+
+//
+// Calibrations:
+//
+#include "$GLEAMJOBOPTIONSPATH/jobOptions/pipeline/calibrations.txt"  
+
+//---------------------------------------------------------
+// Things to modify start here
+
 TriggerTest.Members={ "SkimOverlayEventsAlg"}; // put it here for now
 
-Triggered.Members = {
-    "Sequencer/ReconCalibrationUpdate",
-    "Sequencer/Reconstruction",
-    "Sequencer/NtupleMaker",
-    "Sequencer/Output"
+// From Tracy to make sure Tree base tracking is used
+TkrFindFirst.DoCRFinding = false;
+
+//ToolSvc.TreeBasedTool.MaxNumVecPoints = 2000;
+
+// Control which energy assignment tool to use
+//TkrFitIter.EnergyToolName  = "TkrTrackEnergyTool";
+//TkrFitFirst.EnergyToolName = "TkrTrackEnergyTool";
+//ToolSvc.TkrEnergySplitTool.TupleFileName = ""; // Try turning off to test memory resident tuples
+//ToolSvc.TkrTreeTrackFinderTool.FindSecondTrack = false;
+//ToolSvc.TkrTrackEnergyTool.DoNotChangeEnergy = true;
+
+// Try the tracker filter again
+TkrFilterFirst.FilterToolName = "TkrHoughFilterTool";
+
+// Set file names
+
+PtValsAlg.PointingHistory = {
+   "root://glast-rdr.slac.stanford.edu//glast/Data/Flight/Level1/LPA/prod/4.0/ft2/gll_pt_p130_r0369760008_v001.fit", "",  ""
 };
 
-NtupleMaker.Members = {"PtValsAlg", "AnalysisNtupleAlg", "ClassifyAlg", "FT1Alg","ObfCoordsAlg"};
-AnalysisNtupleAlg.realData = true;
+digiRootReaderAlg.digiRootFileList = {
+   "root://glast-rdr.slac.stanford.edu//glast/Data/Flight/Level1/LPA/prod/4.0/digi/r0369760008_v001_digi.root"
+   };
+
+//NtupleMaker2.Members = {};
+AnalysisNtupleAlg1.realData = true;
+AnalysisNtupleAlg2.realData = true;
+ClassifyAlg1.UseTMine = false;
+
+OverlayOutputSvc.overlayRootFile = "$MYUSERS/overlay5/r0369760008-Oct2_overlay.root";
+RootTupleSvc.filename            = "$MYUSERS/overlay5/r0369760008-Oct2_merit.root";
+
+ApplicationMgr.EvtMax = 1000;
 
 // for making the overlays, sets the Output sequence
 #include "$OVERLAYJOBOPTIONSPATH/Translation/DigiToOverlay.txt"
 
-ToolSvc.AcdHitToOverlayTool.PHATileCut = 25.0;
+// Special ACD cuts
+ToolSvc.AcdHitToOverlayTool.PHATileCut   = 25.0;
 ToolSvc.AcdHitToOverlayTool.PHARibbonCut = 25.0;
-
-// get the calibrations
-#include "$GLEAMJOBOPTIONSPATH/jobOptions/pipeline/calibrations.txt"
-
-// -------------------------------------------------
-//          input files
-
-digiRootReaderAlg.digiRootFileList = 
-  {"root://glast-rdr.slac.stanford.edu//glast/Data/Flight/Level1/LPA/prod/1.66/digi/r0244973765_v001_digi.root"};
-
-// ------------------------------------------------
-//          output files
-
-
-OverlayOutputSvc.overlayRootFile = "$FARM/u31/lsrea/testOverlay/r0236243776-PT-final7_overlay.root";
-RootTupleSvc.filename=             "$FARM/u31/lsrea/testOverlay/r0236243776-PT-final7_merit.root";
-
-ApplicationMgr.EvtMax =10000000;
-
-//==============================================================
-//
-// End of job options file
-//
-//##############################################################
-
