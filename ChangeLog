@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: usher  Tue Oct  2 18:43:49 PDT 2012
+Overlay/src/cnv
+
+Modified Files:
+	TkrOverlayCnv.cxx 
+Log Message:
+Fix compile time issue. As Rick Perry would say... oops.
+    *
+------------------------------------------------------------
 TAG
 Tag name: Overlay-02-04-02, operation: add
 Package: Overlay
