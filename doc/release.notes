@@ -1,10 +1,11 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.63 2012/10/02 18:29:25 usher Exp $
+$Id: release.notes,v 1.64 2012/10/03 01:45:39 usher Exp $
 @verbatim
  * EOH *
 
+ Overlay-02-04-04 02-Oct-2012  lsrea updated skimOverlayEvents.txt
  Overlay-02-04-03  2-Oct-2012 TU Fix compile oops
  Overlay-02-04-02  2-Oct-2012 TU Fix bugs which prevented correct operation of the making of overlay files
  Overlay-02-04-01 25-Sep-2012 TU Add options to screen out overlay events that trigger and used different file names from tool names
