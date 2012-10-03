@@ -1,5 +1,5 @@
 // File and Version Information:
-//      $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/DataServices/OverlayCnvSvc.cxx,v 1.3 2011/12/12 20:54:54 heather Exp $
+//      $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/DataServices/OverlayCnvSvc.cxx,v 1.4 2012/05/25 19:50:59 usher Exp $
 //
 // Description:
 //      OverlayCnvSvc is the GLAST converter service.
@@ -45,7 +45,7 @@ template <class TYPE> class SvcFactory;
  * access to the data and put it on the TDS.
  * Based on SICb service written by Markus Frank.
  *
- * $Header: /usr/local/CVS/SLAC/Overlay/src/DataServices/OverlayCnvSvc.cxx,v 1.2 2011/06/29 15:32:00 usher Exp $
+ * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/DataServices/OverlayCnvSvc.cxx,v 1.4 2012/05/25 19:50:59 usher Exp $
  */
 
 class OverlayCnvSvc  : virtual public ConversionSvc	
