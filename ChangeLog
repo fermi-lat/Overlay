@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: usher  Fri Oct  5 21:53:03 PDT 2012
+Overlay/Overlay
+
+Modified Files:
+	IOverlayDataSvc.h 
+Log Message:
+somehow this file was not included in updates... don't understand how things could have compiled
+    *
+------------------------------------------------------------
 TAG
 Tag name: GlastRelease-17-35-24-lp37, operation: add
 Package: Overlay
