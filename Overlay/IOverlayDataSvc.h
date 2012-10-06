@@ -2,7 +2,7 @@
 
     @brief declaration of an interface to the OverlayDataSvc service
 
-$Header: /nfs/slac/g/glast/ground/cvs/Overlay/Overlay/IOverlayDataSvc.h,v 1.1 2008/12/01 22:36:11 usher Exp $
+$Header: /nfs/slac/g/glast/ground/cvs/Overlay/Overlay/IOverlayDataSvc.h,v 1.2 2009/01/14 20:07:51 usher Exp $
 
 */
 
@@ -22,14 +22,16 @@ Aims to provide the abstract interface to the Overlay Data service
 
 class EventOverlay;
 
-static const InterfaceID IID_IOverlayDataSvc("IOverlayDataSvc", 1 , 0);
+//static const InterfaceID IID_IOverlayDataSvc("IOverlayDataSvc", 1 , 0);
 
-class IOverlayDataSvc : virtual public IService
+class GAUDI_API IOverlayDataSvc : virtual public IService
 {
 public:
 
     // Retrieve interface ID
-    static const InterfaceID& interfaceID() { return IID_IOverlayDataSvc; }
+//    static const InterfaceID& interfaceID() { return IID_IOverlayDataSvc; }
+	/// InterfaceID
+	DeclareInterfaceID(IOverlayDataSvc, 1, 0);
 
     /** @brief Get pointer to a Root DigiEvent object
     */
