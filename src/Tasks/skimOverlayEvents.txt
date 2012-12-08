@@ -64,7 +64,7 @@ TkrFilterFirst.FilterToolName = "TkrHoughFilterTool";
 
 // Set file names
 
-PtValsAlg.PointingHistory = {
+PtValsAlg1.PointingHistory = {
    "root://glast-rdr.slac.stanford.edu//glast/Data/Flight/Level1/LPA/prod/4.0/ft2/gll_pt_p130_r0369760008_v001.fit", "",  ""
 };
 
