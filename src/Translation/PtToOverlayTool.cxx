@@ -1,7 +1,7 @@
 /**  @file PtToOverlayTool.cxx
     @brief implementation of class PtToOverlayTool
     
-  $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/Translation/PtToOverlayTool.cxx,v 1.3 2011/11/03 18:21:15 usher Exp $  
+  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/PtToOverlayTool.cxx,v 1.4 2011/12/12 20:54:56 heather Exp $  
 */
 
 #include "IDigiToOverlayTool.h"
@@ -81,6 +81,12 @@ private:
     float*            m_bEast;
     float*            m_bNorth;
     float*            m_bUp;
+
+	int*              m_lat_mode;
+	int*              m_lat_config;
+	int*              m_data_qual;
+	float*            m_rock_angle;
+	float*            m_livetime_frac;
 };
 
 //static ToolFactory<PtToOverlayTool> s_factory;
@@ -116,6 +122,12 @@ PtToOverlayTool::PtToOverlayTool(const std::string& type,
     m_bEast       = 0;
     m_bNorth      = 0;
     m_bUp         = 0;
+
+	m_lat_mode    = 0;
+	m_lat_config  = 0;
+	m_data_qual   = 0;
+	m_rock_angle  = 0;
+	m_livetime_frac = 0;
 
     return;
 }
@@ -342,8 +354,59 @@ StatusCode PtToOverlayTool::initialize()
             m_bUp  = new float;
             *m_bUp = 0;
         }
-    }
-    else
+
+		try {type = m_tuple->getItem(m_treename, "PtLATMode", dummy);}
+        catch(...) {type = "";}
+
+        if (type == "Int_t") m_lat_mode = reinterpret_cast<int*>(dummy);
+        else
+        {
+
+            m_lat_mode  = new int; 
+            *m_lat_mode = 0;
+        }
+
+		try {type = m_tuple->getItem(m_treename, "PtLATConfig", dummy);}
+        catch(...) {type = "";}
+
+        if (type == "Int_t") m_lat_config = reinterpret_cast<int*>(dummy);
+        else
+        {
+            m_lat_config  = new int;
+            *m_lat_config = 0;
+        }
+
+		try {type = m_tuple->getItem(m_treename, "PtDataQual", dummy);}
+        catch(...) {type = "";}
+
+        if (type == "Int_t") m_data_qual = reinterpret_cast<int*>(dummy);
+        else
+        {
+            m_data_qual  = new int;
+            *m_data_qual = 0;
+        }
+
+		try {type = m_tuple->getItem(m_treename, "PtRockAngle", dummy);}
+        catch(...) {type = "";}
+
+        if (type == "Float_t") m_rock_angle = reinterpret_cast<float*>(dummy);
+        else
+        {
+            m_rock_angle  = new float;
+            *m_rock_angle = 0;
+        }
+
+		try {type = m_tuple->getItem(m_treename, "PtLivetimeFrac", dummy);}
+        catch(...) {type = "";}
+
+        if (type == "Float_t") m_livetime_frac = reinterpret_cast<float*>(dummy);
+        else
+        {
+            m_livetime_frac  = new float;
+            *m_livetime_frac = 0;
+        }	
+	}	
+	else
     {
         log << MSG::ERROR << " failed to recast pointer to tuple service" << std::endl;
         return StatusCode::FAILURE;
@@ -396,7 +459,12 @@ StatusCode PtToOverlayTool::translate()
                              *m_R,
                              *m_bEast,
                              *m_bNorth,
-                             *m_bUp
+                             *m_bUp,
+							 *m_lat_mode,
+							 *m_lat_config,
+							 *m_data_qual,
+							 *m_rock_angle,
+							 *m_livetime_frac
                             );
 
     return status;
