@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: lsrea  Fri Dec  7 17:54:35 PST 2012
+Overlay/src/Tasks
+
+Modified Files:
+	skimOverlayEvents.txt 
+Log Message:
+Add variables
+
+    *
+------------------------------------------------------------
 TAG
 Tag name: GlastRelease-20-07-00, operation: add
 Package: Overlay
