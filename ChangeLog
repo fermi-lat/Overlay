@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: usher  Mon Dec 17 09:58:13 PST 2012
+GlastRelease-scons/Overlay/src/DataServices
+
+Modified Files:
+	OverlayDataSvc.cxx 
+Log Message:
+Have the overlay keep track of the file wrap condition instead of having RootIO signal it back.
+    *
+------------------------------------------------------------
 TAG
 Tag name: GlastRelease-20-08-00, operation: add
 Package: Overlay
