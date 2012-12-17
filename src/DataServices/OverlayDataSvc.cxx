@@ -106,8 +106,9 @@ private:
     // end of the job
     std::map<std::string, std::string> m_inputFileMap;
 
-    // Hopefully a temporary kludge until RootIo can handle this
+    // We keep track of the current index and the number of events in the given input file
     std::map<std::string, long long>   m_inputIndexMap;
+	std::map<std::string, long long>   m_inputEntriesMap;
     
     std::string                        m_curFileType;
 
@@ -211,6 +212,7 @@ OverlayDataSvc::OverlayDataSvc(const std::string& name,ISvcLocator* svc)
 
     m_inputFileMap.clear();
     m_inputIndexMap.clear();
+	m_inputEntriesMap.clear();
     m_clidToPathMap.clear();
 
     return;
@@ -423,20 +425,21 @@ StatusCode OverlayDataSvc::selectNextEvent()
 			// update the input index
 			inputIndexIter->second = inputIndex + 1;
 
+			// Poor man's mod
+			if (inputIndexIter->second >= m_inputEntriesMap[m_curFileType]) inputIndexIter->second = 0;
+
 			// Try reading the event this way... 
 			// using treename as the key
 			m_eventOverlay = dynamic_cast<EventOverlay*>(m_rootIoSvc->getNextEvent(m_curFileType, inputIndex));
 
-			// If the call returns a null pointer then most likely we have hit the end of file
-			// Try to wrap back to first event and try again
+			// If the call returns a null pointer then we have some sort of IO error that needs to be trapped
 			if( m_eventOverlay == 0)
 			{ 
-				long long inputIndex = 0;
-
-				//m_inputIndexMap[m_curFileType] = inputIndex;
-				inputIndexIter->second = inputIndex + 1;
-            
-				m_eventOverlay = dynamic_cast<EventOverlay*>(m_rootIoSvc->getNextEvent(m_curFileType, inputIndex));
+				log << MSG::ERROR 
+					<< "selectEvent: called with " << name() 
+					<< ": Error detected in RootIO call"
+					<< endreq;
+				return StatusCode::FAILURE;
 			}
 
 			// If the trigger reject mask is non-zero then check to see if allowed input overlay event
@@ -575,8 +578,8 @@ void OverlayDataSvc::setNewInputBin(double x)
             // Set the index in our local map
             m_inputIndexMap[m_curFileType] = startEvent;
 
-            // Set that as the starting event
-            //m_rootIoSvc->setIndex(startEvent);
+			// And keep track of the total number of events
+			m_inputEntriesMap[m_curFileType] = numEventsLong;
         } 
         catch(...) 
         {
