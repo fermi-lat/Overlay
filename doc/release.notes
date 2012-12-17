@@ -1,10 +1,11 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.67 2012/10/06 04:55:25 usher Exp $
+$Id: release.notes,v 1.68 2012/12/08 02:07:40 lsrea Exp $
 @verbatim
  * EOH *
 
+ Overlay-02-05-01 17-Dec-2012 TU Change input scheme so Overlay keeps track of end of file wrap condition
  Overlay-02-05-00 07-Dec-2012  lsrea add 'ft2' variables
  Overlay-02-04-06 05-Oct-2012 TU missing header file now included
  Overlay-02-04-05 02-Oct-2012  lsrea tweak to skimOverlayEvents.txt
