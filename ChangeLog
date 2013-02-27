@@ -1,5 +1,76 @@
 ------------------------------------------------------------
 TAG
+Tag name: GlastRelease-20-08-10, operation: add
+Package: Overlay
+User: heather  Wed Feb 27 05:08:18 2013
+Files:
+  Overlay/.cvsignore  1.2
+  Overlay/ChangeLog  1.566
+  Overlay/SConscript  1.45
+  Overlay/OverlayLib.py  1.3
+  Overlay/Overlay/IOverlayDataSvc.h  1.3
+  Overlay/Overlay/IFetchEvents.h  1.1
+  Overlay/Overlay/IBackgroundBinTool.h  1.1
+  Overlay/cmt/.cvsignore  1.1.1.1
+  Overlay/cmt/NMake  1.1.1.1
+  Overlay/cmt/requirements  1.70
+  Overlay/data/test/overlay.root  1.1
+  Overlay/doc/release.notes  1.69
+  Overlay/src/mainpage.h  1.1
+  Overlay/src/DataServices/OverlayInputSvc.cxx  1.12
+  Overlay/src/DataServices/OverlayOutputSvc.cxx  1.5
+  Overlay/src/DataServices/OverlayCnvSvc.cxx  1.5
+  Overlay/src/DataServices/OverlayAddress.cxx  1.1
+  Overlay/src/DataServices/OverlayAddress.h  1.1
+  Overlay/src/DataServices/OverlayDataSvc.cxx  1.10
+  Overlay/src/Dll/Overlay_dll.cxx  1.1.1.1
+  Overlay/src/Dll/Overlay_load.cxx  1.8
+  Overlay/src/InputControl/XmlFetchEvents.h  1.1
+  Overlay/src/InputControl/XmlFetchEvents.cxx  1.2
+  Overlay/src/InputControl/OverlayRandom.cxx  1.2
+  Overlay/src/InputControl/McIlwain_L_Tool.cxx  1.2
+  Overlay/src/MergeAlgs/OverlayTwoInput.txt  1.1
+  Overlay/src/MergeAlgs/TkrOverlayMergeAlg.cxx  1.5
+  Overlay/src/MergeAlgs/Overlay.txt  1.11
+  Overlay/src/MergeAlgs/AcdOverlayMergeAlg.cxx  1.10
+  Overlay/src/MergeAlgs/DoMergeAlg.cxx  1.5
+  Overlay/src/MergeAlgs/CalOverlayMergeAlg.cxx  1.10
+  Overlay/src/MergeAlgs/DiagDataOverlayMergeAlg.cxx  1.5
+  Overlay/src/MergeAlgs/GemOverlayMergeAlg.cxx  1.4
+  Overlay/src/Tasks/skimOverlayEvents.txt  1.8
+  Overlay/src/Tasks/SkimOverlayEventsAlg.cxx  1.3
+  Overlay/src/Translation/DigiToOverlayAlg.cxx  1.5
+  Overlay/src/Translation/IDigiToOverlayTool.h  1.1
+  Overlay/src/Translation/PtToOverlayTool.cxx  1.5
+  Overlay/src/Translation/TkrDigiToOverlayTool.cxx  1.4
+  Overlay/src/Translation/AcdHitToOverlayTool.cxx  1.8
+  Overlay/src/Translation/EventToOverlayTool.cxx  1.4
+  Overlay/src/Translation/DigiToOverlay.txt  1.3
+  Overlay/src/Translation/GemToOverlayTool.cxx  1.4
+  Overlay/src/Translation/CalXtalToOverlayTool.cxx  1.4
+  Overlay/src/Translation/DiagnosticDataToOverlayTool.cxx  1.5
+  Overlay/src/cnv/IEventCnvSvc.h  1.1
+  Overlay/src/cnv/DiagDataOverlayCnv.cxx  1.5
+  Overlay/src/cnv/AcdOverlayCnv.cxx  1.7
+  Overlay/src/cnv/GemOverlayCnv.cxx  1.6
+  Overlay/src/cnv/CalOverlayiCnv.cxx  1.6
+  Overlay/src/cnv/SrcOverlayCnv.cxx  1.9
+  Overlay/src/cnv/TkrOverlayCnv.cxx  1.7
+  Overlay/src/cnv/BaseCnv.h  1.2
+  Overlay/src/cnv/PtOverlayCnv.cxx  1.9
+  Overlay/src/cnv/BaseCnv.cpp  1.1
+  Overlay/src/cnv/EventOverlayCnv.cxx  1.7
+  Overlay/src/test/jobOptions.txt  1.5
+  Overlay/src/test/TestReadJobOptions.txt  1.6
+  Overlay/src/test/OverlayTestAlg.cxx  1.6
+  Overlay/xml/backgroundOverlay.xsd  1.1.1.1
+  Overlay/xml/McIlwain_L_434K.xml  1.1
+  Overlay/xml/McIlwain_L.xml  1.1.1.1
+  Overlay/xml/test/McIlwain_L.xml  1.2
+
+    *
+------------------------------------------------------------
+TAG
 Tag name: GlastRelease-20-08-09, operation: add
 Package: Overlay
 User: heather  Fri Feb 22 12:11:43 2013
