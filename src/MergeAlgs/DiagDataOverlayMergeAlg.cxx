@@ -5,7 +5,7 @@
  *
  * @author Tracy Usher
  *
- * $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/MergeAlgs/DiagDataOverlayMergeAlg.cxx,v 1.4 2011/06/27 17:45:57 usher Exp $
+ * $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/DiagDataOverlayMergeAlg.cxx,v 1.5 2011/12/12 20:54:55 heather Exp $
  */
 
 
@@ -21,7 +21,7 @@
 
 #include "LdfEvent/DiagnosticData.h"
 
-#include "Event/Recon/TkrRecon/TkrDiagnosticFlag.h"
+//#include "Event/Recon/TkrRecon/TkrDiagnosticFlag.h"
 
 #include <map>
 
@@ -111,19 +111,22 @@ StatusCode DiagDataOverlayMergeAlg::execute()
 
     StatusCode sc = StatusCode::SUCCESS; 
 
-    SmartDataPtr<Event::TkrDiagnosticFlag> diagFlag(eventSvc(), EventModel::TkrRecon::TkrDiagnosticFlag);
-    // if no diagFlag, do the default (full diagnostics), otherwise check the flag
-    if(diagFlag) {
-        bool doDiag = diagFlag->getDiagnosticFlag();
-        if (!doDiag) return sc;
-    }
+//     SmartDataPtr<Event::TkrDiagnosticFlag> diagFlag(eventSvc(), EventModel::TkrRecon::TkrDiagnosticFlag);
+//     // if no diagFlag, do the default (full diagnostics), otherwise check the flag
+//     if(diagFlag) {
+//         bool doDiag = diagFlag->getDiagnosticFlag();
+//         if (!doDiag) return sc;
+//     }
 
     MsgStream log(msgSvc(), name());
     log << MSG::DEBUG << "execute" << endreq;
 
     // First, recover any overlay diagnostic data, to see if we have anything to do
     SmartDataPtr<Event::DiagDataOverlay> diagDataOverlay(m_dataSvc, m_dataSvc->rootName() + OverlayEventModel::Overlay::DiagDataOverlay);
-    if(!diagDataOverlay) return sc;
+    if(!diagDataOverlay)
+      {
+        return sc;
+      }
 
     // Successful recovery of an overlay TDS object! 
     // Build the overlay maps from the input overlay diagnostic data
@@ -190,7 +193,7 @@ StatusCode DiagDataOverlayMergeAlg::execute()
             unsigned updateBits = tkrDiagData.dataWord() | tkrOverIter->second;
 
             // Update the bits for the tracker
-            diagnosticData->setTkrDataWordByIndex(idx,updateBits);
+            //            diagnosticData->setTkrDataWordByIndex(idx,updateBits);
 
             // Now clear the overlay information from the map
             tkrOverDiagMap.erase(tkrOverIter);
@@ -213,7 +216,7 @@ StatusCode DiagDataOverlayMergeAlg::execute()
             unsigned updateBits = calDiagData.dataWord() | calOverIter->second;
 
             // Update the bits for the Cal
-            diagnosticData->setCalDataWordByIndex(idx,updateBits);
+            //            diagnosticData->setCalDataWordByIndex(idx,updateBits);
 
             // Now clear the overlay information from the map
             calOverDiagMap.erase(calOverIter);
