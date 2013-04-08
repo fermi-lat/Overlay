@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: heather  Mon Apr  8 13:32:17 PDT 2013
+Overlay
+
+Modified Files:
+      Tag: GlastRelease-17-35-24-br08
+	SConscript 
+Log Message:
+bring P8 updates into L1
+    *
+------------------------------------------------------------
 TAG
 Tag name: GlastRelease-17-35-24-br08, operation: add
 Package: Overlay
