@@ -4,7 +4,7 @@
  *
  * @author Zach Fewtrell zachary.fewtrell@nrl.navy.mil
  * 
- *  $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/MergeAlgs/CalOverlayMergeAlg.cxx,v 1.9 2011/12/12 20:54:55 heather Exp $
+ *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/CalOverlayMergeAlg.cxx,v 1.10 2012/09/14 14:46:11 usher Exp $
  */
 
 // Gaudi specific include files
@@ -170,7 +170,10 @@ StatusCode CalOverlayMergeAlg::execute()
 
     // First, recover any overlay digis, to see if we have anything to do
     SmartDataPtr<Event::CalOverlayCol> overlayCol(m_dataSvc, m_dataSvc->rootName() + OverlayEventModel::Overlay::CalOverlayCol);
-    if(!overlayCol) return StatusCode::SUCCESS;
+    if(!overlayCol)
+      {
+        return StatusCode::SUCCESS;
+      }
 
     // Now recover the McIntegratingHits for this event
     SmartDataPtr<Event::McIntegratingHitCol> calMcHitCol(eventSvc(), EventModel::MC::McIntegratingHitCol);
@@ -456,9 +459,9 @@ StatusCode CalOverlayMergeAlg::execute()
             double totalDepE  = calOverlay->getEnergy() * totalDep;
 
             // Retrieve reference to object to fill for this diode
-            Event::McIntegratingHit::XtalEnergyDep& xtalDep = mcHit->getXtalEnergyDep(m_diodeNames[diodeIdx-1]);
+//             Event::McIntegratingHit::XtalEnergyDep& xtalDep = mcHit->getXtalEnergyDep(m_diodeNames[diodeIdx-1]);
 
-            xtalDep.addEnergyItem(totalDepE, directDepE, localHit);
+//             xtalDep.addEnergyItem(totalDepE, directDepE, localHit);
 
             int stop = 0;
         }

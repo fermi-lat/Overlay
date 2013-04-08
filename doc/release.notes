@@ -1,10 +1,12 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.68 2012/12/08 02:07:40 lsrea Exp $
+$Id: release.notes,v 1.69 2012/12/17 18:57:15 usher Exp $
 @verbatim
  * EOH *
 
+ Overlay-02-05-01-gr01 08-Apr-2013 HMK Merge in Overlay updates from P8 into 
+    L1
  Overlay-02-05-01 17-Dec-2012 TU Change input scheme so Overlay keeps track of end of file wrap condition
  Overlay-02-05-00 07-Dec-2012  lsrea add 'ft2' variables
  Overlay-02-04-06 05-Oct-2012 TU missing header file now included
