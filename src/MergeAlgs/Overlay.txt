@@ -1,7 +1,7 @@
 //##############################################################
 //
 // Job options file for Setting up the background overlay from input digis
-// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/Overlay.txt,v 1.10.24.1 2012/02/04 04:29:50 lsrea Exp $
+// $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/Overlay.txt,v 1.11 2012/04/25 04:55:55 heather Exp $
 
 // Include the Overlay package library
 ApplicationMgr.DLLs   += { "Overlay"};
@@ -42,8 +42,8 @@ Digitization.BranchMembers = {
 // Turn off the random noise hit backgrounds in the Tracker
 ToolSvc.GeneralNoiseTool.occupancy = 0.;
 
-// Make sure the Overlay information goes to the ntuple
-AnalysisNtupleAlg.toolList = {"+", "Overlay"};
+// Make sure the Overlay information goes to the ntuple - SIMREQ-89
+AnalysisNtupleAlg1.toolList = {"+", "Overlay"};
 
 //==============================================================
 //
