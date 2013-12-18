@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: carmelo  Wed Dec 18 09:41:50 PST 2013
+Overlay/src/MergeAlgs
+
+Modified Files:
+	Overlay.txt 
+Log Message:
+added a line in Digitization to fix a truncation issue seen by Philippe
+    *
+------------------------------------------------------------
 TAG
 Tag name: GlastRelease-20-09-05, operation: add
 Package: Overlay
