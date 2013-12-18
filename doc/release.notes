@@ -1,10 +1,11 @@
 /** @file release.notes
  @brief package Overlay
 
-$Id: release.notes,v 1.69 2012/12/17 18:57:15 usher Exp $
+$Id: release.notes,v 1.70 2013/11/05 17:32:03 bregeon Exp $
 @verbatim
  * EOH *
 
+ Overlay-02-05-03 18-Dec-2013 carmelo quick fix on Digitization sequencer
  Overlay-02-05-02 05-Nov-2013 bregeon update alg name - LPATE-167
  Overlay-02-05-01 17-Dec-2012 TU Change input scheme so Overlay keeps track of end of file wrap condition
  Overlay-02-05-00 07-Dec-2012  lsrea add 'ft2' variables
