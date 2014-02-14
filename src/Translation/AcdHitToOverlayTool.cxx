@@ -1,7 +1,7 @@
 /**  @file AcdHitToOverlayTool.cxx
     @brief implementation of class AcdHitToOverlayTool
     
-  $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/Translation/AcdHitToOverlayTool.cxx,v 1.7 2011/11/03 18:21:15 usher Exp $  
+  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/AcdHitToOverlayTool.cxx,v 1.8 2011/12/12 20:54:56 heather Exp $  
 */
 
 #include "IDigiToOverlayTool.h"
@@ -88,6 +88,8 @@ private:
 
     /// Convert energy to mips
     float m_mipsPerMeV;
+    /// Convert energy to mips in ribbons
+    float m_mipsPerMeV_Ribbon;
 
     /// Pointer to the event data service (aka "eventSvc")
     IDataProviderSvc*      m_edSvc;
@@ -116,13 +118,14 @@ AcdHitToOverlayTool::AcdHitToOverlayTool(const std::string& type,
     declareInterface<IDigiToOverlayTool>(this);
 
     //Declare properties for this tool
-    declareProperty("PHATileCut",    m_pha_tile_cut    = 0.0);
+    declareProperty("PHATileCut",    m_pha_tile_cut    = 25.0);
     declareProperty("MIPSTileCut",   m_mips_tile_cut   = 0.0);
-    declareProperty("PHARibbonCut",  m_pha_ribbon_cut  = 0.0);
+    declareProperty("PHARibbonCut",  m_pha_ribbon_cut  = 25.0);
     declareProperty("MIPSRibbonCut", m_mips_ribbon_cut = 0.0);
     declareProperty("VetoThrehsold", m_vetoThreshold   = 0.4);
 
     declareProperty("MipsPerMeV",    m_mipsPerMeV      = 0.52631);
+    declareProperty("MipsPerMeV_Ribbon",m_mipsPerMeV_Ribbon = 2.0);
 
     return;
 }
@@ -211,6 +214,11 @@ StatusCode AcdHitToOverlayTool::translate()
         }
     }
 
+    float mipsPerMeV10 = m_mipsPerMeV;
+    float mipsPerMeV12 = m_mipsPerMeV/1.2;
+    
+    float mipPerMeV(0.);
+
     // Loop over available AcdHits
     for(Event::AcdDigiCol::const_iterator acdIter = acdDigiCol->begin(); acdIter != acdDigiCol->end(); acdIter++)
     {
@@ -226,8 +234,14 @@ StatusCode AcdHitToOverlayTool::translate()
         idents::VolumeIdentifier volId = acdDigi->getVolId();
         idents::AcdId            acdId = acdDigi->getId();
 
-        // Extract deposited energy
-        float  eDep   = acdHit->mips() / m_mipsPerMeV;
+        // Extract deposited energy.  The conversion from mips depends on if we have a tile or ribbon
+	if ( acdId.tile() ) {
+	  mipPerMeV = acdId.top() && acdId.row() == 2 ? mipsPerMeV12 : mipsPerMeV10;
+	} else if ( acdId.ribbon() ) {
+	  mipPerMeV = m_mipsPerMeV_Ribbon;
+	}	
+
+        float  eDep   = acdHit->mips() / mipPerMeV;
 
         // Our entry/exit point
         HepPoint3D center(0.,0.,0.);
@@ -308,9 +322,10 @@ Event::AcdHit* AcdHitToOverlayTool::makeAcdHit ( const Event::AcdDigi* digi)
     if ( acceptDigi ) 
     {
         hit = new Event::AcdHit(*digi,mipsPmtA,mipsPmtB);
-
+	// Correct for the fact that the Accept Mask bits are always set.
+	hit->correctAcceptMapBits( (mipsPmtA > 1e-6), (mipsPmtB > 1e-6) );
     }
-    
+
     return hit;
 }
 
@@ -325,8 +340,7 @@ bool AcdHitToOverlayTool::getCalibratedValues(const Event::AcdDigi* digi,
     double pedSubB(0.);
 
     // do PMT A
-    bool hasHitA = digi->getAcceptMapBit(Event::AcdDigi::A) || digi->getVeto(Event::AcdDigi::A);
-    
+    bool hasHitA = digi->getAcceptMapBit(Event::AcdDigi::A) || digi->getVeto(Event::AcdDigi::A);    
     if ( hasHitA ) 
     {
         Event::AcdDigi::Range rangeA = digi->getRange(Event::AcdDigi::A);  
@@ -334,14 +348,12 @@ bool AcdHitToOverlayTool::getCalibratedValues(const Event::AcdDigi* digi,
         getValues_lowRange(digi->getId(),Event::AcdDigi::A,digi->getPulseHeight(Event::AcdDigi::A),pedSubA,mipsPmtA) :
         getValues_highRange(digi->getId(),Event::AcdDigi::A,digi->getPulseHeight(Event::AcdDigi::A),pedSubA,mipsPmtA);
     
-        if ( !ok ) return false;
-    
+        if ( !ok ) return false;    
         acceptDigi |= rangeA == Event::AcdDigi::HIGH ? true : accept(digi->getId(),pedSubA,mipsPmtA);
     }
 
     // do PMT B
-    bool hasHitB = digi->getAcceptMapBit(Event::AcdDigi::B) || digi->getVeto(Event::AcdDigi::A);
-    
+    bool hasHitB = digi->getAcceptMapBit(Event::AcdDigi::B) || digi->getVeto(Event::AcdDigi::B);    
     if ( hasHitB ) 
     {
         Event::AcdDigi::Range rangeB = digi->getRange(Event::AcdDigi::B);  
@@ -384,7 +396,25 @@ bool AcdHitToOverlayTool::getValues_lowRange(const idents::AcdId&  id,
     double mipPeak = gain->getPeak();
 
     pedSub = (double)pha - pedestal;
-  
+    
+    // Added Feb. 2014 by EAC to deal with periodic triggers below the ZS threshold.
+    if ( id.tile() ) {
+      if ( pedSub < m_pha_tile_cut ) { 
+	pedSub = 0.;
+	mips = 0.;
+	return true;
+      }
+    } else if ( id.ribbon() ) {
+      if ( pedSub < m_pha_ribbon_cut ) {
+	pedSub = 0.;
+	mips = 0.;
+	return true;
+      }	
+    } else {
+      pedSub = 0.;
+      mips = 0.;
+      return true;
+    }
     sc = AcdCalib::mipEquivalent_lowRange(pha,pedestal,mipPeak,mips);
   
     return sc.isFailure() ? false : true;
