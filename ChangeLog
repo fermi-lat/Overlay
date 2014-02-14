@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: echarles  Thu Feb 13 19:38:06 PST 2014
+Overlay/src/Translation
+
+Modified Files:
+	AcdHitToOverlayTool.cxx 
+Log Message:
+Fix AcdOverlays so that the accept map bits are only set if the PMT is above ZS thershold.  This fixes the fact that the are always set for periodic triggers which are not ZS'ed
+    *
+------------------------------------------------------------
 TAG
 Tag name: GlastRelease-20-09-06, operation: add
 Package: Overlay
