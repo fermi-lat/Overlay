@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: echarles  Fri Feb 14 18:15:02 PST 2014
+Overlay/src/Translation
+
+Modified Files:
+	AcdHitToOverlayTool.cxx 
+Log Message:
+Added coded to remove coherent noise before making ACD Overlay
+    *
+------------------------------------------------------------
 User: echarles  Thu Feb 13 19:38:06 PST 2014
 Overlay/src/Translation
 
