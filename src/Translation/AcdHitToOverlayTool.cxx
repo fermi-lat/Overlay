@@ -1,7 +1,7 @@
 /**  @file AcdHitToOverlayTool.cxx
     @brief implementation of class AcdHitToOverlayTool
     
-  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/AcdHitToOverlayTool.cxx,v 1.8 2011/12/12 20:54:56 heather Exp $  
+  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/Translation/AcdHitToOverlayTool.cxx,v 1.9 2014/02/14 03:38:06 echarles Exp $  
 */
 
 #include "IDigiToOverlayTool.h"
@@ -16,6 +16,8 @@
 #include "Event/TopLevel/EventModel.h"
 #include "Event/Digi/AcdDigi.h"
 #include "Event/Recon/AcdRecon/AcdRecon.h"
+
+#include "LdfEvent/Gem.h"
 
 #include "OverlayEvent/OverlayEventModel.h"
 #include "OverlayEvent/AcdOverlay.h"
@@ -91,6 +93,12 @@ private:
     /// Convert energy to mips in ribbons
     float m_mipsPerMeV_Ribbon;
 
+    /// Turn on or off the coherent noise calibration
+    bool m_applyCoherentNoiseCalib;
+
+    /// This is needed for the coherent noise calibration
+    int m_gemDeltaEventTime;
+
     /// Pointer to the event data service (aka "eventSvc")
     IDataProviderSvc*      m_edSvc;
 
@@ -127,6 +135,7 @@ AcdHitToOverlayTool::AcdHitToOverlayTool(const std::string& type,
     declareProperty("MipsPerMeV",    m_mipsPerMeV      = 0.52631);
     declareProperty("MipsPerMeV_Ribbon",m_mipsPerMeV_Ribbon = 2.0);
 
+    declareProperty("ApplyCoherentNoiseCalib",m_applyCoherentNoiseCalib = false);
     return;
 }
 //------------------------------------------------------------------------
@@ -196,6 +205,19 @@ StatusCode AcdHitToOverlayTool::translate()
 {
     MsgStream log(msgSvc(), name());
     StatusCode status = StatusCode::SUCCESS;
+
+    // Deal with the GEM Delta Event Time, if requested
+    if ( m_applyCoherentNoiseCalib ) 
+    {
+        SmartDataPtr<LdfEvent::Gem> gemTds(m_edSvc, "/Event/Gem");    
+	if (gemTds) 
+        {
+	    m_gemDeltaEventTime = gemTds->deltaEventTime();
+	}  else {
+	    log << MSG::ERROR << "Failed to get GemDeltaEventTime from Event" << endreq;
+	    return StatusCode::FAILURE;	    
+	}
+    }
 
     // Now recover the hit collection
     SmartDataPtr<Event::AcdDigiCol> acdDigiCol(m_edSvc, EventModel::Digi::AcdDigiCol);
@@ -394,6 +416,26 @@ bool AcdHitToOverlayTool::getValues_lowRange(const idents::AcdId&  id,
         return false;
     }
     double mipPeak = gain->getPeak();
+
+    // Added Feb. 2014 by EAC to deal with coherent noise
+    if ( m_applyCoherentNoiseCalib ) 
+    {
+        CalibData::AcdCoherentNoise* cNoise(0);
+	sc = m_calibSvc->getCoherentNoise(id,pmt,cNoise);
+	if ( sc.isFailure() ) 
+	{
+	    return false;
+	}
+	double deltaPed(0.);
+	sc = AcdCalib::coherentNoise(m_gemDeltaEventTime,
+				     cNoise->getAmplitude(),cNoise->getDecay(),cNoise->getFrequency(),cNoise->getPhase(),
+				     deltaPed);
+	if ( sc.isFailure() ) 
+        {
+	    return false;
+	}
+	pedestal += deltaPed;
+    }
 
     pedSub = (double)pha - pedestal;
     
