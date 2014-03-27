@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: echarles  Thu Mar 27 13:32:36 PDT 2014
+Overlay/src/MergeAlgs
+
+Modified Files:
+	AcdOverlayMergeAlg.cxx 
+Log Message:
+set overlay status bit on readback of AcdOverlays
+    *
+------------------------------------------------------------
 TAG
 Tag name: GlastRelease-20-09-08, operation: add
 Package: Overlay
