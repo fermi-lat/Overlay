@@ -4,7 +4,7 @@
  *
  * @author Zach Fewtrell zachary.fewtrell@nrl.navy.mil
  * 
- *  $Header: /nfs/slac/g/glast/ground/cvs/GlastRelease-scons/Overlay/src/MergeAlgs/AcdOverlayMergeAlg.cxx,v 1.9 2011/06/27 17:45:57 usher Exp $
+ *  $Header: /nfs/slac/g/glast/ground/cvs/Overlay/src/MergeAlgs/AcdOverlayMergeAlg.cxx,v 1.10 2011/12/12 20:54:55 heather Exp $
  */
 
 // Gaudi specific include files
@@ -18,6 +18,7 @@
 // Glast specific includes
 #include "Event/TopLevel/EventModel.h"
 #include "Event/TopLevel/Event.h"
+#include "Event/Digi/AcdDigi.h"
 #include "Event/MonteCarlo/McPositionHit.h"
 #include "OverlayEvent/OverlayEventModel.h"
 #include "OverlayEvent/EventOverlay.h"
@@ -236,7 +237,7 @@ StatusCode AcdOverlayMergeAlg::execute()
                         Event::McPositionHit::overlayHit);
 
             // Since this is from overlay, add the acdOverlay status mask to the packed flags
-            mcHit->addPackedMask(acdOverlay->getStatus());
+            mcHit->addPackedMask(acdOverlay->getStatus() | Event::AcdDigi::DIGI_OVERLAY);
 
             mcPosHitCol->push_back(mcHit);
         }
